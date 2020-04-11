@@ -1,3 +1,10 @@
 module.exports = {
-  lintOnSave: false,
+  lintOnSave: true,
+  css: {
+    loaderOptions: {
+      sass: {
+        prependData: '@import "@/assets/scss/_variables/colors.scss";',
+      },
+    },
+  },
 };
