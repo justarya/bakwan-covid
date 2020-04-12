@@ -50,7 +50,8 @@ export default {
 
 <style lang="scss">
 .o-hospital-item {
-  padding: 30px;
+  padding: 15px;
+  @media (min-width: $sm) { padding: 30px; }
 
   display: flex;
   align-items: center;

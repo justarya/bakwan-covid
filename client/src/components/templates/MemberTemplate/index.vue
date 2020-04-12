@@ -48,17 +48,35 @@ export default {
 .t-member-template {
   padding-top: 30px;
   display: flex;
+  flex-direction: column;
   &__sidebar {
+    width: 100%;
     padding: 0 7.5px;
-    width: 33%;
-    max-width: 300px;
   }
   &__content {
-    width: 67%;
+    width: 100%;
     padding: 0 7.5px;
   }
   &__card {
+    width: 100%;
     padding: 20px;
+  }
+  @media (min-width: $sm) {
+    padding-top: 30px;
+    display: flex;
+    flex-direction: row;
+    &__sidebar {
+      padding: 0 7.5px;
+      width: 33%;
+      max-width: 300px;
+    }
+    &__content {
+      width: 67%;
+      padding: 0 7.5px;
+    }
+    &__card {
+      padding: 20px;
+    }
   }
 }
 </style>

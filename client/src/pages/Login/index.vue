@@ -71,7 +71,10 @@ export default {
   align-items: center;
   min-height: 80vh;
   &__content {
-    padding: 40px;
+    padding: 20px;
+    @media (min-width: $sm) {
+      padding: 40px
+    }
     width: 100%;
     max-width: 500px;
   }

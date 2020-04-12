@@ -85,7 +85,8 @@ export default {
     margin-bottom: 10px;
   }
   &__content {
-    padding: 30px;
+    padding: 15px;
+    @media (min-width: $sm) { padding: 30px; }
   }
   &__title {
     font-size: 40px;
