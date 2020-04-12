@@ -46,7 +46,7 @@ export default {
     line-height: 1.25;
   }
   &__subtitle {
-    color: $gray;
+    color: #88959a;
     font-size: 14px;
     font-style: italic;
     line-height: 1.25;
