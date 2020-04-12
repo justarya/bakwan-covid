@@ -1,6 +1,6 @@
 <template>
-  <div class="o-home-top-nav">
-    <p class="text-2xl my-4">
+  <div class="o-home-top-nav mt-10 mb-4">
+    <p class="text-2xl">
       <template v-if="filter.search.submitted">
         Search: {{ filter.search.submitted }}
       </template>

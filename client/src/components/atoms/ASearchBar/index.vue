@@ -62,7 +62,6 @@ export default {
 .a-search-bar {
   max-width: 300px;
   width: 90%;
-  margin-bottom: 20px;
   position: relative;
   &__close {
     display: block;
