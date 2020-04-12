@@ -1,8 +1,13 @@
 <template>
   <div class="o-main-nav">
-    <p class="a-text text-3xl">
-      Bakwan<b>Covid</b>
-    </p>
+    <div class="o-main-nav__brand">
+      <p class="a-text o-main-nav__title">
+        Bakwan<b>Covid</b>
+      </p>
+      <p class="o-main-nav__subtitle">
+        Bersama, Kita Lawan Covid
+      </p>
+    </div>
     <AButtonNav
       icon="keyboard_arrow_right"
       icon-position="right"
@@ -36,8 +41,15 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  &__brand {
-    width: 200px;
+  &__title {
+    font-size: 35px;
+    line-height: 1.25;
+  }
+  &__subtitle {
+    color: $gray;
+    font-size: 14px;
+    font-style: italic;
+    line-height: 1.25;
   }
 }
 </style>
