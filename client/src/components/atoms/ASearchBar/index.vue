@@ -5,9 +5,15 @@
       type="text"
       placeholder="Search"
       @keyup.enter="$emit('submit')"
+      @focus="onFocus"
+      @blur="onBlur"
     >
     <i
-      class="a-search-bar__close material-icons"
+      v-if="inputValue.length"
+      :class="[
+        'a-search-bar__close material-icons',
+        { '--active': isFocus },
+      ]"
       @click="reset"
     >
       close
@@ -24,6 +30,9 @@ export default {
       default: '',
     },
   },
+  data: () => ({
+    isFocus: false,
+  }),
   computed: {
     inputValue: {
       get() {
@@ -39,6 +48,12 @@ export default {
       this.$emit('input', '');
       this.$emit('submit');
     },
+    onFocus() {
+      this.isFocus = true;
+    },
+    onBlur() {
+      this.isFocus = false;
+    },
   },
 };
 </script>
@@ -51,13 +66,16 @@ export default {
   position: relative;
   &__close {
     display: block;
-    visibility: hidden;
+    opacity: 0;
     position: absolute;
     right: 0;
     top: 0;
     padding: 10px;
     cursor: pointer;
-    color: $gray;
+    color: black;
+    &.--active {
+      opacity: 0.4;
+    }
   }
   input {
     width: 100%;
@@ -73,9 +91,6 @@ export default {
       transition: 0.15s;
       border-color: $blue;
       box-shadow: 0 0 0 5px $light-blue;
-    }
-    &:focus ~ .a-search-bar__close {
-      visibility: visible;
     }
   }
 }
