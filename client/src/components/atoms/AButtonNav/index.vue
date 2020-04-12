@@ -27,7 +27,7 @@ export default {
       default: 'left',
     },
     to: {
-      type: String,
+      type: [String, Object],
       default: '',
     },
     goBack: {

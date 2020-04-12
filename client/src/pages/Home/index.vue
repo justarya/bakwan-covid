@@ -6,6 +6,7 @@
           v-model="filter.search"
           @submit="fetchHospital"
         />
+        <p class="text-2xl my-4">Data Kebutuhan Alat Medis</p>
       </template>
       <HospitalItem
         v-for="(item, index) in list.hospital"

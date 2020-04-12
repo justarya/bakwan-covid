@@ -1,12 +1,19 @@
 <template>
   <div class="o-main-nav">
-    <p class="a-text text-3xl">BakwanCovid</p>
+    <p class="a-text text-3xl">
+      Bakwan<b>Covid</b>
+    </p>
     <AButtonNav
       icon="keyboard_arrow_right"
       icon-position="right"
       :to="{ name: 'Login' }"
     >
-      Masuk
+      <span v-if="$store.state.isLogin">
+        Dashboard
+      </span>
+      <span v-else>
+        Masuk
+      </span>
     </AButtonNav>
   </div>
 </template>
@@ -29,5 +36,8 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  &__brand {
+    width: 200px;
+  }
 }
 </style>
