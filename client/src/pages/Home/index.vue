@@ -3,16 +3,29 @@
     <MainTemplate>
       <template v-slot:top>
         <ASearchBar
-          v-model="filter.search"
+          v-model="filter.search.value"
           @submit="fetchHospital"
         />
-        <p class="text-2xl my-4">Data Kebutuhan Alat Medis</p>
+        <p class="text-2xl my-4">
+          <template v-if="filter.search.submitted">
+            Search: {{ filter.search.submitted }}
+          </template>
+          <template v-else>
+            Data Kebutuhan Alat Medis
+          </template>
+        </p>
       </template>
       <HospitalItem
         v-for="(item, index) in list.hospital"
         :key="index"
         v-bind="item"
       />
+      <p
+        v-if="!list.hospital.length"
+        class="text-2xl p-3"
+      >
+        Data kosong
+      </p>
     </MainTemplate>
   </div>
 </template>
@@ -34,7 +47,10 @@ export default {
       hospital: [],
     },
     filter: {
-      search: '',
+      search: {
+        value: '',
+        submitted: '',
+      },
     },
   }),
   created() {
@@ -42,7 +58,8 @@ export default {
   },
   methods: {
     fetchHospital() {
-      this.$http.get(`/hospital/?search=${this.filter.search}`)
+      this.filter.search.submitted = this.filter.search.value;
+      this.$http.get(`/hospital/?search=${this.filter.search.value}`)
         .then(({ data }) => {
           this.assignHospitalData(data);
         });
