@@ -33,8 +33,18 @@ class HospitalController {
 
   static async getAllHospital(req, res, next) {
     try {
+      let filter = {};
+      if (req.query.search) {
+        const regex = new RegExp(req.query.search,'i');
+        filter = {
+          $or: [
+            { name: regex },
+            { location: regex },
+          ],
+        };
+      }
       const hospitalList = await Hospital
-        .find()
+        .find(filter)
         .populate('supplies')
         .select(`${defaultSelection} supplies`);
 

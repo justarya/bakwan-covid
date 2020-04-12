@@ -1,6 +1,12 @@
 <template>
   <div class="p-home">
     <MainTemplate>
+      <template v-slot:top>
+        <ASearchBar
+          v-model="filter.search"
+          @submit="fetchHospital"
+        />
+      </template>
       <HospitalItem
         v-for="(item, index) in list.hospital"
         :key="index"
@@ -13,16 +19,21 @@
 <script>
 import MainTemplate from '@/components/templates/MainTemplate';
 import HospitalItem from '@/components/organisms/HospitalItem';
+import ASearchBar from '@/components/atoms/ASearchBar';
 
 export default {
   name: 'Home',
   components: {
     MainTemplate,
     HospitalItem,
+    ASearchBar,
   },
   data: () => ({
     list: {
       hospital: [],
+    },
+    filter: {
+      search: '',
     },
   }),
   created() {
@@ -30,7 +41,7 @@ export default {
   },
   methods: {
     fetchHospital() {
-      this.$http.get('/hospital')
+      this.$http.get(`/hospital/?search=${this.filter.search}`)
         .then(({ data }) => {
           this.assignHospitalData(data);
         });

@@ -206,7 +206,9 @@ $ yarn dev
 
 + ### Get all Hospital
   > **Method** : `GET`<br>
-  > **Endpoint** : `/hospital`
+  > **Endpoint** : `/hospital`<br>
+  > **query** : 
+  > - `search`: `String` (for field: `name`, `location`)
 
   #### _Response Body_ :
   - 200

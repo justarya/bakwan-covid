@@ -1,6 +1,7 @@
 <template>
   <div class="t-main-template">
     <MainNav/>
+    <slot name="top"></slot>
     <ACard>
       <slot></slot>
     </ACard>
