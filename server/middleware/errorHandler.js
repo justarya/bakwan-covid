@@ -15,7 +15,7 @@ const errorHandler = (err, req, res, next) => {
   } else if (err.message === 'Username / password cannot be empty') {
     res.status(400).json({
       code: 400,
-      message: [message],
+      message: [err.message],
     });
   } else if (err.message === 'Wrong username / password') {
     res.status(404).json({

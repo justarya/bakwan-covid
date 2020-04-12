@@ -23,7 +23,9 @@ class UserController {
           username,
           role: data.role,
         };
-        res.status(201).json({ token: jwtHash(token) });
+        res.status(201).json({
+          token: jwtHash(token),
+        });
       })
       .catch(next);
   }
@@ -43,13 +45,17 @@ class UserController {
         .then((result) => {
           if (result) {
             if (comparePassword(password, result.password)) {
-              const {_id, username, role } = result;
+              const { _id, username, role } = result;
               const payload = {
                 _id,
                 username,
                 role,
               };
-              res.status(200).json({ token: jwtHash(payload) });
+              res.status(200).json({
+                token: jwtHash(payload),
+                username,
+                role,
+              });
             } else {
               next({
                 message: 'Wrong username / password',
@@ -68,7 +74,7 @@ class UserController {
   static async getUser(req, res, next) {
     try {
       const { _id } = req.payload;
-      const { username } = await User
+      const { username, role } = await User
         .findById(_id);
       const HospitalData = await Hospital
         .find({ users: _id }, 'name');
@@ -77,6 +83,7 @@ class UserController {
         .status(200)
         .json({
           username,
+          role,
           hospitals: HospitalData,
         });
     } catch (err) {

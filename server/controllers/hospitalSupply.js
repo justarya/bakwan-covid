@@ -1,6 +1,6 @@
 const HospitalSupply = require('../models/hospitalSupply');
 const Hospital = require('../models/hospital');
-const selection = 'product_name supply demand';
+const selection = '_id product_name supply demand';
 
 class HospitalSupplyController {
   static async getAll(req, res, next) {
@@ -45,6 +45,7 @@ class HospitalSupplyController {
       res
         .status(201)
         .json({
+          _id: result._id,
           product_name: result.product_name,
           supply: result.supply,
           demand: result.demand,
@@ -107,9 +108,7 @@ class HospitalSupplyController {
               _id: hospitalId
             }, {
               $pull: {
-                supplies: {
-                  $elemMatch: hospitalSupplyId,
-                },
+                supplies: hospitalSupplyId,
               },
             }
           );
