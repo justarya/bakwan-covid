@@ -17,6 +17,7 @@
 
 <script>
 import ACard from '@/components/atoms/ACard';
+
 export default {
   name: 'ASearchBar',
   components: {
