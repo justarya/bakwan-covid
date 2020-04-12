@@ -2,12 +2,14 @@
   <div class="o-main-footer">
     <div class="o-main-footer__section">
       <p class="text-base">
-        &copy; {{ year }} Pasokan Alat Medis Nusantara
+        &copy; {{ year }} Bakwan Covid
       </p>
     </div>
     <div class="o-main-footer__section">
       <p class="text-base">
-        Daftar sebagai rumah sakit
+        <a href="mailto:justaryaid@gmail.com?subject=[DAFTAR] (nama rumah sakit)">
+          Daftar sebagai rumah sakit
+        </a>
       </p>
     </div>
   </div>

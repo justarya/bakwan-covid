@@ -30,7 +30,10 @@
           rows="4"
         />
       </div>
-      <AButton>
+      <AButton
+        type="submit"
+        @click="saveInfo"
+      >
         Simpan
       </AButton>
     </div>
@@ -40,12 +43,20 @@
 <script>
 import AInputText from '@/components/atoms/AInputText';
 import AButton from '@/components/atoms/AButton';
+import swalMixin from '@/mixins/swalMixin';
 
 export default {
   name: 'HospitalInfo',
+  mixins: [swalMixin],
   components: {
     AInputText,
     AButton,
+  },
+  props: {
+    id: {
+      type: String,
+      default: '',
+    },
   },
   data: () => ({
     formData: {
@@ -55,6 +66,32 @@ export default {
       location: '',
     },
   }),
+  created() {
+    this.fetchInfo();
+  },
+  methods: {
+    fetchInfo() {
+      this.$http.get(`/hospital/${this.id}`)
+        .then(({ data }) => {
+          this.formData = {
+            ...data,
+            contactNumber: data.contact_number,
+          };
+        })
+        .catch(this.catchHandler);
+    },
+    saveInfo() {
+      const payload = {
+        ...this.formData,
+        contact_number: this.formData.contactNumber,
+      };
+      this.$http.put(`/hospital/${this.id}`, payload)
+        .then(() => {
+          this.successHandler('Update info berhasil!');
+        })
+        .catch(this.catchHandler);
+    },
+  },
 };
 </script>
 

@@ -1,7 +1,11 @@
 <template>
   <div class="p-home">
     <MainTemplate>
-      <HospitalItem v-for="data in 3" :key="data"/>
+      <HospitalItem
+        v-for="(item, index) in list.hospital"
+        :key="index"
+        v-bind="item"
+      />
     </MainTemplate>
   </div>
 </template>
@@ -15,6 +19,35 @@ export default {
   components: {
     MainTemplate,
     HospitalItem,
+  },
+  data: () => ({
+    list: {
+      hospital: [],
+    },
+  }),
+  created() {
+    this.fetchHospital();
+  },
+  methods: {
+    fetchHospital() {
+      this.$http.get('/hospital')
+        .then(({ data }) => {
+          this.assignHospitalData(data);
+        });
+    },
+    assignHospitalData(data) {
+      const { list } = data;
+      const newList = list.reduce((curr, val) => [
+        ...curr,
+        {
+          id: val._id,
+          name: val.name,
+          location: val.location,
+          supplies: val.supplies,
+        },
+      ], []);
+      this.list.hospital = newList;
+    },
   },
 };
 </script>

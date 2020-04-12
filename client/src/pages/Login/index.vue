@@ -5,11 +5,26 @@
         Back
       </AButtonNav>
       <p class="p-login__title text-3xl">Masuk</p>
-      <div class="p-login__form">
-        <AInputText placeholder="Username"></AInputText>
-        <AInputText type="password" placeholder="Password"></AInputText>
-      </div>
-      <a-button icon="arrow_forward">Kirim</a-button>
+      <form @submit.prevent="login">
+        <div class="p-login__form">
+          <AInputText
+            v-model="formData.username"
+            placeholder="Username"
+          />
+          <AInputText
+            v-model="formData.password"
+            type="password"
+            placeholder="Password"
+          />
+        </div>
+        <a-button
+          type="submit"
+          icon="arrow_forward"
+          @click="login"
+        >
+          Kirim
+        </a-button>
+      </form>
     </ACard>
   </div>
 </template>
@@ -20,13 +35,31 @@ import AButton from '@/components/atoms/AButton';
 import AButtonNav from '@/components/atoms/AButtonNav';
 import AInputText from '@/components/atoms/AInputText';
 
+import swalMixin from '@/mixins/swalMixin';
+
 export default {
   name: 'Login',
+  mixins: [swalMixin],
   components: {
     ACard,
     AButton,
     AButtonNav,
     AInputText,
+  },
+  data: () => ({
+    formData: {
+      username: '',
+      password: '',
+    },
+  }),
+  methods: {
+    login() {
+      this.$store.dispatch('login', this.formData)
+        .then(() => {
+          this.$router.push({ name: 'MemberArea' });
+        })
+        .catch(this.catchHandler);
+    },
   },
 };
 </script>

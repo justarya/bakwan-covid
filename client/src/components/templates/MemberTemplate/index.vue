@@ -8,8 +8,9 @@
         :key="index"
       />
       <SidebarUser
-        username="admin"
+        :username="$store.state.user.username"
       />
+      <SidebarNavigation/>
     </div>
     <div class="t-member-template__content">
       <ACard class="t-member-template__card">
@@ -24,6 +25,7 @@ import ACard from '@/components/atoms/ACard';
 
 import SidebarMenu from '@/components/organisms/sidebar/SidebarMenu';
 import SidebarUser from '@/components/organisms/sidebar/SidebarUser';
+import SidebarNavigation from '@/components/organisms/sidebar/SidebarNavigation';
 
 export default {
   name: 'MemberTemplate',
@@ -31,6 +33,7 @@ export default {
     ACard,
     SidebarMenu,
     SidebarUser,
+    SidebarNavigation,
   },
   props: {
     sidebar: {

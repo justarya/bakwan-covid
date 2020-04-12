@@ -29,7 +29,8 @@ export default {
   },
   methods: {
     logout() {
-      this.$router.push('/');
+      this.$store.dispatch('logout')
+        .then(() => this.$router.push('/'));
     },
   },
 };

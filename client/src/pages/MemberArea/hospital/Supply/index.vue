@@ -17,7 +17,7 @@
                 :disabled="config.action !== null"
                 @click="createRow"
               >
-                + Create
+                + Buat
               </AButton>
             </th>
           </tr>
@@ -37,12 +37,16 @@
               <AInputText
                 v-if="config.action === -1"
                 v-model="formData.create.supply"
+                type="number"
+                min="0"
               />
             </td>
             <td width="50">
               <AInputText
                 v-if="config.action === -1"
                 v-model="formData.create.demand"
+                type="number"
+                min="0"
               />
             </td>
             <td width="150" class="--action">
@@ -50,14 +54,14 @@
                 <AButton
                   :border="false"
                   size="small"
-                  @click="saveEditRow(index)"
+                  @click="saveCreateRow"
                 >
                   <i class="material-icons">save</i>
                 </AButton>
                 <AButton
                   :border="false"
                   size="small"
-                  @click="cancelEditRow(index)"
+                  @click="cancelCreateRow"
                 >
                   <i class="material-icons">cancel</i>
                 </AButton>
@@ -83,16 +87,19 @@
               <AInputText
                 v-if="config.action === index"
                 v-model="formData.edit.supply"
+                type="number"
+                min="0"
               />
               <span v-else>
                 {{ data.supply }}
               </span>
             </td>
             <td width="50">
-
               <AInputText
                 v-if="config.action === index"
                 v-model="formData.edit.demand"
+                type="number"
+                min="0"
               />
               <span v-else>
                 {{ data.demand }}
@@ -143,33 +150,26 @@
 import AInputText from '@/components/atoms/AInputText';
 import AButton from '@/components/atoms/AButton';
 
+import swalMixin from '@/mixins/swalMixin';
+
 export default {
   name: 'HospitalSupply',
+  mixins: [swalMixin],
   components: {
     AButton,
     AInputText,
+  },
+  props: {
+    id: {
+      type: String,
+      default: '',
+    },
   },
   data: () => ({
     config: {
       action: null,
     },
-    list: [
-      {
-        name: 'mask',
-        supply: 9,
-        demand: 100,
-      },
-      {
-        name: 'mask',
-        supply: 9,
-        demand: 100,
-      },
-      {
-        name: 'mask',
-        supply: 9,
-        demand: 100,
-      },
-    ],
+    list: [],
     formData: {
       edit: {
         name: '',
@@ -183,7 +183,17 @@ export default {
       },
     },
   }),
+  created() {
+    this.fetchSupply();
+  },
   methods: {
+    fetchSupply() {
+      this.$http.get(`/hospital/${this.id}/supplies`)
+        .then(({ data }) => {
+          this.list = data.map(this.translateDataFromServer);
+        })
+        .catch(this.catchHandler);
+    },
     editRow(index) {
       this.config.action = index;
       this.formData.edit = {
@@ -192,21 +202,74 @@ export default {
         demand: this.list[index].demand,
       };
     },
-    promptDeleteRow() {},
-    saveEditRow() {},
+    saveEditRow(index) {
+      const supplyId = this.list[index].id;
+      const payload = {
+        ...this.formData.edit,
+        product_name: this.formData.edit.name,
+      };
+      this.$http
+        .put(`/hospital/${this.id}/supplies/${supplyId}`, payload)
+        .then(() => {
+          this.successHandler('Ubah pasokan berhasil!');
+          this.config.action = null;
+          this.list[index] = {
+            ...this.list[index],
+            ...this.formData.edit,
+          };
+        })
+        .catch(this.catchHandler);
+    },
     cancelEditRow() {
       this.config.action = null;
     },
+    promptDeleteRow(index) {
+      this.askDelete()
+        .then(() => {
+          this.deleteRow(index);
+        });
+    },
+    deleteRow(index) {
+      const supplyId = this.list[index].id;
+      this.$http
+        .delete(`/hospital/${this.id}/supplies/${supplyId}`)
+        .then(() => {
+          this.successHandler('Hapus pasokan berhasil!');
+          this.list.splice(index, 1);
+        })
+        .catch(this.catchHandler);
+    },
     createRow() {
-      this.formData.edit = {
+      this.formData.create = {
         name: '',
-        supply: '',
-        demand: '',
+        supply: 0,
+        demand: 0,
       };
       this.config.action = -1;
     },
+    saveCreateRow() {
+      const payload = {
+        ...this.formData.create,
+        product_name: this.formData.create.name,
+      };
+      this.$http
+        .post(`/hospital/${this.id}/supplies/`, payload)
+        .then(({ data }) => {
+          this.successHandler('Buat pasokan baru berhasil!');
+          this.list.push(this.translateDataFromServer(data));
+          this.cancelCreateRow();
+        })
+        .catch(this.catchHandler);
+    },
     cancelCreateRow() {
       this.config.action = null;
+    },
+    translateDataFromServer(val) {
+      return {
+        ...val,
+        id: val._id,
+        name: val.product_name,
+      };
     },
   },
 };

@@ -1,12 +1,16 @@
 <template>
   <a
-    class="m-navigation-button"
+    :class="[
+      'm-navigation-button',
+      `--icon-${iconPosition}`
+    ]"
     @click="goToUrl"
   >
-    <i class="material-icons">{{ icon }}</i>
+    <i v-if="iconPosition === 'left'" class="material-icons">{{ icon }}</i>
     <span>
       <slot></slot>
     </span>
+    <i v-if="iconPosition === 'right'" class="material-icons">{{ icon }}</i>
   </a>
 </template>
 
@@ -17,6 +21,10 @@ export default {
     icon: {
       type: String,
       default: '',
+    },
+    iconPosition: {
+      type: String,
+      default: 'left',
     },
     to: {
       type: String,
@@ -30,7 +38,7 @@ export default {
   methods: {
     goToUrl() {
       if (this.goBack) this.$router.go(-1);
-      this.$router.push(to);
+      this.$router.push(this.to);
     },
   },
 };
@@ -45,11 +53,16 @@ export default {
   font-size: 20px;
   border-radius: 20px;
   display: inline-block;
-  padding-right: 10px;
   transition: 0.2s;
   .material-icons {
     padding: 0;
     font-size: 30px;
+  }
+  &.--icon-left {
+    padding-right: 10px;
+  }
+  &.--icon-right {
+    padding-left: 10px;
   }
   &:hover {
     transition: 0.2s;

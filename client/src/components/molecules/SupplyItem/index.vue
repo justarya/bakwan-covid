@@ -1,15 +1,15 @@
 <template>
   <div class="m-supply-item">
-    <p class="m-supply-item__title a-text text-lg">Masker</p>
+    <p class="m-supply-item__title a-text text-lg">{{ name }}</p>
     <div class="m-supply-item__total">
       <div class="m-supply-item__supply">
         <p class="m-supply-item__label">Sisa</p>
-        <p class="m-supply-item__count">100</p>
+        <p class="m-supply-item__count">{{ supply }}</p>
       </div>
       <div class="m-supply-item__seperator"></div>
       <div class="m-supply-item__demand">
         <p class="m-supply-item__label">Butuh</p>
-        <p class="m-supply-item__count">2000</p>
+        <p class="m-supply-item__count">{{ demand }}</p>
       </div>
     </div>
   </div>
@@ -18,6 +18,20 @@
 <script>
 export default {
   name: 'SupplyItem',
+  props: {
+    name: {
+      type: String,
+      default: '',
+    },
+    supply: {
+      type: Number,
+      default: 0,
+    },
+    demand: {
+      type: Number,
+      default: 0,
+    },
+  },
 };
 </script>
 

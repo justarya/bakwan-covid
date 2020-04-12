@@ -1,13 +1,24 @@
 <template>
   <div class="o-main-nav">
-    <p class="a-text text-3xl">Pasokan Alat Medis Nusantara</p>
-    <router-link to="/login">Masuk</router-link>
+    <p class="a-text text-3xl">BakwanCovid</p>
+    <AButtonNav
+      icon="keyboard_arrow_right"
+      icon-position="right"
+      :to="{ name: 'Login' }"
+    >
+      Masuk
+    </AButtonNav>
   </div>
 </template>
 
 <script>
+import AButtonNav from '@/components/atoms/AButtonNav';
+
 export default {
   name: 'MainNav',
+  components: {
+    AButtonNav,
+  },
 };
 </script>
 

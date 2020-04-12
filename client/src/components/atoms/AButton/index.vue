@@ -1,5 +1,6 @@
 <template>
   <a
+    v-if="type === 'anchor'"
     :class="[
       'a-button',
       `--color-${color}`,
@@ -14,6 +15,22 @@
     </span>
     <i class="material-icons">{{ icon }}</i>
   </a>
+  <button
+    v-else
+    :class="[
+      'a-button',
+      `--color-${color}`,
+      `--size-${size}`,
+      { '--border': border },
+      { '--disabled': disabled },
+    ]"
+    @click="click"
+  >
+    <span>
+      <slot></slot>
+    </span>
+    <i class="material-icons">{{ icon }}</i>
+  </button>
 </template>
 
 <script>
@@ -39,6 +56,10 @@ export default {
     disabled: {
       type: Boolean,
       default: false,
+    },
+    type: {
+      type: String,
+      default: 'anchor',
     },
   },
   methods: {

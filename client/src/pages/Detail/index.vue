@@ -11,25 +11,31 @@
           </AButtonNav>
         </div>
         <p class="p-detail__title a-text">
-          RS Persahabatan
+          {{ detail.hospital.name }}
         </p>
         <div class="p-detail__info o-detail-info">
           <div class="o-detail-info__item --location">
             <i class="material-icons">room</i>
-            <span>Jl. Mawar itu merah warnanya No. 123</span>
+            <span>{{ detail.hospital.location }}</span>
           </div>
           <div class="o-detail-info__item --contact-number">
             <i class="material-icons">call</i>
-            <span>08712347347</span>
+            <span>{{ detail.hospital.contact_number }}</span>
           </div>
           <div class="o-detail-info__item --email">
             <i class="material-icons">email</i>
-            <span>admin@rs.com</span>
+            <span>{{ detail.hospital.email }}</span>
           </div>
         </div>
         <div class="p-detail__supply-list">
           <p class="text-2xl font-semibold">Pasokan</p>
-          <SupplyItem v-for="data in 9" :key="data" class="my-5"></SupplyItem>
+          <SupplyItem
+            v-for="(data, index) in detail.hospital.supplies"
+            v-bind="data"
+            :name="data.product_name"
+            :key="index"
+            class="my-5"
+          />
         </div>
       </div>
     </MainTemplate>
@@ -47,6 +53,28 @@ export default {
     MainTemplate,
     SupplyItem,
     AButtonNav,
+  },
+  props: {
+    id: {
+      type: String,
+      default: '',
+    },
+  },
+  created() {
+    this.fetchHospitalDetailData();
+  },
+  data: () => ({
+    detail: {
+      hospital: {},
+    },
+  }),
+  methods: {
+    fetchHospitalDetailData() {
+      this.$http.get(`/hospital/${this.id}`)
+        .then(({ data }) => {
+          this.detail.hospital = data;
+        });
+    },
   },
 };
 </script>

@@ -22,7 +22,7 @@
 import ACard from '@/components/atoms/ACard';
 
 export default {
-  name: 'Sidebar',
+  name: 'SidebarMenu',
   components: {
     ACard,
   },

@@ -1,11 +1,17 @@
 <template>
-  <router-link to="/detail/1" class="o-hospital-item">
+  <router-link :to="`/detail/${this.id}`" class="o-hospital-item">
     <div class="o-hospital-item__main">
-      <p class="a-text text-2xl">RS Persahabatan</p>
-      <p class="a-text text-base text-gray-500">Jl. Sunter Satu dua tiga No. 123</p>
+      <p class="a-text text-2xl">{{ name }}</p>
+      <p class="a-text text-base text-gray-500">{{ location }}</p>
     </div>
     <div class="m-supply-item--container">
-      <SupplyItem v-for="data in 5" :key="data"></SupplyItem>
+      <SupplyItem
+        v-for="(data, index) in supplies"
+        :name="data.product_name"
+        :supply="data.supply"
+        :demand="data.demand"
+        :key="index"
+      />
     </div>
     <div class="o-hospital-item__view-more">
       <i class="material-icons">keyboard_arrow_right</i>
@@ -20,6 +26,24 @@ export default {
   name: 'HospitalItem',
   components: {
     SupplyItem,
+  },
+  props: {
+    id: {
+      type: String,
+      default: '',
+    },
+    name: {
+      type: String,
+      default: '',
+    },
+    location: {
+      type: String,
+      default: '',
+    },
+    supplies: {
+      type: Array,
+      default: () => [],
+    },
   },
 };
 </script>
