@@ -7,8 +7,11 @@
     </div>
     <div class="o-main-footer__section">
       <p class="text-base">
-        <a href="mailto:justaryaid@gmail.com?subject=[DAFTAR] (nama rumah sakit)">
-          Daftar sebagai rumah sakit
+        <span>
+          Mau daftar?
+        </span>
+        <a href="mailto:register.bakwancovid@gmail.com?subject=[DAFTAR] (nama rumah sakit)">
+          register.bakwancovid@gmail.com
         </a>
       </p>
     </div>
