@@ -12,6 +12,9 @@
 
 ## Dependencies
 > List of all dependencies
+* [serverless](https://www.npmjs.com/package/serverless)
+* [serverless-offline](https://www.npmjs.com/package/serverless-offline)
+* [serverless-http](https://www.npmjs.com/package/serverless-http)
 * [morgan](https://www.npmjs.com/package/morgan)
 * [dotenv](https://www.npmjs.com/package/dotenv)
 * [express](https://www.npmjs.com/package/express)
@@ -39,7 +42,7 @@ $ npm run dev
 $ yarn dev
 ```
 #### Base Url default :<br>
-> `http://localhost:3000`
+> `http://localhost:3000/dev`
 
 <br>
 
