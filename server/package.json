@@ -4,9 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "NODE_ENV=dev nodemon bin/http.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node bin/http.js"
+    "dev": "serverless offline",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
