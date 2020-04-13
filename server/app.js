@@ -4,6 +4,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'dev') {
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
+const serverless = require('serverless-http');
 
 mongoose.connect(process.env.ATLAS_CLUSTER, {
   useNewUrlParser: true,
@@ -24,4 +25,4 @@ app.use('/hospital', hospital);
 const errorHandler = require('./middleware/errorHandler');
 app.use(errorHandler);
 
-module.exports = app;
+module.exports.handler = serverless(app);
