@@ -1,12 +1,10 @@
-# **Server Template With Express**
-> _This repo made with love_  :heart:
-
+# Server
 # _Section Header_
 * [Dependencies](#dependencies)
 * [Features](#features)
-* [Clone](#clone)
 * [Installation](#installation)
 * [Usage](#usage)
+* [API Documentation](#api-documentation)
 * [Another Error](#another-error)
 * [License](#license)
 
@@ -432,15 +430,7 @@ $ yarn dev
     "message": "Internal server error :("
   }
   ```
-
-
-## License
-
-- **[MIT license](http://opensource.org/licenses/mit-license.php)**
-- Contributor [
-  <a href="https://github.com/justarya" target="_blank">JustArya</a>,
-  <a href="https://github.com/havus" target="_blank">Havus</a>
-]
-
-<br><br><br>
-### Happy Hacking!
+  
+  
+## Special Thanks to
+[Express User Template](https://github.com/havus/express-user-template)

@@ -18,9 +18,20 @@ Untuk itu dibuatlah aplikasi **Bakwan Covid**.
 ![Dashboard Rumah Sakit](https://i.ibb.co/zJtKgJx/screely-1586685875892.png "Dashboard Rumah Sakit")
 
 ## Tech Stack
-Aplikasi ini menggunakan MEVN Stack<br>
+Aplikasi ini dibuat menggunakan MEVN Stack<br>
 **(Mongodb, Express, Vue, NodeJS)**
 
+Untuk hosting, kita menggunakan **MongoDb Atlas** sebagai Penyimpanan Database dan **AWS Lambda** sebagai server.
 
 ---
-Made with ❤️ by JustArya
+**Wanna help build Bakwan Covid**?<br>
+Feel free to contribute to the project.
+
+## License
+
+[![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
+
+- **[MIT license](http://opensource.org/licenses/mit-license.php)**
+- Copyright 2020 © <a href="https://github.com/justarya" target="_blank">JustArya</a>.
+- Contributor [ Havus (express template), waited_to_be_filled ]
+
