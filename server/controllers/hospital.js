@@ -59,7 +59,14 @@ class HospitalController {
       }
       const hospitalList = await Hospital
         .find(filter)
-        .populate('supplies')
+        .populate({
+          path: 'supplies',
+          options: {
+            sort: {
+              demand: -1,
+            },
+          },
+        })
         .select(`${defaultSelection} supplies`);
 
       res
@@ -76,7 +83,14 @@ class HospitalController {
       const { hospitalId } = req.params;
       const hospitalData = await Hospital
         .findById(hospitalId)
-        .populate('supplies')
+        .populate({
+          path: 'supplies',
+          options: {
+            sort: {
+              demand: -1,
+            },
+          },
+        })
         .select(`${defaultSelection} supplies`);
 
         if (!hospitalData.name) {
