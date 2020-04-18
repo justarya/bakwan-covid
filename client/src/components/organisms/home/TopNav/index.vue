@@ -2,7 +2,7 @@
   <div class="o-home-top-nav mt-10 mb-4">
     <p class="text-2xl font-semibold">
       <template v-if="filter.search.submitted">
-        Search: {{ filter.search.submitted }}
+        Cari: {{ filter.search.submitted }}
       </template>
       <template v-else>
         Data Kebutuhan Alat Medis
@@ -34,7 +34,7 @@ export default {
   methods: {
     submit() {
       this.filter.search.submitted = this.filter.search.value;
-      this.$emit('submit', this.filter.search.value);
+      this.$emit('submit:search', this.filter.search.value);
     },
   },
 };

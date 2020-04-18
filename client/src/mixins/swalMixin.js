@@ -17,7 +17,6 @@ export default {
       );
     },
     successHandler(message, title = 'Sukses!') {
-      console.log(message);
       this.$swal.fire(
         title,
         message,

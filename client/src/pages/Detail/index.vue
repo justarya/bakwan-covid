@@ -19,9 +19,13 @@
               <i class="material-icons">room</i>
               <span>{{ detail.hospital.location }}</span>
             </div>
-            <div class="o-detail-info__item --contact-number">
+            <div
+              class="o-detail-info__item --contact-number"
+              v-for="(contactNumber, index) in detail.hospital.contactNumbers"
+              :key="index"
+            >
               <i class="material-icons">call</i>
-              <span>{{ detail.hospital.contact_number }}</span>
+              <span>{{ contactNumber }}</span>
             </div>
             <div class="o-detail-info__item --email">
               <i class="material-icons">email</i>
@@ -37,6 +41,12 @@
               :key="index"
               class="my-5"
             />
+          </div>
+          <div class="p-detail__last-updated">
+            Terakhir diperbarukan:
+            <b>
+              {{ suppliesLastUpdated }}
+            </b>
           </div>
         </div>
       </ACard>
@@ -72,11 +82,26 @@ export default {
       hospital: {},
     },
   }),
+  computed: {
+    suppliesLastUpdated() {
+      return this.$moment(this.detail.hospital.suppliesLastUpdated).format('LLLL');
+    },
+  },
   methods: {
     fetchHospitalDetailData() {
       this.$http.get(`/hospital/${this.id}`)
         .then(({ data }) => {
-          this.detail.hospital = data;
+          const suppliesLastUpdated = data.supplies.reduce((result, curr) => {
+            const date = this.$moment(curr.updatedAt);
+            if (!result) return date;
+            if (date < result) return result;
+            return date;
+          }, null);
+          this.detail.hospital = {
+            ...data,
+            contactNumbers: data.contact_numbers,
+            suppliesLastUpdated,
+          };
         });
     },
   },
@@ -100,6 +125,10 @@ export default {
   &__info {
     margin-bottom: 20px;
   }
+  &__last-updated {
+    color: $gray;
+    margin-bottom: 20px;
+  }
 }
 .o-detail-info {
   border-radius: 10px;
@@ -108,7 +137,7 @@ export default {
   display: inline-block;
   padding-right: 50px;
   &__item {
-    margin-bottom: 8px;
+    margin-top: 8px;
     .material-icons {
       padding-right: 8px;
     }

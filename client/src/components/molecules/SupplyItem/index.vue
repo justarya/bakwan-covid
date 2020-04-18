@@ -49,7 +49,7 @@ export default {
       position: absolute;
       right: 0;
       top: 0;
-      max-width: 200px;
+      max-width: 193px;
       width: 100%;
       height: 100%;
       background: linear-gradient(to right, rgba(255, 255, 255, 0), #fff)

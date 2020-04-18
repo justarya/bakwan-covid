@@ -2,26 +2,38 @@
   <div class="p-home">
     <MainTemplate>
       <HomeTopNav
-        @submit="fetchHospital"
+        @submit:search="getSearch"
       />
       <ACard>
-        <HospitalItem
-          v-for="(item, index) in list.hospital"
-          :key="index"
-          v-bind="item"
-        />
-        <p
-          v-if="!list.hospital.length"
-          class="text-2xl p-3"
+        <div class="p-home__hospital-list">
+          <HospitalItem
+            v-for="(item, index) in list.hospital"
+            :key="index"
+            v-bind="item"
+          />
+        </div>
+        <InfiniteLoading
+          spinner="spiral"
+          :identifier="filter.search"
+          @infinite="fetchHospital"
         >
-          Data kosong
-        </p>
+          <div slot="no-more"></div>
+          <div slot="no-results">
+            <p
+              v-if="!list.hospital.length"
+              class="text-2xl p-3"
+            >
+              Data kosong
+            </p>
+          </div>
+        </InfiniteLoading>
       </ACard>
     </MainTemplate>
   </div>
 </template>
 
 <script>
+import InfiniteLoading from 'vue-infinite-loading';
 import MainTemplate from '@/components/templates/MainTemplate';
 import HospitalItem from '@/components/organisms/HospitalItem';
 import HomeTopNav from '@/components/organisms/home/TopNav';
@@ -34,40 +46,56 @@ export default {
     HospitalItem,
     ACard,
     HomeTopNav,
+    InfiniteLoading,
   },
   data: () => ({
     list: {
       hospital: [],
     },
     filter: {
-      search: {
-        value: '',
-        submitted: '',
-      },
+      search: '',
+    },
+    pagination: {
+      page: 0,
+      size: 20,
     },
   }),
-  created() {
-    this.fetchHospital();
-  },
   methods: {
-    fetchHospital(search = '') {
-      this.$http.get(`/hospital/?search=${search}`)
+    getSearch(value) {
+      this.filter.search = value;
+    },
+    fetchHospital(state) {
+      this.$http.get('/hospital', {
+        params: {
+          search: this.filter.search,
+          page: this.pagination.page,
+          size: this.pagination.size,
+        },
+      })
         .then(({ data }) => {
-          this.assignHospitalData(data);
+          if (data.list.length) {
+            this.pagination.page += 1;
+
+            const newData = this.mappingHospitalData(data);
+            this.list.hospital.push(...newData);
+
+            state.loaded();
+          } else {
+            state.complete();
+          }
         });
     },
-    assignHospitalData(data) {
+    mappingHospitalData(data) {
       const { list } = data;
-      const newList = list.reduce((curr, val) => [
-        ...curr,
+      const newList = list.map((val) => (
         {
           id: val._id,
           name: val.name,
           location: val.location,
           supplies: val.supplies,
-        },
-      ], []);
-      this.list.hospital = newList;
+        }
+      ));
+      return newList;
     },
   },
 };

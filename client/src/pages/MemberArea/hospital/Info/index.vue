@@ -4,32 +4,9 @@
       <p>Informasi</p>
     </div>
     <div class="p-hospital-info__form">
-      <div class="m-form-group">
-        <p>Nama</p>
-        <AInputText
-          v-model="formData.name"
-        />
-      </div>
-      <div class="m-form-group">
-        <p>Email</p>
-        <AInputText
-          v-model="formData.email"
-        />
-      </div>
-      <div class="m-form-group">
-        <p>Telepon/Kontak</p>
-        <AInputText
-          v-model="formData.contactNumber"
-        />
-      </div>
-      <div class="m-form-group">
-        <p class="mb-2">Lokasi</p>
-        <AInputText
-          v-model="formData.location"
-          type="textarea"
-          rows="4"
-        />
-      </div>
+      <FormHospital
+        :form-data="formData"
+      />
       <AButton
         type="submit"
         @click="saveInfo"
@@ -41,16 +18,16 @@
 </template>
 
 <script>
-import AInputText from '@/components/atoms/AInputText';
 import AButton from '@/components/atoms/AButton';
+import FormHospital from '@/components/organisms/form/Hospital';
 import swalMixin from '@/mixins/swalMixin';
 
 export default {
   name: 'HospitalInfo',
   mixins: [swalMixin],
   components: {
-    AInputText,
     AButton,
+    FormHospital,
   },
   props: {
     id: {
@@ -62,7 +39,7 @@ export default {
     formData: {
       name: '',
       email: '',
-      contactNumber: '',
+      contactNumbers: [],
       location: '',
     },
   }),
@@ -73,17 +50,19 @@ export default {
     fetchInfo() {
       this.$http.get(`/hospital/${this.id}`)
         .then(({ data }) => {
+          const contactNumbers = data.contact_numbers.map((el) => ({ value: el }));
           this.formData = {
             ...data,
-            contactNumber: data.contact_number,
+            contactNumbers,
           };
         })
         .catch(this.catchHandler);
     },
     saveInfo() {
+      const contactNumbers = this.formData.contactNumbers.map((el) => el.value);
       const payload = {
         ...this.formData,
-        contact_number: this.formData.contactNumber,
+        contact_numbers: contactNumbers,
       };
       this.$http.put(`/hospital/${this.id}`, payload)
         .then(() => {

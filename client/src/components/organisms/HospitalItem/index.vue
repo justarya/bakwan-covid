@@ -14,6 +14,9 @@
       />
     </div>
     <div class="o-hospital-item__view-more">
+      <span>
+        Yuk! Bantu
+      </span>
       <i class="material-icons">keyboard_arrow_right</i>
     </div>
   </router-link>
@@ -69,6 +72,14 @@ export default {
   &__view-more {
     font-size: 14px;
     height: 100%;
+    display: flex;
+    align-items: center;
+    color: $blue;
+    span {
+      text-align: right;
+      font-weight: bold;
+      font-size: 14px;
+    }
   }
 }
 </style>

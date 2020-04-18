@@ -15,10 +15,10 @@ const HospitalSchema = new Schema({
     type: String,
     required: [true, 'Name required!'],
   },
-  contact_number: {
+  contact_numbers: [{
     type: String,
     required: [true, 'Contact Number required!'],
-  },
+  }],
   email: {
     type: String,
     unique: true,
