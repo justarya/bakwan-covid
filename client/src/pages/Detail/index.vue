@@ -32,6 +32,12 @@
               <span>{{ detail.hospital.email }}</span>
             </div>
           </div>
+          <div class="p-detail__last-updated">
+            Terakhir diperbarukan:
+            <b>
+              {{ suppliesLastUpdated }}
+            </b>
+          </div>
           <div class="p-detail__supply-list">
             <p class="text-2xl font-semibold">Pasokan</p>
             <SupplyItem
@@ -76,13 +82,25 @@ export default {
       hospital: {},
     },
   }),
+  computed: {
+    suppliesLastUpdated() {
+      return this.$moment(this.detail.hospital.suppliesLastUpdated).format('LLLL');
+    },
+  },
   methods: {
     fetchHospitalDetailData() {
       this.$http.get(`/hospital/${this.id}`)
         .then(({ data }) => {
+          const suppliesLastUpdated = data.supplies.reduce((result, curr) => {
+            const date = this.$moment(curr.updatedAt);
+            if (!result) return date;
+            if (date < result) return result;
+            return date;
+          }, null);
           this.detail.hospital = {
             ...data,
             contactNumbers: data.contact_numbers,
+            suppliesLastUpdated,
           };
         });
     },
