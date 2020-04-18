@@ -3,7 +3,7 @@
     <input
       v-model="inputValue"
       type="text"
-      placeholder="Search"
+      placeholder="Cari nama, lokasi"
       @keyup.enter="$emit('submit')"
       @focus="onFocus"
       @blur="onBlur"

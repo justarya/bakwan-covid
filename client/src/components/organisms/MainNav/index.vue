@@ -8,18 +8,26 @@
         Bersama, Kita Lawan Covid
       </p>
     </div>
-    <AButtonNav
-      icon="keyboard_arrow_right"
-      icon-position="right"
-      :to="{ name: 'Login' }"
-    >
-      <span v-if="$store.state.isLogin">
-        Dashboard
-      </span>
-      <span v-else>
-        Masuk
-      </span>
-    </AButtonNav>
+    <div class="o-main-nav__link">
+      <AButtonNav
+        class="mr-2"
+        href="mailto:register.bakwancovid@gmail.com?subject=[DAFTAR] (nama rumah sakit)"
+      >
+        Buat Akun RS?
+      </AButtonNav>
+      <AButtonNav
+        icon="keyboard_arrow_right"
+        icon-position="right"
+        :to="{ name: 'Login' }"
+      >
+        <span v-if="$store.state.isLogin">
+          Dashboard
+        </span>
+        <span v-else>
+          Masuk
+        </span>
+      </AButtonNav>
+    </div>
   </div>
 </template>
 

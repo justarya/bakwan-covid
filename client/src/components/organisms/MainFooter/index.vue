@@ -6,14 +6,17 @@
       </p>
     </div>
     <div class="o-main-footer__section">
-      <p class="text-base">
-        <span>
-          Mau daftar?
-        </span>
-        <a href="mailto:register.bakwancovid@gmail.com?subject=[DAFTAR] (nama rumah sakit)">
-          register.bakwancovid@gmail.com
+      <span class="text-base">
+        <a target="_blank" href="http://github.com/justarya/bakwan-covid">
+          Github
         </a>
-      </p>
+      </span>
+      <span> | </span>
+      <span class="text-base">
+        <a href="mailto:report.bakwancovid@gmail.com?subject=[REPORT] (subject masalah)">
+          Lapor bug?
+        </a>
+      </span>
     </div>
   </div>
 </template>
