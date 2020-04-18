@@ -109,7 +109,7 @@ export default {
           const { data } = await this.$http.post('/user/signup', payloadUser);
           this.formData.hospital.userId = data._id;
         }
-        const contactNumbers = this.formData.contactNumbers.map((el) => el.value);
+        const contactNumbers = this.formData.hospital.contactNumbers.map((el) => el.value);
         const payloadHospital = {
           ...this.formData.hospital,
           contact_numbers: contactNumbers,
