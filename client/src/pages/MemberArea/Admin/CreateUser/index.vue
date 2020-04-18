@@ -138,7 +138,12 @@ export default {
       if (this.formData.hospital.name === '') {
         errorMessages.push('Nama rumah sakit tidak boleh kosong');
       }
-      if (this.formData.hospital.contactNumbers === '') {
+      const contactNumbers = this.formData.hospital.contactNumbers
+        .map((el) => el.value).join('');
+      if (
+        !this.formData.hospital.contactNumbers.length
+        || !contactNumbers
+      ) {
         errorMessages.push('Telepon/Kontak rumah sakit tidak boleh kosong');
       }
       if (this.formData.hospital.location === '') {

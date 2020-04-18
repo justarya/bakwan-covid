@@ -83,6 +83,9 @@ export default {
           } else {
             state.complete();
           }
+        })
+        .catch(() => {
+          state.error();
         });
     },
     mappingHospitalData(data) {
