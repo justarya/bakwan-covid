@@ -43,7 +43,7 @@ export default {
             title: 'Admin Menu',
             menu: [
               {
-                label: 'Buat Member',
+                label: 'Buat User & RS',
                 url: {
                   name: 'AdminCreateUser',
                 },

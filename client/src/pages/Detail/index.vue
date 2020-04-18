@@ -19,9 +19,13 @@
               <i class="material-icons">room</i>
               <span>{{ detail.hospital.location }}</span>
             </div>
-            <div class="o-detail-info__item --contact-number">
+            <div
+              class="o-detail-info__item --contact-number"
+              v-for="(contactNumber, index) in detail.hospital.contactNumbers"
+              :key="index"
+            >
               <i class="material-icons">call</i>
-              <span>{{ detail.hospital.contact_number }}</span>
+              <span>{{ contactNumber }}</span>
             </div>
             <div class="o-detail-info__item --email">
               <i class="material-icons">email</i>
@@ -76,7 +80,10 @@ export default {
     fetchHospitalDetailData() {
       this.$http.get(`/hospital/${this.id}`)
         .then(({ data }) => {
-          this.detail.hospital = data;
+          this.detail.hospital = {
+            ...data,
+            contactNumbers: data.contact_numbers,
+          };
         });
     },
   },

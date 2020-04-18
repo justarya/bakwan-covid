@@ -1,20 +1,34 @@
 const Hospital = require('../models/hospital');
-const defaultSelection = 'name contact_number email location';
+const defaultSelection = 'name contact_numbers email location';
 
 class HospitalController {
   static async createHospital(req, res, next) {
     try {
+      const users = [];
       const {
+        userId,
         name,
-        contact_number,
+        contact_numbers,
         email,
         location,
       } = req.body;
-      const { _id: userId } = req.payload;
+      const fromAuthDecode = req.payload;
+      if (fromAuthDecode.role !== 1) {
+        const hospitalWithThisUser = await Hospital.find({ users: fromAuthDecode._id });
+        if (hospitalWithThisUser.length) {
+          next({
+            code: 401,
+            message: 'Hospital cannot created more than once',
+          });
+        }
+        users.push(fromAuthDecode._id);
+      } else {
+        users.push(userId);
+      }
       await Hospital.create({
-        users: [userId],
+        users,
         name,
-        contact_number,
+        contact_numbers,
         email,
         location,
       });
@@ -22,7 +36,7 @@ class HospitalController {
         .status(201)
         .json({
           name,
-          contact_number,
+          contact_numbers,
           email,
           location,
         });
@@ -78,11 +92,12 @@ class HospitalController {
       next(err);
     }
   }
+
   static async editHospital(req, res, next) {
     try {
       const {
         name,
-        contact_number,
+        contact_numbers,
         email,
         location,
       } = req.body;
@@ -90,7 +105,7 @@ class HospitalController {
       const hospitalData = await Hospital
         .findByIdAndUpdate(hospitalId, {
           name,
-          contact_number,
+          contact_numbers,
           email,
           location,
         }, {
@@ -109,24 +124,24 @@ class HospitalController {
 
       res
         .json(hospitalData);
-      } catch (err) {
-        next(err);
-      }
+    } catch (err) {
+      next(err);
     }
-    static async deleteHospital(req, res, next) {
-      try {
-        const { hospitalId } = req.params;
-        const { deletedCount } = await Hospital
-          .deleteOne({ _id: hospitalId });
+  }
+  static async deleteHospital(req, res, next) {
+    try {
+      const { hospitalId } = req.params;
+      const { deletedCount } = await Hospital
+        .deleteOne({ _id: hospitalId });
 
-        if (!deletedCount) {
-          next({
-            code: 404,
-            message: 'Hospital Not found',
-          });
-        }
-        res
-          .json({ success: true });
+      if (!deletedCount) {
+        next({
+          code: 404,
+          message: 'Hospital Not found',
+        });
+      }
+      res
+        .json({ success: true });
 
     } catch (err) {
       next(err);

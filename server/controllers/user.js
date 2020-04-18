@@ -25,6 +25,8 @@ class UserController {
         };
         res.status(201).json({
           token: jwtHash(token),
+          _id: data._id,
+          username,
         });
       })
       .catch(next);

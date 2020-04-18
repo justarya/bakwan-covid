@@ -124,7 +124,7 @@ $ yarn dev
       "hospitals": [
         {
           "name": "RS Gatot Subroto",
-          "contact_number": "6123928379290",
+          "contact_numbers": ["6123928379290"],
           "email": "contact@gatot.com",
           "location": "Jln. Gatot Subtroto",
         },
@@ -174,11 +174,22 @@ $ yarn dev
   > **Endpoint** : `/hospital`<br>
   > **Authentication** : `true`
 
-  #### _Request Body_ :
+  #### _Request Body (Admin)_ :
+  ```json
+  {
+    "userId": "91231923129",
+    "name": "RS Gatot Subroto",
+    "contact_numbers": ["6123928379290"],
+    "email": "contact@gatot.com",
+    "location": "Jln. Gatot Subtroto",
+  }
+  ```
+
+  #### _Request Body (normal user)_ :
   ```json
   {
     "name": "RS Gatot Subroto",
-    "contact_number": "6123928379290",
+    "contact_numbers": ["6123928379290"],
     "email": "contact@gatot.com",
     "location": "Jln. Gatot Subtroto",
   }
@@ -189,7 +200,7 @@ $ yarn dev
     ```json
     {
       "name": "RS Gatot Subroto",
-      "contact_number": "6123928379290",
+      "contact_numbers": ["6123928379290"],
       "email": "contact@gatot.com",
       "location": "Jln. Gatot Subtroto",
     }
@@ -218,7 +229,7 @@ $ yarn dev
       "list": [
         {
           "name": "RS Gatot Subroto",
-          "contact_number": "6123928379290",
+          "contact_numbers": ["6123928379290"],
           "email": "contact@gatot.com",
           "location": "Jln. Gatot Subtroto",
           "supplies": [
@@ -242,7 +253,7 @@ $ yarn dev
     ```json
     {
       "name": "RS Gatot Subroto",
-      "contact_number": "6123928379290",
+      "contact_numbers": ["6123928379290"],
       "email": "contact@gatot.com",
       "location": "Jln. Gatot Subtroto",
       "supplies": [
@@ -273,7 +284,7 @@ $ yarn dev
     ```json
     {
       "name": "RS Gatot Subroto",
-      "contact_number": "6123928379290",
+      "contact_numbers": ["6123928379290"],
       "email": "contact@gatot.com",
       "location": "Jln. Gatot Subtroto",
     }
