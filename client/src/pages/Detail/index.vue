@@ -41,6 +41,12 @@
               :key="index"
               class="my-5"
             />
+            <p
+              v-if="!detail.hospital.supplies.length"
+              class="text-gray-600"
+            >
+              Data pasokan kosong
+            </p>
           </div>
           <div
             class="p-detail__last-updated"
