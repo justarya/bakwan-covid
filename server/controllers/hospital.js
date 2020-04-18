@@ -57,8 +57,15 @@ class HospitalController {
           ],
         };
       }
+      const pagination = {
+        size: Number(req.query.size) || 20,
+        page: Number(req.query.page) || 0,
+      };
+      console.log(pagination);
       const hospitalList = await Hospital
         .find(filter)
+        .limit(pagination.size)
+        .skip(pagination.size * pagination.page)
         .populate({
           path: 'supplies',
           options: {
@@ -67,6 +74,7 @@ class HospitalController {
             },
           },
         })
+        .sort({ updatedAt: -1 })
         .select(`${defaultSelection} supplies`);
 
       res

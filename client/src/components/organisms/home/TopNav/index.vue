@@ -34,7 +34,7 @@ export default {
   methods: {
     submit() {
       this.filter.search.submitted = this.filter.search.value;
-      this.$emit('submit', this.filter.search.value);
+      this.$emit('submit:search', this.filter.search.value);
     },
   },
 };

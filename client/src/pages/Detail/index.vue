@@ -32,12 +32,6 @@
               <span>{{ detail.hospital.email }}</span>
             </div>
           </div>
-          <div class="p-detail__last-updated">
-            Terakhir diperbarukan:
-            <b>
-              {{ suppliesLastUpdated }}
-            </b>
-          </div>
           <div class="p-detail__supply-list">
             <p class="text-2xl font-semibold">Pasokan</p>
             <SupplyItem
@@ -47,6 +41,12 @@
               :key="index"
               class="my-5"
             />
+          </div>
+          <div class="p-detail__last-updated">
+            Terakhir diperbarukan:
+            <b>
+              {{ suppliesLastUpdated }}
+            </b>
           </div>
         </div>
       </ACard>
@@ -125,6 +125,10 @@ export default {
   &__info {
     margin-bottom: 20px;
   }
+  &__last-updated {
+    color: $gray;
+    margin-bottom: 20px;
+  }
 }
 .o-detail-info {
   border-radius: 10px;
@@ -133,7 +137,7 @@ export default {
   display: inline-block;
   padding-right: 50px;
   &__item {
-    margin-bottom: 8px;
+    margin-top: 8px;
     .material-icons {
       padding-right: 8px;
     }

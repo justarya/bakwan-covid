@@ -221,6 +221,8 @@ $ yarn dev
   > **Endpoint** : `/hospital`<br>
   > **query** : 
   > - `search`: `String` (for field: `name`, `location`)
+  > - `size`: `Number`
+  > - `page`: `Number`
 
   #### _Response Body_ :
   - 200
