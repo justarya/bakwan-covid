@@ -21,11 +21,11 @@ Untuk itu dibuatlah aplikasi **Bakwan Covid**.
 Aplikasi ini dibuat menggunakan MEVN Stack<br>
 **(Mongodb, Express, Vue, NodeJS)**
 
-Untuk hosting, kita menggunakan **MongoDb Atlas** sebagai Penyimpanan Database dan **AWS Lambda** sebagai server.
+Untuk hosting, kita menggunakan **MongoDb Atlas** sebagai Penyimpanan Database, **AWS Lambda** sebagai servis backend, **Netlify** sebagai host website static frontend.
 
 ---
 **Wanna help build Bakwan Covid**?<br>
-Feel free to contribute to the project.
+Feel free to contribute to the project, or contact me in [Telegram](http://t.me/justarya) or [Whatsapp](http://s.id/pcarya)
 
 ## License
 
@@ -33,5 +33,5 @@ Feel free to contribute to the project.
 
 - **[MIT license](http://opensource.org/licenses/mit-license.php)**
 - Copyright 2020 © <a href="https://github.com/justarya" target="_blank">JustArya</a>.
-- Contributor [ Havus (express template), waited_to_be_filled ]
+- Contributor [ [Havus](https://github.com/havus) (express-user-template), waited_to_be_filled ]
 
