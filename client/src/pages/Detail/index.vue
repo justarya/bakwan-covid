@@ -42,7 +42,10 @@
               class="my-5"
             />
             <p
-              v-if="!detail.hospital.supplies.length"
+              v-if="
+                detail.hospital.supplies
+                && !detail.hospital.supplies.length
+              "
               class="text-gray-600"
             >
               Data pasokan kosong
@@ -50,7 +53,10 @@
           </div>
           <div
             class="p-detail__last-updated"
-            v-if="detail.hospital.supplies.length"
+            v-if="
+              detail.hospital.supplies
+              && detail.hospital.supplies.length
+            "
           >
             Terakhir diperbarukan:
             <b>

@@ -38,7 +38,7 @@ export default {
   methods: {
     goToUrl() {
       if (this.goBack) this.$router.go(-1);
-      else this.$router.push(this.to);
+      else if (this.to) this.$router.push(this.to);
     },
   },
 };
