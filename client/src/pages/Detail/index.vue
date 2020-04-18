@@ -42,7 +42,10 @@
               class="my-5"
             />
           </div>
-          <div class="p-detail__last-updated">
+          <div
+            class="p-detail__last-updated"
+            v-if="detail.hospital.supplies.length"
+          >
             Terakhir diperbarukan:
             <b>
               {{ suppliesLastUpdated }}

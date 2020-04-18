@@ -52,9 +52,10 @@ export default {
   },
   methods: {
     create() {
+      const contactNumbers = this.formData.contactNumbers.map((el) => el.value);
       const payload = {
         ...this.formData,
-        contact_numbers: this.formData.contactNumbers,
+        contact_numbers: contactNumbers,
       };
       this.$http.post('/hospital', payload)
         .then(() => {
