@@ -20,7 +20,8 @@
     >
       <AButtonNav
         class="mr-2"
-        href="mailto:register.bakwancovid@gmail.com?subject=[DAFTAR] (nama rumah sakit)"
+        href="https://forms.gle/QibTRX2h66zQVkqz8"
+        target="_blank"
       >
         Buat Akun RS?
       </AButtonNav>
