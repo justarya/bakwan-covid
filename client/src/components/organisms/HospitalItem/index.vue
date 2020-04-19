@@ -3,15 +3,29 @@
     <div class="o-hospital-item__main">
       <p class="o-hospital-item__title a-text">
         {{ name }}
-        <span class="text-gray-500">
+        <span
+          v-if="supplies.length"
+          class="text-gray-500"
+        >
           butuh
         </span>
       </p>
       <div class="o-hospital-item__location">
         <p class="a-text">{{ location }}</p>
       </div>
+      <a href="">
+        <i
+          v-if="!supplies.length"
+          class="material-icons"
+        >
+          keyboard_arrow_right
+        </i>
+      </a>
     </div>
-    <div class="m-supply-item--container">
+    <div
+      v-if="supplies.length"
+      class="m-supply-item--container"
+    >
       <SupplyItem
         v-for="(data, index) in supplies"
         :name="data.product_name"
@@ -61,12 +75,16 @@ export default {
 
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  border: 0;
 
   cursor: pointer;
   &__main {
     line-height: 1.25;
     width: 100%;
     margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
   }
   &__view-more {
     font-size: 14px;
@@ -89,7 +107,8 @@ export default {
   @media (min-width: $sm) {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
+    align-items: initial;
 
     &__main {
       margin-bottom: 0;
