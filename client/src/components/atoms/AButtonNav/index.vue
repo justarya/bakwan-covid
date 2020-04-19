@@ -38,7 +38,7 @@ export default {
   methods: {
     goToUrl() {
       if (this.goBack) this.$router.go(-1);
-      else this.$router.push(this.to);
+      else if (this.to) this.$router.push(this.to);
     },
   },
 };
@@ -67,12 +67,6 @@ export default {
       margin-left: -10px;
     }
   }
-  // &.--icon-left {
-  //   padding-right: 10px;
-  // }
-  // &.--icon-right {
-  //   padding-left: 10px;
-  // }
   &:hover {
     transition: 0.2s;
     background-color: $light-blue;
