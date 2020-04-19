@@ -16,7 +16,7 @@
       </div>
       <InfiniteLoading
         spinner="spiral"
-        :identifier="filter.search"
+        :identifier="filter.search.identifier"
         @infinite="fetchHospital"
       >
         <div slot="no-more"></div>
@@ -54,7 +54,10 @@ export default {
       hospital: [],
     },
     filter: {
-      search: '',
+      search: {
+        value: '',
+        identifier: 0,
+      },
     },
     pagination: {
       page: 0,
@@ -63,18 +66,18 @@ export default {
   }),
   methods: {
     getSearch(value) {
-      this.filter.search = value;
+      this.filter.search.value = value;
+      this.filter.search.identifier++;
       this.pagination = {
         page: 0,
         size: 20,
       };
+      if (this.pagination.page === 0) this.list.hospital = [];
     },
     fetchHospital(state) {
-      console.log('trigger');
-      if (this.pagination.page === 0) this.list.hospital = [];
       this.$http.get('/hospital', {
         params: {
-          search: this.filter.search,
+          search: this.filter.search.value,
           page: this.pagination.page,
           size: this.pagination.size,
         },
