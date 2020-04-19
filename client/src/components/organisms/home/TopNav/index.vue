@@ -1,17 +1,20 @@
 <template>
-  <div class="o-home-top-nav mt-10 mb-4">
-    <p class="text-2xl font-semibold">
-      <template v-if="filter.search.submitted">
-        Cari: {{ filter.search.submitted }}
-      </template>
-      <template v-else>
-        Data Kebutuhan Alat Medis
-      </template>
+  <div class="o-home-top-nav">
+    <p
+      class="o-home-top-nav__search-title"
+    >
+      <span
+        v-if="filter.search.submitted"
+      >
+        Cari kata kunci: {{ filter.search.submitted }}
+      </span>
     </p>
-    <ASearchBar
-      v-model="filter.search.value"
-      @submit="submit"
-    />
+    <div class="o-home-top-nav__search-bar">
+      <ASearchBar
+        v-model="filter.search.value"
+        @submit="submit"
+      />
+    </div>
   </div>
 </template>
 
@@ -43,6 +46,21 @@ export default {
 <style lang="scss">
 .o-home-top-nav {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column-reverse;
+  margin-bottom: 20px;
+  padding: 0 25px;
+  &__search-title {
+    padding: 20px 0;
+    font-size: 23px;
+    font-weight: 600;
+  }
+  @media (min-width: $sm) {
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+    &__search-title {
+      padding: 0;
+    }
+  }
 }
 </style>

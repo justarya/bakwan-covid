@@ -60,8 +60,6 @@ export default {
 
 <style lang="scss">
 .a-search-bar {
-  max-width: 300px;
-  width: 90%;
   position: relative;
   &__close {
     display: block;
