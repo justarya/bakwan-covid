@@ -1,11 +1,16 @@
 <template>
   <div class="o-main-footer">
-    <div class="o-main-footer__section">
-      <p class="text-base">
-        &copy; {{ year }} Bakwan Covid
+    <div class="o-main-footer__section --copyright">
+      <p class="a-text text-base">
+        <span>
+          &copy; {{ year }}
+        </span>
+        <span>
+          Bakwan Covid
+        </span>
       </p>
     </div>
-    <div class="o-main-footer__section">
+    <div class="o-main-footer__section --link">
       <span class="text-base">
         <a target="_blank" href="http://github.com/justarya/bakwan-covid">
           Github
@@ -35,9 +40,28 @@ export default {
 
 <style lang="scss">
 .o-main-footer {
-  margin: 30px 0;
+  margin: 30px 25px;
   color: $gray;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+
+  &__section {
+    &.--link {
+      text-align: right;
+      margin-bottom: 10px;
+    }
+    .a-text {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  @media (min-width: $sm) {
+    &__section {
+      .a-text {
+        display: block;
+      }
+    }
+  }
 }
 </style>

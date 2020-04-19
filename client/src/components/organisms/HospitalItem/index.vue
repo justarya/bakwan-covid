@@ -1,26 +1,26 @@
 <template>
   <router-link :to="`/detail/${this.id}`" class="o-hospital-item">
     <div class="o-hospital-item__main">
-      <p class="o-hospital-item__title a-text">
-        {{ name }}
-        <span
-          v-if="supplies.length"
-          class="text-gray-500"
-        >
-          butuh
-        </span>
-      </p>
-      <div class="o-hospital-item__location">
-        <p class="a-text">{{ location }}</p>
-      </div>
-      <a href="">
+      <div class="o-hospital-item__main--top">
+        <p class="o-hospital-item__title a-text">
+          {{ name }}
+          <span
+            v-if="supplies.length"
+            class="text-gray-500"
+          >
+            butuh
+          </span>
+        </p>
         <i
           v-if="!supplies.length"
-          class="material-icons"
+          class="o-hospital-item__arrow-icon material-icons"
         >
           keyboard_arrow_right
         </i>
-      </a>
+      </div>
+      <div class="o-hospital-item__location">
+        <p class="a-text">{{ location }}</p>
+      </div>
     </div>
     <div
       v-if="supplies.length"
@@ -83,8 +83,10 @@ export default {
     line-height: 1.25;
     width: 100%;
     margin-bottom: 10px;
-    display: flex;
-    justify-content: space-between;
+    &--top {
+      display: flex;
+      justify-content: space-between;
+    }
   }
   &__view-more {
     font-size: 14px;
@@ -128,6 +130,9 @@ export default {
 
         color: $gray;
       }
+    }
+    &__arrow-icon {
+      display: none;
     }
   }
   @media (min-width: $lg) {
