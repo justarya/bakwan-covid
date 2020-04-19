@@ -63,6 +63,11 @@ export default {
   methods: {
     getSearch(value) {
       this.filter.search = value;
+      this.pagination = {
+        page: 0,
+        size: 20,
+      };
+      this.list.hospital = [];
     },
     fetchHospital(state) {
       this.$http.get('/hospital', {
