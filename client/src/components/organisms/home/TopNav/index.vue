@@ -1,11 +1,10 @@
 <template>
-  <div class="o-home-top-nav mt-10 mb-4">
+  <div class="o-home-top-nav">
     <p class="text-2xl font-semibold">
       <template v-if="filter.search.submitted">
         Cari: {{ filter.search.submitted }}
       </template>
       <template v-else>
-        Data Kebutuhan Alat Medis
       </template>
     </p>
     <ASearchBar
@@ -44,5 +43,6 @@ export default {
 .o-home-top-nav {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 20px;
 }
 </style>

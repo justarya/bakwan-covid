@@ -146,7 +146,10 @@ export default {
   display: inline-block;
   padding-right: 50px;
   &__item {
-    margin-top: 8px;
+    margin-bottom: 8px;
+    &:last-child {
+      margin-bottom: 0;
+    }
     .material-icons {
       padding-right: 8px;
     }

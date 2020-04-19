@@ -76,8 +76,7 @@ export default {
     align-items: center;
     color: $blue;
     span {
-      text-align: right;
-      font-weight: bold;
+      text-align: center;
       font-size: 14px;
     }
   }

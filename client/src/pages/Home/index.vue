@@ -1,33 +1,34 @@
 <template>
   <div class="p-home">
     <MainTemplate>
+      <HomeBanner
+        class="mb-4"
+      />
       <HomeTopNav
         @submit:search="getSearch"
       />
-      <ACard>
-        <div class="p-home__hospital-list">
-          <HospitalItem
-            v-for="(item, index) in list.hospital"
-            :key="index"
-            v-bind="item"
-          />
+      <div class="p-home__hospital-list">
+        <HospitalItem
+          v-for="(item, index) in list.hospital"
+          :key="index"
+          v-bind="item"
+        />
+      </div>
+      <InfiniteLoading
+        spinner="spiral"
+        :identifier="filter.search"
+        @infinite="fetchHospital"
+      >
+        <div slot="no-more"></div>
+        <div slot="no-results">
+          <p
+            v-if="!list.hospital.length"
+            class="text-2xl p-3"
+          >
+            Data kosong
+          </p>
         </div>
-        <InfiniteLoading
-          spinner="spiral"
-          :identifier="filter.search"
-          @infinite="fetchHospital"
-        >
-          <div slot="no-more"></div>
-          <div slot="no-results">
-            <p
-              v-if="!list.hospital.length"
-              class="text-2xl p-3"
-            >
-              Data kosong
-            </p>
-          </div>
-        </InfiniteLoading>
-      </ACard>
+      </InfiniteLoading>
     </MainTemplate>
   </div>
 </template>
@@ -37,15 +38,15 @@ import InfiniteLoading from 'vue-infinite-loading';
 import MainTemplate from '@/components/templates/MainTemplate';
 import HospitalItem from '@/components/organisms/HospitalItem';
 import HomeTopNav from '@/components/organisms/home/TopNav';
-import ACard from '@/components/atoms/ACard';
+import HomeBanner from '@/components/organisms/home/Banner';
 
 export default {
   name: 'Home',
   components: {
     MainTemplate,
     HospitalItem,
-    ACard,
     HomeTopNav,
+    HomeBanner,
     InfiniteLoading,
   },
   data: () => ({
