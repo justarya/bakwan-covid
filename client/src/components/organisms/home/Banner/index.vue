@@ -23,6 +23,7 @@ export default {
 .o-home-banner {
   height: 50vh;
   max-height: 400px;
+  min-height: 300px;
   display: flex;
   align-items: flex-end;
 
