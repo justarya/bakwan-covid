@@ -36,7 +36,10 @@ export default {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba($blue, 0.2);
     padding: 10px;
-    width: 100%;
+    padding-right: 40px;
+    min-width: 45px;
+    max-width: 100%;
+    min-height: 50px;
 
     display: flex;
     position: relative;
