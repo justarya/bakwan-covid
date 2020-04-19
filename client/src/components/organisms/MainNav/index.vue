@@ -61,6 +61,7 @@ export default {
       window.addEventListener('resize', this.onResize);
       window.addEventListener('click', this.closeMenu);
     });
+    this.onResize();
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.onResize);
@@ -128,6 +129,9 @@ export default {
     align-items: center;
     justify-content: flex-start;
     flex-direction: row;
+    &__brand {
+      width: auto;
+    }
     &__title {
       font-size: 35px;
     }

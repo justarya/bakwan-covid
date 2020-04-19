@@ -68,9 +68,10 @@ export default {
         page: 0,
         size: 20,
       };
-      this.list.hospital = [];
     },
     fetchHospital(state) {
+      console.log('trigger');
+      if (this.pagination.page === 0) this.list.hospital = [];
       this.$http.get('/hospital', {
         params: {
           search: this.filter.search,
@@ -109,7 +110,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-
-</style>

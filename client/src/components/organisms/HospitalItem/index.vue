@@ -1,8 +1,15 @@
 <template>
   <router-link :to="`/detail/${this.id}`" class="o-hospital-item">
     <div class="o-hospital-item__main">
-      <p class="a-text text-2xl">{{ name }}</p>
-      <p class="a-text text-base text-gray-500">{{ location }}</p>
+      <p class="o-hospital-item__title a-text">
+        {{ name }}
+        <span class="text-gray-500">
+          butuh
+        </span>
+      </p>
+      <div class="o-hospital-item__location">
+        <p class="a-text">{{ location }}</p>
+      </div>
     </div>
     <div class="m-supply-item--container">
       <SupplyItem
@@ -12,12 +19,9 @@
         :demand="data.demand"
         :key="index"
       />
-    </div>
-    <div class="o-hospital-item__view-more">
-      <span>
-        Yuk! Bantu
-      </span>
-      <i class="material-icons">keyboard_arrow_right</i>
+      <div class="m-supply-item--container__arrow">
+        <i class="material-icons">keyboard_arrow_right</i>
+      </div>
     </div>
   </router-link>
 </template>
@@ -53,21 +57,16 @@ export default {
 
 <style lang="scss">
 .o-hospital-item {
-  padding: 15px;
-  @media (min-width: $sm) { padding: 30px; }
+  padding: 15px 25px;
 
   display: flex;
-  align-items: center;
+  flex-direction: column;
 
   cursor: pointer;
-
-  border-bottom: 1px solid $soft-gray;
-  &:last-child {
-    border-bottom: 0;
-  }
   &__main {
+    line-height: 1.25;
     width: 100%;
-    max-width: 350px;
+    margin-bottom: 10px;
   }
   &__view-more {
     font-size: 14px;
@@ -78,6 +77,60 @@ export default {
     span {
       text-align: center;
       font-size: 14px;
+    }
+  }
+  &__title {
+    font-size: 20px;
+  }
+  &__location {
+    display: none;
+  }
+
+  @media (min-width: $sm) {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    &__main {
+      margin-bottom: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      max-width: 275px;
+    }
+    &__location {
+      display: flex;
+      padding-right: 20px;
+      font-size: 14px;
+      p {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        color: $gray;
+      }
+    }
+  }
+  @media (min-width: $lg) {
+    &__main {
+      max-width: 450px;
+    }
+    &__title {
+      font-size: 24px;
+    }
+    &__location {
+      font-size: 16px;
+    }
+  }
+  @media (min-width: $xl) {
+    &__main {
+      max-width: 450px;
+    }
+    &__title {
+      font-size: 24px;
+    }
+    &__location {
+      font-size: 16px;
     }
   }
 }

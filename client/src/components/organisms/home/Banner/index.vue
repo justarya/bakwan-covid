@@ -22,7 +22,7 @@ export default {
 <style lang="scss">
 .o-home-banner {
   height: 50vh;
-  max-height: 500px;
+  max-height: 400px;
   display: flex;
   align-items: flex-end;
 
@@ -60,19 +60,20 @@ export default {
     &__message {
       padding: 0px;
       padding-bottom: 30px;
-      padding-left: 15vw;
+      padding-left: 9vw;
       width: 60%;
     }
   }
   @media (min-width: $sm) {
     background-image:url('/assets/img/covid-19-banner.png');
     background-position: right center;
+    max-height: 400px;
     &__message {
       background-image: linear-gradient(to right, white 70%, rgba(0, 0, 0, 0) 100%);
       justify-content: center;
       height: 100%;
       max-width: 322px;
-      padding-left: 20px;
+      padding-left: 25px;
     }
     &__title {
       font-size: 32px;
