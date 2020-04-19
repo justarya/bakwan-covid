@@ -6,7 +6,7 @@
       <span
         v-if="filter.search.submitted"
       >
-        Cari: {{ filter.search.submitted }}
+        Cari kata kunci: {{ filter.search.submitted }}
       </span>
     </p>
     <div class="o-home-top-nav__search-bar">
@@ -55,7 +55,7 @@ export default {
     font-weight: 600;
   }
   @media (min-width: $sm) {
-    flex-direction: row;
+    flex-direction: row-reverse;
     justify-content: space-between;
     align-items: center;
     &__search-title {
