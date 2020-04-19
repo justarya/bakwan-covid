@@ -67,7 +67,7 @@ export default {
   methods: {
     getSearch(value) {
       this.filter.search.value = value;
-      this.filter.search.identifier++;
+      this.filter.search.identifier += 1;
       this.pagination = {
         page: 0,
         size: 20,
