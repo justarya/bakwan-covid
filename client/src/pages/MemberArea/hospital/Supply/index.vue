@@ -8,9 +8,9 @@
         <thead>
           <tr>
             <th width="500">Nama Barang</th>
-            <th width="50">Sisa</th>
-            <th width="50">Butuh</th>
-            <th width="150" class="--action">
+            <th width="80">Butuh</th>
+            <th width="150">Satuan</th>
+            <th width="70" class="--action">
               <AButton
                 size="small"
                 :border="false"
@@ -29,27 +29,31 @@
           >
             <td width="500">
               <AInputText
-                v-if="config.action === -1"
                 v-model="formData.create.name"
               />
             </td>
-            <td width="50">
+            <td width="80">
               <AInputText
-                v-if="config.action === -1"
-                v-model="formData.create.supply"
-                type="number"
-                min="0"
-              />
-            </td>
-            <td width="50">
-              <AInputText
-                v-if="config.action === -1"
                 v-model="formData.create.demand"
                 type="number"
                 min="0"
               />
             </td>
-            <td width="150" class="--action">
+            <td width="150">
+              <select
+                class="a-input"
+                v-model="formData.create.demandUnit"
+              >
+                <option
+                  v-for="(data, index) in config.demandUnit.list"
+                  :value="data.value"
+                  :key="index"
+                >
+                  {{ data.label }}
+                </option>
+              </select>
+            </td>
+            <td width="70" class="--action">
               <template v-if="config.action === -1">
                 <AButton
                   :border="false"
@@ -82,19 +86,7 @@
                 {{ data.name }}
               </span>
             </td>
-            <td width="50">
-
-              <AInputText
-                v-if="config.action === index"
-                v-model="formData.edit.supply"
-                type="number"
-                min="0"
-              />
-              <span v-else>
-                {{ data.supply }}
-              </span>
-            </td>
-            <td width="50">
+            <td width="80">
               <AInputText
                 v-if="config.action === index"
                 v-model="formData.edit.demand"
@@ -105,7 +97,25 @@
                 {{ data.demand }}
               </span>
             </td>
-            <td width="150" class="--action">
+            <td width="150">
+              <select
+                class="a-input"
+                v-if="config.action === index"
+                v-model="formData.edit.demandUnit"
+              >
+                <option
+                  v-for="(unit, index) in config.demandUnit.list"
+                  :value="unit.value"
+                  :key="index"
+                >
+                  {{ unit.label }}
+                </option>
+              </select>
+              <span v-else>
+                {{ getDemandUnitLabel(data.demandUnit) }}
+              </span>
+            </td>
+            <td width="70" class="--action">
               <template v-if="config.action === null">
                 <AButton
                   :border="false"
@@ -140,6 +150,12 @@
               </template>
             </td>
           </tr>
+          <tr
+            class="p-hospital-supply__table--create-row"
+            v-if="!list.length"
+          >
+            <td colspan="4" class="text-center">Data kosong</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -168,17 +184,33 @@ export default {
   data: () => ({
     config: {
       action: null,
+      demandUnit: {
+        list: [
+          {
+            value: '',
+            label: '-',
+          },
+          {
+            value: 'kg',
+            label: 'Kilogram',
+          },
+          {
+            value: 'L',
+            label: 'Liter',
+          },
+        ],
+      },
     },
     list: [],
     formData: {
       edit: {
         name: '',
-        supply: '',
+        demandUnit: '',
         demand: '',
       },
       create: {
         name: '',
-        supply: '',
+        demandUnit: '',
         demand: '',
       },
     },
@@ -198,7 +230,7 @@ export default {
       this.config.action = index;
       this.formData.edit = {
         name: this.list[index].name,
-        supply: this.list[index].supply,
+        demandUnit: this.list[index].demandUnit,
         demand: this.list[index].demand,
       };
     },
@@ -207,6 +239,7 @@ export default {
       const payload = {
         ...this.formData.edit,
         product_name: this.formData.edit.name,
+        demand_unit: this.formData.edit.demandUnit,
       };
       this.$http
         .put(`/hospital/${this.id}/supplies/${supplyId}`, payload)
@@ -242,7 +275,7 @@ export default {
     createRow() {
       this.formData.create = {
         name: '',
-        supply: 0,
+        demandUnit: '',
         demand: 0,
       };
       this.config.action = -1;
@@ -251,6 +284,7 @@ export default {
       const payload = {
         ...this.formData.create,
         product_name: this.formData.create.name,
+        demand_unit: this.formData.edit.demandUnit,
       };
       this.$http
         .post(`/hospital/${this.id}/supplies/`, payload)
@@ -269,7 +303,14 @@ export default {
         ...val,
         id: val._id,
         name: val.product_name,
+        demandUnit: val.demand_unit || '',
       };
+    },
+    getDemandUnitLabel(data) {
+      const demandUnit = this.config.demandUnit.list
+        .find((el) => el.value === data);
+      if (demandUnit !== undefined) return demandUnit.label;
+      return '';
     },
   },
 };

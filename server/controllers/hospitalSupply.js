@@ -1,6 +1,6 @@
 const HospitalSupply = require('../models/hospitalSupply');
 const Hospital = require('../models/hospital');
-const selection = '_id product_name supply demand';
+const selection = '_id product_name demand_unit demand';
 
 class HospitalSupplyController {
   static async getAll(req, res, next) {
@@ -27,13 +27,13 @@ class HospitalSupplyController {
       const { hospitalId } = req.params;
       const {
         product_name,
-        supply,
+        demand_unit,
         demand,
       } = req.body;
       const result = await HospitalSupply
         .create({
           product_name,
-          supply,
+          demand_unit,
           demand
         })
       await Hospital
@@ -47,7 +47,7 @@ class HospitalSupplyController {
         .json({
           _id: result._id,
           product_name: result.product_name,
-          supply: result.supply,
+          demand_unit: result.demand_unit,
           demand: result.demand,
         });
     } catch (err) {
@@ -62,14 +62,14 @@ class HospitalSupplyController {
 
       const {
         product_name,
-        supply,
+        demand_unit,
         demand,
       } = req.body;
 
       const result = await HospitalSupply
         .findByIdAndUpdate(hospitalSupplyId, {
           product_name,
-          supply,
+          demand_unit,
           demand,
         }, {
           new: true,

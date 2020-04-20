@@ -237,7 +237,7 @@ $ yarn dev
           "supplies": [
             {
               "product_name": "Face Mask 3M",
-              "supply": 30,
+              "demand_unit": "",
               "demand": 100,
             }
           ]
@@ -261,7 +261,7 @@ $ yarn dev
       "supplies": [
         {
           "product_name": "Face Mask 3M",
-          "supply": 30,
+          "demand_unit": "",
           "demand": 100,
         }
       ]
@@ -333,7 +333,7 @@ $ yarn dev
       {
         "_id": "581ehj9128ehj19e8h12e98",
         "product_name": "Face Mask 3M",
-        "supply": 30,
+        "demand_unit": "",
         "demand": 100,
       }
     ]
@@ -348,7 +348,7 @@ $ yarn dev
   ```json
   {
     "product_name": "Face Mask 3M",
-    "supply": 30,
+    "demand_unit": "",
     "demand": 100,
   }
   ```
@@ -359,7 +359,7 @@ $ yarn dev
     {
       "_id": "581ehj9128ehj19e8h12e98",
       "product_name": "Face Mask 3M",
-      "supply": 30,
+      "demand_unit": "",
       "demand": 100,
     }
     ```
@@ -381,7 +381,7 @@ $ yarn dev
   ```json
   {
     "product_name": "Face Mask 3M",
-    "supply": 30,
+    "demand_unit": "",
     "demand": 100,
   }
   ```
@@ -391,7 +391,7 @@ $ yarn dev
     ```json
     {
       "product_name": "Face Mask 3M",
-      "supply": 30,
+      "demand_unit": "",
       "demand": 100,
     }
     ```

@@ -6,13 +6,12 @@ const HospitalSupplySchema = new Schema({
     type: String,
     required: [true, 'Product name cannot be empty'],
   },
-  supply: {
-    type: Number,
-    required: [true, 'Supply cannot be empty'],
-  },
   demand: {
     type: Number,
     required: [true, 'Demand cannot be empty'],
+  },
+  demand_unit: {
+    type: String,
   },
 }, {
   timestamps: true,

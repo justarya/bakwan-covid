@@ -29,7 +29,7 @@
       <SupplyItem
         v-for="(data, index) in supplies"
         :name="data.product_name"
-        :supply="data.supply"
+        :demand-unit="data.demand_unit"
         :demand="data.demand"
         :key="index"
       />

@@ -1,6 +1,6 @@
 <template>
   <div class="m-supply-item">
-    <p class="m-supply-item__count a-text">{{ demand }}</p>
+    <p class="m-supply-item__count a-text">{{ demand + demandUnit }}</p>
     <p class="m-supply-item__name a-text">{{ name }}</p>
   </div>
 </template>
@@ -13,13 +13,13 @@ export default {
       type: String,
       default: '',
     },
-    supply: {
-      type: Number,
-      default: 0,
-    },
     demand: {
       type: Number,
       default: 0,
+    },
+    demandUnit: {
+      type: String,
+      default: '',
     },
   },
 };
