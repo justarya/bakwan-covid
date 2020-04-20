@@ -2,6 +2,12 @@
   <div class="p-hospital-supply">
     <div class="p-hospital-supply__title">
       <p>Pasokan</p>
+      <ASearchBar
+        v-model="filter.search.value"
+        class="p-hospital-supply__search"
+        :placeholder="filter.search.placeholder"
+        @submit="submit"
+      />
     </div>
     <div class="p-hospital-supply__content">
       <table class="p-hospital-supply__table">
@@ -22,141 +28,146 @@
             </th>
           </tr>
         </thead>
-        <tbody>
-          <tr
-            class="p-hospital-supply__table--create-row"
-            v-if="config.action === -1"
-          >
-            <td width="500">
-              <AInputText
-                v-model="formData.create.name"
-              />
-            </td>
-            <td width="80">
-              <AInputText
-                v-model="formData.create.demand"
-                type="number"
-                min="0"
-              />
-            </td>
-            <td width="150">
-              <select
-                class="a-input"
-                v-model="formData.create.demandUnit"
-              >
-                <option
-                  v-for="(data, index) in config.demandUnit.list"
-                  :value="data.value"
-                  :key="index"
+        <template v-if="!loading">
+          <tbody>
+            <tr
+              class="p-hospital-supply__table--create-row"
+              v-if="config.action === -1"
+            >
+              <td width="500">
+                <AInputText
+                  v-model="formData.create.name"
+                />
+              </td>
+              <td width="80">
+                <AInputText
+                  v-model="formData.create.demand"
+                  type="number"
+                  min="0"
+                />
+              </td>
+              <td width="150">
+                <select
+                  class="a-input"
+                  v-model="formData.create.demandUnit"
                 >
-                  {{ data.label }}
-                </option>
-              </select>
-            </td>
-            <td width="70" class="--action">
-              <template v-if="config.action === -1">
-                <AButton
-                  :border="false"
-                  size="small"
-                  @click="saveCreateRow"
+                  <option
+                    v-for="(data, index) in config.demandUnit.list"
+                    :value="data.value"
+                    :key="index"
+                  >
+                    {{ data.label }}
+                  </option>
+                </select>
+              </td>
+              <td width="70" class="--action">
+                <template v-if="config.action === -1">
+                  <AButton
+                    :border="false"
+                    size="small"
+                    @click="saveCreateRow"
+                  >
+                    <i class="material-icons">save</i>
+                  </AButton>
+                  <AButton
+                    :border="false"
+                    size="small"
+                    @click="cancelCreateRow"
+                  >
+                    <i class="material-icons">cancel</i>
+                  </AButton>
+                </template>
+              </td>
+            </tr>
+            <tr
+              class="p-hospital-supply__table--row"
+              v-for="(data, index) in list"
+              :key="index"
+            >
+              <td width="500">
+                <AInputText
+                  v-if="config.action === index"
+                  v-model="formData.edit.name"
+                />
+                <span v-else>
+                  {{ data.name }}
+                </span>
+              </td>
+              <td width="80">
+                <AInputText
+                  v-if="config.action === index"
+                  v-model="formData.edit.demand"
+                  type="number"
+                  min="0"
+                />
+                <span v-else>
+                  {{ data.demand }}
+                </span>
+              </td>
+              <td width="150">
+                <select
+                  class="a-input"
+                  v-if="config.action === index"
+                  v-model="formData.edit.demandUnit"
                 >
-                  <i class="material-icons">save</i>
-                </AButton>
-                <AButton
-                  :border="false"
-                  size="small"
-                  @click="cancelCreateRow"
-                >
-                  <i class="material-icons">cancel</i>
-                </AButton>
-              </template>
-            </td>
-          </tr>
-          <tr
-            class="p-hospital-supply__table--row"
-            v-for="(data, index) in list"
-            :key="index"
-          >
-            <td width="500">
-              <AInputText
-                v-if="config.action === index"
-                v-model="formData.edit.name"
-              />
-              <span v-else>
-                {{ data.name }}
-              </span>
-            </td>
-            <td width="80">
-              <AInputText
-                v-if="config.action === index"
-                v-model="formData.edit.demand"
-                type="number"
-                min="0"
-              />
-              <span v-else>
-                {{ data.demand }}
-              </span>
-            </td>
-            <td width="150">
-              <select
-                class="a-input"
-                v-if="config.action === index"
-                v-model="formData.edit.demandUnit"
-              >
-                <option
-                  v-for="(unit, index) in config.demandUnit.list"
-                  :value="unit.value"
-                  :key="index"
-                >
-                  {{ unit.label }}
-                </option>
-              </select>
-              <span v-else>
-                {{ getDemandUnitLabel(data.demandUnit) }}
-              </span>
-            </td>
-            <td width="70" class="--action">
-              <template v-if="config.action === null">
-                <AButton
-                  :border="false"
-                  size="small"
-                  @click="editRow(index)"
-                >
-                  <i class="material-icons">edit</i>
-                </AButton>
-                <AButton
-                  :border="false"
-                  size="small"
-                  @click="promptDeleteRow(index)"
-                >
-                  <i class="material-icons">delete</i>
-                </AButton>
-              </template>
-              <template v-if="config.action === index">
-                <AButton
-                  :border="false"
-                  size="small"
-                  @click="saveEditRow(index)"
-                >
-                  <i class="material-icons">save</i>
-                </AButton>
-                <AButton
-                  :border="false"
-                  size="small"
-                  @click="cancelEditRow(index)"
-                >
-                  <i class="material-icons">cancel</i>
-                </AButton>
-              </template>
-            </td>
-          </tr>
-          <tr
-            class="p-hospital-supply__table--create-row"
-            v-if="!list.length"
-          >
-            <td colspan="4" class="text-center">Data kosong</td>
-          </tr>
-        </tbody>
+                  <option
+                    v-for="(unit, index) in config.demandUnit.list"
+                    :value="unit.value"
+                    :key="index"
+                  >
+                    {{ unit.label }}
+                  </option>
+                </select>
+                <span v-else>
+                  {{ getDemandUnitLabel(data.demandUnit) }}
+                </span>
+              </td>
+              <td width="70" class="--action">
+                <template v-if="config.action === null">
+                  <AButton
+                    :border="false"
+                    size="small"
+                    @click="editRow(index)"
+                  >
+                    <i class="material-icons">edit</i>
+                  </AButton>
+                  <AButton
+                    :border="false"
+                    size="small"
+                    @click="promptDeleteRow(index)"
+                  >
+                    <i class="material-icons">delete</i>
+                  </AButton>
+                </template>
+                <template v-if="config.action === index">
+                  <AButton
+                    :border="false"
+                    size="small"
+                    @click="saveEditRow(index)"
+                  >
+                    <i class="material-icons">save</i>
+                  </AButton>
+                  <AButton
+                    :border="false"
+                    size="small"
+                    @click="cancelEditRow(index)"
+                  >
+                    <i class="material-icons">cancel</i>
+                  </AButton>
+                </template>
+              </td>
+            </tr>
+            <tr
+              class="p-hospital-supply__table--create-row"
+              v-if="!list.length"
+            >
+              <td colspan="4" class="text-center">Data kosong</td>
+            </tr>
+          </tbody>
+        </template>
+        <TableLoader
+          v-else
+        />
       </table>
     </div>
   </div>
@@ -165,6 +176,8 @@
 <script>
 import AInputText from '@/components/atoms/AInputText';
 import AButton from '@/components/atoms/AButton';
+import ASearchBar from '@/components/atoms/ASearchBar';
+import TableLoader from '@/components/molecules/table/Loader';
 
 import swalMixin from '@/mixins/swalMixin';
 
@@ -174,6 +187,8 @@ export default {
   components: {
     AButton,
     AInputText,
+    ASearchBar,
+    TableLoader,
   },
   props: {
     id: {
@@ -214,14 +229,26 @@ export default {
         demand: '',
       },
     },
+    filter: {
+      search: {
+        value: '',
+        placeholder: 'Cari pasokan',
+      },
+    },
+    loading: false,
   }),
   created() {
     this.fetchSupply();
   },
   methods: {
     fetchSupply() {
-      this.$http.get(`/hospital/${this.id}/supplies`)
+      this.loading = true;
+      const params = {
+        search: this.filter.search.value,
+      };
+      this.$http.get(`/hospital/${this.id}/supplies`, { params })
         .then(({ data }) => {
+          this.loading = false;
           this.list = data.map(this.translateDataFromServer);
         })
         .catch(this.catchHandler);
@@ -298,6 +325,9 @@ export default {
     cancelCreateRow() {
       this.config.action = null;
     },
+    submit() {
+      this.fetchSupply();
+    },
     translateDataFromServer(val) {
       return {
         ...val,
@@ -317,10 +347,18 @@ export default {
 </script>
 
 <style lang="scss">
+.u-t-right {
+  text-align: right;
+}
 .p-hospital-supply {
   &__title {
     font-size: 30px;
     margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+  &__search {
+    font-size: 16px;
   }
   &__table {
     width: 100%;
