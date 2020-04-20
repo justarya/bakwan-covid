@@ -3,7 +3,7 @@
     <input
       v-model="inputValue"
       type="text"
-      placeholder="Cari nama, lokasi"
+      :placeholder="placeholder"
       @keyup.enter="$emit('submit')"
       @focus="onFocus"
       @blur="onBlur"
@@ -28,6 +28,10 @@ export default {
     value: {
       type: [String, Number],
       default: '',
+    },
+    placeholder: {
+      type: String,
+      default: 'Cari nama, lokasi',
     },
   },
   data: () => ({
