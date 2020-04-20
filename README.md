@@ -34,5 +34,5 @@ Feel free to contribute to the project, or contact me in [Telegram](http://t.me/
 
 - **[MIT license](http://opensource.org/licenses/mit-license.php)**
 - Copyright 2020 © <a href="https://github.com/justarya" target="_blank">JustArya</a>
-- Contributor [ [Havus](https://github.com/havus) ([express-user-template](https://github.com/havus/express-user-template)), waited_to_be_filled ]
+- Contributor [ [willyhHariardi](https://github.com/willyhHariardi), [Havus](https://github.com/havus) ([express-user-template](https://github.com/havus/express-user-template)), waiting_to_be_filled ]
 
