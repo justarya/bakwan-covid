@@ -13,9 +13,10 @@ Untuk itu dibuatlah aplikasi **Bakwan Covid**.
 > [Bakwan Covid](https://bakwan.justarya.com/)
 
 ## Screenshot
-![Home Page](https://i.ibb.co/W6gjxz9/screely-1586685729687.png "Home Page")
-![Detail Rumah Sakit](https://i.ibb.co/0csXYK6/screely-1586685793635.png "Detail Rumah Sakit")
-![Dashboard Rumah Sakit](https://i.ibb.co/zJtKgJx/screely-1586685875892.png "Dashboard Rumah Sakit")
+![Home Page](https://i.ibb.co/GH00mrw/screely-1587347928782.png "Home Page")
+![Detail Rumah Sakit](https://i.ibb.co/dBntpxH/screely-1587347948256.png "Detail Rumah Sakit")
+![Dashboard Rumah Sakit - Pasokan](https://i.ibb.co/TgK4dyh/screely-1587347978803.png "Dashboard Rumah Sakit - Pasokan")
+![Dashboard Rumah Sakit - Info](https://i.ibb.co/5cmCCBW/screely-1587348000366.png "Dashboard Rumah Sakit - Info")
 
 ## Tech Stack
 Aplikasi ini dibuat menggunakan MEVN Stack<br>
@@ -32,6 +33,6 @@ Feel free to contribute to the project, or contact me in [Telegram](http://t.me/
 [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
 
 - **[MIT license](http://opensource.org/licenses/mit-license.php)**
-- Copyright 2020 © <a href="https://github.com/justarya" target="_blank">JustArya</a>.
-- Contributor [ [Havus](https://github.com/havus) (express-user-template), waited_to_be_filled ]
+- Copyright 2020 © <a href="https://github.com/justarya" target="_blank">JustArya</a>
+- Contributor [ [willyhHariardi](https://github.com/willyhHariardi), [Havus](https://github.com/havus) ([express-user-template](https://github.com/havus/express-user-template)), waiting_to_be_filled ]
 

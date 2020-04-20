@@ -14,9 +14,9 @@
         <thead>
           <tr>
             <th width="500">Nama Barang</th>
-            <th width="50">Sisa</th>
-            <th width="50">Butuh</th>
-            <th width="150" class="--action">
+            <th width="80">Butuh</th>
+            <th width="150">Satuan</th>
+            <th width="80" class="--action">
               <AButton
                 size="small"
                 :border="false"
@@ -28,7 +28,7 @@
             </th>
           </tr>
         </thead>
-        <template  v-if="!loading" >
+        <template v-if="!loading">
           <tbody>
             <tr
               class="p-hospital-supply__table--create-row"
@@ -36,27 +36,31 @@
             >
               <td width="500">
                 <AInputText
-                  v-if="config.action === -1"
                   v-model="formData.create.name"
                 />
               </td>
-              <td width="50">
+              <td width="80">
                 <AInputText
-                  v-if="config.action === -1"
-                  v-model="formData.create.supply"
-                  type="number"
-                  min="0"
-                />
-              </td>
-              <td width="50">
-                <AInputText
-                  v-if="config.action === -1"
                   v-model="formData.create.demand"
                   type="number"
                   min="0"
                 />
               </td>
-              <td width="150" class="--action">
+              <td width="150">
+                <select
+                  class="a-input"
+                  v-model="formData.create.demandUnit"
+                >
+                  <option
+                    v-for="(data, index) in config.demandUnit.list"
+                    :value="data.value"
+                    :key="index"
+                  >
+                    {{ data.label }}
+                  </option>
+                </select>
+              </td>
+              <td width="80" class="--action">
                 <template v-if="config.action === -1">
                   <AButton
                     :border="false"
@@ -89,19 +93,7 @@
                   {{ data.name }}
                 </span>
               </td>
-              <td width="50">
-
-                <AInputText
-                  v-if="config.action === index"
-                  v-model="formData.edit.supply"
-                  type="number"
-                  min="0"
-                />
-                <span v-else>
-                  {{ data.supply }}
-                </span>
-              </td>
-              <td width="50">
+              <td width="80">
                 <AInputText
                   v-if="config.action === index"
                   v-model="formData.edit.demand"
@@ -112,7 +104,25 @@
                   {{ data.demand }}
                 </span>
               </td>
-              <td width="150" class="--action">
+              <td width="150">
+                <select
+                  class="a-input"
+                  v-if="config.action === index"
+                  v-model="formData.edit.demandUnit"
+                >
+                  <option
+                    v-for="(unit, index) in config.demandUnit.list"
+                    :value="unit.value"
+                    :key="index"
+                  >
+                    {{ unit.label }}
+                  </option>
+                </select>
+                <span v-else>
+                  {{ getDemandUnitLabel(data.demandUnit) }}
+                </span>
+              </td>
+              <td width="80" class="--action">
                 <template v-if="config.action === null">
                   <AButton
                     :border="false"
@@ -146,6 +156,12 @@
                   </AButton>
                 </template>
               </td>
+            </tr>
+            <tr
+              class="p-hospital-supply__table--create-row"
+              v-if="!list.length"
+            >
+              <td colspan="4" class="text-center">Data kosong</td>
             </tr>
           </tbody>
         </template>
@@ -183,24 +199,40 @@ export default {
   data: () => ({
     config: {
       action: null,
+      demandUnit: {
+        list: [
+          {
+            value: '',
+            label: '-',
+          },
+          {
+            value: 'kg',
+            label: 'Kilogram',
+          },
+          {
+            value: 'L',
+            label: 'Liter',
+          },
+        ],
+      },
     },
     list: [],
     formData: {
       edit: {
         name: '',
-        supply: '',
+        demandUnit: '',
         demand: '',
       },
       create: {
         name: '',
-        supply: '',
+        demandUnit: '',
         demand: '',
       },
     },
     filter: {
       search: {
         value: '',
-        placeholder: 'Cari pasokan',
+        placeholder: 'Cari pasokan (nama)',
       },
     },
     loading: false,
@@ -225,7 +257,7 @@ export default {
       this.config.action = index;
       this.formData.edit = {
         name: this.list[index].name,
-        supply: this.list[index].supply,
+        demandUnit: this.list[index].demandUnit,
         demand: this.list[index].demand,
       };
     },
@@ -234,6 +266,7 @@ export default {
       const payload = {
         ...this.formData.edit,
         product_name: this.formData.edit.name,
+        demand_unit: this.formData.edit.demandUnit,
       };
       this.$http
         .put(`/hospital/${this.id}/supplies/${supplyId}`, payload)
@@ -269,7 +302,7 @@ export default {
     createRow() {
       this.formData.create = {
         name: '',
-        supply: 0,
+        demandUnit: '',
         demand: 0,
       };
       this.config.action = -1;
@@ -278,6 +311,7 @@ export default {
       const payload = {
         ...this.formData.create,
         product_name: this.formData.create.name,
+        demand_unit: this.formData.edit.demandUnit,
       };
       this.$http
         .post(`/hospital/${this.id}/supplies/`, payload)
@@ -293,34 +327,44 @@ export default {
     },
     submit() {
       this.fetchSupply();
+      this.cancelEditRow();
+      this.cancelCreateRow();
     },
     translateDataFromServer(val) {
       return {
         ...val,
         id: val._id,
         name: val.product_name,
+        demandUnit: val.demand_unit || '',
       };
+    },
+    getDemandUnitLabel(data) {
+      const demandUnit = this.config.demandUnit.list
+        .find((el) => el.value === data);
+      if (demandUnit !== undefined) return demandUnit.label;
+      return '';
     },
   },
 };
 </script>
 
 <style lang="scss">
-.u-t-right {
-  text-align: right;
-}
 .p-hospital-supply {
   &__title {
-    font-size: 30px;
-    margin-bottom: 20px;
+    p {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+    margin-bottom: 10px;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
   }
   &__search {
     font-size: 16px;
   }
   &__table {
     width: 100%;
+    font-size: 14px;
     thead {
       th {
         text-align: left;
@@ -336,6 +380,19 @@ export default {
     .--action {
       width: 300px;
       text-align: right;
+    }
+  }
+  @media (min-width: $sm) {
+    &__title {
+      p {
+        margin-bottom: 0;
+      }
+      margin-bottom: 20px;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+    &__table {
+      font-size: 16px;
     }
   }
 }

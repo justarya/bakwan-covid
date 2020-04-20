@@ -237,7 +237,7 @@ $ yarn dev
           "supplies": [
             {
               "product_name": "Face Mask 3M",
-              "supply": 30,
+              "demand_unit": "",
               "demand": 100,
             }
           ]
@@ -261,7 +261,7 @@ $ yarn dev
       "supplies": [
         {
           "product_name": "Face Mask 3M",
-          "supply": 30,
+          "demand_unit": "",
           "demand": 100,
         }
       ]
@@ -325,6 +325,8 @@ $ yarn dev
   > **Method** : `GET`<br>
   > **Endpoint** : `/hospital/:id/supplies`<br>
   > **Authentication** : `true`
+  > **query** :
+  > - `search`: `String` (for field: `product_name`)
 
   #### _Response Body_ :
   - 200
@@ -333,7 +335,7 @@ $ yarn dev
       {
         "_id": "581ehj9128ehj19e8h12e98",
         "product_name": "Face Mask 3M",
-        "supply": 30,
+        "demand_unit": "",
         "demand": 100,
       }
     ]
@@ -348,7 +350,7 @@ $ yarn dev
   ```json
   {
     "product_name": "Face Mask 3M",
-    "supply": 30,
+    "demand_unit": "",
     "demand": 100,
   }
   ```
@@ -359,7 +361,7 @@ $ yarn dev
     {
       "_id": "581ehj9128ehj19e8h12e98",
       "product_name": "Face Mask 3M",
-      "supply": 30,
+      "demand_unit": "",
       "demand": 100,
     }
     ```
@@ -381,7 +383,7 @@ $ yarn dev
   ```json
   {
     "product_name": "Face Mask 3M",
-    "supply": 30,
+    "demand_unit": "",
     "demand": 100,
   }
   ```
@@ -391,7 +393,7 @@ $ yarn dev
     ```json
     {
       "product_name": "Face Mask 3M",
-      "supply": 30,
+      "demand_unit": "",
       "demand": 100,
     }
     ```

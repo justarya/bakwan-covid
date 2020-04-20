@@ -7,7 +7,7 @@
     @click="goToUrl"
   >
     <i v-if="iconPosition === 'left'" class="material-icons">{{ icon }}</i>
-    <span>
+    <span class="m-navigation-button__text">
       <slot></slot>
     </span>
     <i v-if="iconPosition === 'right'" class="material-icons">{{ icon }}</i>
@@ -38,7 +38,7 @@ export default {
   methods: {
     goToUrl() {
       if (this.goBack) this.$router.go(-1);
-      else this.$router.push(this.to);
+      else if (this.to) this.$router.push(this.to);
     },
   },
 };
@@ -54,15 +54,18 @@ export default {
   border-radius: 20px;
   display: inline-block;
   transition: 0.2s;
+  &__text {
+    padding: 0 10px;
+  }
   .material-icons {
     padding: 0;
     font-size: 30px;
-  }
-  &.--icon-left {
-    padding-right: 10px;
-  }
-  &.--icon-right {
-    padding-left: 10px;
+    &:first-child {
+      margin-right: -10px;
+    }
+    &:last-child {
+      margin-left: -10px;
+    }
   }
   &:hover {
     transition: 0.2s;

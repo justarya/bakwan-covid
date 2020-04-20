@@ -1,33 +1,34 @@
 <template>
   <div class="p-home">
     <MainTemplate>
+      <HomeBanner
+        class="mb-4"
+      />
       <HomeTopNav
         @submit:search="getSearch"
       />
-      <ACard>
-        <div class="p-home__hospital-list">
-          <HospitalItem
-            v-for="(item, index) in list.hospital"
-            :key="index"
-            v-bind="item"
-          />
+      <div class="p-home__hospital-list">
+        <HospitalItem
+          v-for="(item, index) in list.hospital"
+          :key="index"
+          v-bind="item"
+        />
+      </div>
+      <InfiniteLoading
+        spinner="spiral"
+        :identifier="filter.search.identifier"
+        @infinite="fetchHospital"
+      >
+        <div slot="no-more"></div>
+        <div slot="no-results">
+          <p
+            v-if="!list.hospital.length"
+            class="text-2xl p-3"
+          >
+            Data kosong
+          </p>
         </div>
-        <InfiniteLoading
-          spinner="spiral"
-          :identifier="filter.search"
-          @infinite="fetchHospital"
-        >
-          <div slot="no-more"></div>
-          <div slot="no-results">
-            <p
-              v-if="!list.hospital.length"
-              class="text-2xl p-3"
-            >
-              Data kosong
-            </p>
-          </div>
-        </InfiniteLoading>
-      </ACard>
+      </InfiniteLoading>
     </MainTemplate>
   </div>
 </template>
@@ -37,15 +38,15 @@ import InfiniteLoading from 'vue-infinite-loading';
 import MainTemplate from '@/components/templates/MainTemplate';
 import HospitalItem from '@/components/organisms/HospitalItem';
 import HomeTopNav from '@/components/organisms/home/TopNav';
-import ACard from '@/components/atoms/ACard';
+import HomeBanner from '@/components/organisms/home/Banner';
 
 export default {
   name: 'Home',
   components: {
     MainTemplate,
     HospitalItem,
-    ACard,
     HomeTopNav,
+    HomeBanner,
     InfiniteLoading,
   },
   data: () => ({
@@ -53,7 +54,10 @@ export default {
       hospital: [],
     },
     filter: {
-      search: '',
+      search: {
+        value: '',
+        identifier: 0,
+      },
     },
     pagination: {
       page: 0,
@@ -62,17 +66,18 @@ export default {
   }),
   methods: {
     getSearch(value) {
-      this.filter.search = value;
+      this.filter.search.value = value;
+      this.filter.search.identifier += 1;
       this.pagination = {
         page: 0,
         size: 20,
       };
-      this.list.hospital = [];
+      if (this.pagination.page === 0) this.list.hospital = [];
     },
     fetchHospital(state) {
       this.$http.get('/hospital', {
         params: {
-          search: this.filter.search,
+          search: this.filter.search.value,
           page: this.pagination.page,
           size: this.pagination.size,
         },
@@ -108,7 +113,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-
-</style>
