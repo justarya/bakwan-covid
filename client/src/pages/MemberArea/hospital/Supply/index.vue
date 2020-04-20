@@ -347,9 +347,6 @@ export default {
 </script>
 
 <style lang="scss">
-.u-t-right {
-  text-align: right;
-}
 .p-hospital-supply {
   &__title {
     font-size: 30px;

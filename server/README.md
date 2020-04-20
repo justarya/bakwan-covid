@@ -325,6 +325,8 @@ $ yarn dev
   > **Method** : `GET`<br>
   > **Endpoint** : `/hospital/:id/supplies`<br>
   > **Authentication** : `true`
+  > **query** :
+  > - `search`: `String` (for field: `product_name`)
 
   #### _Response Body_ :
   - 200

@@ -6,15 +6,21 @@ class HospitalSupplyController {
   static async getAll(req, res, next) {
     try {
       const { hospitalId } = req.params;
-      let search = '';
+      let filter = {};
       if (req.query.search) {
-        search = req.query.search;
+        const search = req.query.search;
+        filter.product_name = {
+          '$regex': search,
+          '$options' : 'i',
+        };
       }
       const result = await Hospital
         .findById(hospitalId)
         .populate({
           path: 'supplies',
-          match: { product_name: {'$regex': search} },
+          match: {
+            ...filter,
+          },
         })
         .select('supplies');
       if (!result) {

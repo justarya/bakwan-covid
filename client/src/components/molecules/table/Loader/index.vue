@@ -8,7 +8,7 @@
         v-for="(field, idx) in fieldLength"
         :key="idx"
       >
-        <div class="c-table--loader"></div>
+        <div class="m-table--loader"></div>
       </td>
     </tr>
   </tbody>
@@ -32,7 +32,7 @@ export default {
   100% { background-position: 250px 0; }
 }
 
-.c-table--loader {
+.m-table--loader {
     height: 12px;
     background: linear-gradient(to right, #F2F4F7 20%, #E2E2E2 50%, #F2F4F7 80%);
     background-size: 500px 100px;
