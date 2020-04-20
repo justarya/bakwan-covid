@@ -16,7 +16,7 @@
             <th width="500">Nama Barang</th>
             <th width="80">Butuh</th>
             <th width="150">Satuan</th>
-            <th width="70" class="--action">
+            <th width="80" class="--action">
               <AButton
                 size="small"
                 :border="false"
@@ -60,7 +60,7 @@
                   </option>
                 </select>
               </td>
-              <td width="70" class="--action">
+              <td width="80" class="--action">
                 <template v-if="config.action === -1">
                   <AButton
                     :border="false"
@@ -122,7 +122,7 @@
                   {{ getDemandUnitLabel(data.demandUnit) }}
                 </span>
               </td>
-              <td width="70" class="--action">
+              <td width="80" class="--action">
                 <template v-if="config.action === null">
                   <AButton
                     :border="false"
@@ -232,7 +232,7 @@ export default {
     filter: {
       search: {
         value: '',
-        placeholder: 'Cari pasokan',
+        placeholder: 'Cari pasokan (nama)',
       },
     },
     loading: false,
@@ -327,6 +327,8 @@ export default {
     },
     submit() {
       this.fetchSupply();
+      this.cancelEditRow();
+      this.cancelCreateRow();
     },
     translateDataFromServer(val) {
       return {
@@ -349,16 +351,20 @@ export default {
 <style lang="scss">
 .p-hospital-supply {
   &__title {
-    font-size: 30px;
-    margin-bottom: 20px;
+    p {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+    margin-bottom: 10px;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
   }
   &__search {
     font-size: 16px;
   }
   &__table {
     width: 100%;
+    font-size: 14px;
     thead {
       th {
         text-align: left;
@@ -374,6 +380,19 @@ export default {
     .--action {
       width: 300px;
       text-align: right;
+    }
+  }
+  @media (min-width: $sm) {
+    &__title {
+      p {
+        margin-bottom: 0;
+      }
+      margin-bottom: 20px;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+    &__table {
+      font-size: 16px;
     }
   }
 }
