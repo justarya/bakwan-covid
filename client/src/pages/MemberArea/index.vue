@@ -5,18 +5,21 @@
     >
       <router-view></router-view>
     </MemberTemplate>
+    <MainFooter/>
   </div>
 </template>
 
 <script>
 import MemberTemplate from '@/components/templates/MemberTemplate';
 import swalMixin from '@/mixins/swalMixin';
+import MainFooter from '@/components/organisms/MainFooter';
 
 export default {
   name: 'Member',
   mixins: [swalMixin],
   components: {
     MemberTemplate,
+    MainFooter,
   },
   data: () => ({
     config: {

@@ -61,6 +61,7 @@
               v-for="(data, index) in detail.hospital.supplies"
               v-bind="data"
               :name="data.product_name"
+              :demand-unit="data.demand_unit"
               :key="index"
             />
             <p
