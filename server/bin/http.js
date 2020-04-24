@@ -1,9 +1,9 @@
 const http = require('http');
-const app = require('../app');
+const app = require('../app').app;
 const server = http.createServer(app);
 const PORT = process.env.PORT || 3000;
 
-server.listen( PORT , () => {
+server.listen(PORT, () => {
   console.log('\x1b[33m\x1b[1m', ' * * * * * * * * * * * * * * * * * * * * * * * *');
   console.log(
     '\x1b[33m\x1b[1m', ' *',
