@@ -3,7 +3,6 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'dev') {
 }
 const express = require('express');
 const app = express();
-const mongoose = require('mongoose');
 const serverless = require('serverless-http');
 const { connect: connectDatabase }= require('./boot/mongodb');
 
@@ -23,3 +22,4 @@ const errorHandler = require('./middleware/errorHandler');
 app.use(errorHandler);
 
 module.exports.handler = serverless(app);
+module.exports.app = app;

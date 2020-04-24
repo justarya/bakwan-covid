@@ -8,7 +8,7 @@ let isConnected;
  * @param done Callback to notify the result.
  * @returns {*}
  */
-const connect = (done) => {
+const connectToDatabase = (done) => {
   console.log('isConnected', isConnected);
   if (isConnected) return done();
 
@@ -31,5 +31,5 @@ const connect = (done) => {
  * @param next Callback to notify when its done.
  */
 module.exports.connect = (req, res, next) => {
-  connect(next);
+  connectToDatabase(next);
 };
