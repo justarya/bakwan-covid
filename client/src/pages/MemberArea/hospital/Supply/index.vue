@@ -97,7 +97,6 @@
                   :searchable="true"
                   :filterable="true"
                   :options="config.product.options"
-                  @search="fetchProductOptions"
                 >
                   <template #no-options="{ search }">
                     <template v-if="!search">
@@ -237,6 +236,7 @@ export default {
   }),
   created() {
     this.fetchSupply();
+    this.fetchProductOptions();
   },
   methods: {
     fetchSupply() {
@@ -254,7 +254,6 @@ export default {
     fetchProductOptions(search) {
       const params = {
         search,
-        size: 20,
       };
       this.$http.get('/product', { params })
         .then(({ data }) => {
