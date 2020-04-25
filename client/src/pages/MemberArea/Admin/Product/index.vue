@@ -1,20 +1,19 @@
 <template>
-  <div class="p-hospital-supply">
-    <div class="p-hospital-supply__title">
-      <p>Pasokan</p>
+  <div class="p-admin-product">
+    <div class="p-admin-product__title">
+      <p>Produk</p>
       <ASearchBar
         v-model="filter.search.value"
-        class="p-hospital-supply__search"
+        class="p-admin-product__search"
         :placeholder="filter.search.placeholder"
         @submit="submit"
       />
     </div>
-    <div class="p-hospital-supply__content">
-      <table class="p-hospital-supply__table">
+    <div class="p-admin-product__content">
+      <table class="p-admin-product__table">
         <thead>
           <tr>
             <th style="width: 500px">Nama Barang</th>
-            <th width="80">Butuh</th>
             <th width="150">Satuan</th>
             <th width="80" class="--action">
               <AButton
@@ -31,36 +30,22 @@
         <template v-if="!loading">
           <tbody>
             <tr
-              class="p-hospital-supply__table--create-row"
+              class="p-admin-product__table--create-row"
               v-if="config.action === -1"
             >
               <td style="width: 500px">
-                <v-select
-                  v-model="formData.create.product"
-                  :searchable="true"
-                  :filterable="true"
-                  :options="config.product.options"
-                  @search="fetchProductOptions"
-                >
-                  <template #no-options="{ search }">
-                    <template v-if="!search">
-                      Silahkan ketik nama barang
-                    </template>
-                    <template v-else>
-                      Kata kunci "{{ search }}" tidak ditemukan
-                    </template>
-                  </template>
-                </v-select>
-              </td>
-              <td width="80">
                 <AInputText
-                  v-model="formData.create.demand"
-                  type="number"
+                  v-model="formData.create.name"
+                  type="text"
                   min="0"
                 />
               </td>
               <td width="150">
-                {{ formData.create.product && formData.create.product.unit ? formData.create.product.unit : '' }}
+                <AInputText
+                  v-model="formData.create.unit"
+                  type="text"
+                  min="0"
+                />
               </td>
               <td width="80" class="--action">
                 <template v-if="config.action === -1">
@@ -82,49 +67,30 @@
               </td>
             </tr>
             <tr
-              class="p-hospital-supply__table--row"
+              class="p-admin-product__table--row"
               v-for="(data, index) in list"
               :key="index"
             >
               <td style="width: 500px">
-                <v-select
-                  v-if="config.action === index"
-                  v-model="formData.edit.product"
-                  :searchable="true"
-                  :filterable="true"
-                  :options="config.product.options"
-                  @search="fetchProductOptions"
-                >
-                  <template #no-options="{ search }">
-                    <template v-if="!search">
-                      Silahkan ketik nama barang
-                    </template>
-                    <template v-else>
-                      Kata kunci "{{ search }}" tidak ditemukan
-                    </template>
-                  </template>
-                </v-select>
-                <span v-else>
-                  {{ data.product ? data.product.name : data.product_name }}
-                </span>
-              </td>
-              <td width="80">
                 <AInputText
                   v-if="config.action === index"
-                  v-model="formData.edit.demand"
-                  type="number"
+                  v-model="formData.edit.name"
+                  type="text"
                   min="0"
                 />
                 <span v-else>
-                  {{ data.demand }}
+                  {{ data.name }}
                 </span>
               </td>
               <td width="150">
-                <span v-if="config.action === index">
-                  {{ formData.edit.product && formData.edit.product.unit ? formData.edit.product.unit || '-' : '-' }}
-                </span>
+                <AInputText
+                  v-if="config.action === index"
+                  v-model="formData.edit.unit"
+                  type="text"
+                  min="0"
+                />
                 <span v-else>
-                  {{ data.product ? data.product.unit || '-' : '-' }}
+                  {{ data.unit || '-' }}
                 </span>
               </td>
               <td width="80" class="--action">
@@ -163,7 +129,7 @@
               </td>
             </tr>
             <tr
-              class="p-hospital-supply__table--create-row"
+              class="p-admin-product__table--create-row"
               v-if="!list.length"
             >
               <td colspan="4" class="text-center">Data kosong</td>
@@ -204,19 +170,16 @@ export default {
   data: () => ({
     config: {
       action: null,
-      product: {
-        options: [],
-      },
     },
     list: [],
     formData: {
       edit: {
-        product: {},
-        demand: '',
+        name: '',
+        unit: '',
       },
       create: {
-        product: {},
-        demand: '',
+        name: '',
+        unit: '',
       },
     },
     filter: {
@@ -236,64 +199,26 @@ export default {
       const params = {
         search: this.filter.search.value,
       };
-      this.$http.get(`/hospital/${this.id}/supplies`, { params })
+      this.$http.get(`/product`, { params })
         .then(({ data }) => {
           this.loading = false;
           this.list = data.map(this.translateDataFromServer);
         })
         .catch(this.catchHandler);
     },
-    fetchProductOptions(search) {
-      const params = {
-        search: search,
-        size: 20,
-      };
-      this.$http.get('/product', { params })
-        .then(({ data }) => {
-          this.config.product.options = data.map((el) => {
-            return {
-              label: el.name,
-              value: el._id,
-              unit: el.unit,
-            };
-          });
-        })
-        .catch(this.catchHandler);
-    },
     editRow(index) {
       this.config.action = index;
       this.formData.edit = {
-        demand: this.list[index].demand,
+        name: this.list[index].name,
+        unit: this.list[index].unit,
       };
-      if (this.list[index].product) {
-        this.formData.edit = {
-          ...this.formData.edit,
-          product: {
-            label: this.list[index].product.name,
-            value: this.list[index].product._id,
-            unit: this.list[index].product.unit,
-          },
-        };
-      } else {
-        this.formData.edit = {
-          ...this.formData.edit,
-          product: {
-            label: '',
-            value: '',
-            unit: '',
-          },
-        };
-      }
     },
     saveEditRow(index) {
       if (this.validateForm(this.formData.edit)) {
-        const supplyId = this.list[index].id;
-        const payload = {
-          ...this.formData.edit,
-          productId: this.formData.edit.product.value,
-        };
+        const productId = this.list[index].id;
+        const payload = this.formData.edit;
         this.$http
-          .put(`/hospital/${this.id}/supplies/${supplyId}`, payload)
+          .put(`/product/${productId}`, payload)
           .then(({ data }) => {
             this.successHandler('Ubah pasokan berhasil!');
             this.config.action = null;
@@ -315,9 +240,9 @@ export default {
         });
     },
     deleteRow(index) {
-      const supplyId = this.list[index].id;
+      const productId = this.list[index].id;
       this.$http
-        .delete(`/hospital/${this.id}/supplies/${supplyId}`)
+        .delete(`/product/${productId}`)
         .then(() => {
           this.successHandler('Hapus pasokan berhasil!');
           this.list.splice(index, 1);
@@ -326,19 +251,19 @@ export default {
     },
     createRow() {
       this.formData.create = {
-        product: {},
-        demand: 0,
+        name: '',
+        unit: '',
       };
       this.config.action = -1;
     },
     saveCreateRow() {
       if (this.validateForm(this.formData.create)) {
         const payload = {
-          demand: this.formData.create.demand,
-          productId: this.formData.create.product.value,
+          name: this.formData.create.name,
+          unit: this.formData.create.unit,
         };
         this.$http
-          .post(`/hospital/${this.id}/supplies/`, payload)
+          .post('/product', payload)
           .then(({ data }) => {
             this.successHandler('Buat pasokan baru berhasil!');
             this.list.push(this.translateDataFromServer(data));
@@ -359,17 +284,12 @@ export default {
       return {
         ...val,
         id: val._id,
-        product_name: val.product_name,
-        product: val.product,
       };
     },
     validateForm(data) {
       const errorMessages = [];
-      if (!(data.product && data.product.value)) {
-        errorMessages.push('Produk harus diisi');
-      }
-      if (!data.demand) {
-        errorMessages.push('Demand wajib diisi');
+      if (!data.name) {
+        errorMessages.push('Nama barang tidak boleh kosong');
       }
       if (errorMessages.length) this.errorHandler(errorMessages.join('<br>'));
       return !errorMessages.length;
@@ -379,7 +299,7 @@ export default {
 </script>
 
 <style lang="scss">
-.p-hospital-supply {
+.p-admin-product {
   &__title {
     p {
       font-size: 30px;

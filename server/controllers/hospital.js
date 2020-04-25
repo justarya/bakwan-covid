@@ -73,6 +73,9 @@ class HospitalController {
               demand: -1,
             },
           },
+          populate: {
+            path: 'product',
+          },
         })
         .sort({ updatedAt: -1 })
         .select(`${defaultSelection} supplies`);
@@ -97,6 +100,9 @@ class HospitalController {
             sort: {
               demand: -1,
             },
+          },
+          populate: {
+            path: 'product',
           },
         })
         .select(`${defaultSelection} supplies`);

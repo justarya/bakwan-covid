@@ -52,6 +52,13 @@ export default {
                 },
                 icon: 'add',
               },
+              {
+                label: 'Produk',
+                url: {
+                  name: 'AdminProduct',
+                },
+                icon: 'category',
+              },
             ],
           },
         ],

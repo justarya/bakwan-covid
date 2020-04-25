@@ -60,8 +60,8 @@
             <SupplyItem
               v-for="(data, index) in detail.hospital.supplies"
               v-bind="data"
-              :name="data.product_name"
-              :demand-unit="data.demand_unit"
+              :name="data.product.name"
+              :unit="data.product.unit"
               :key="index"
             />
             <p
@@ -112,18 +112,37 @@ export default {
     fetchHospitalDetailData() {
       this.$http.get(`/hospital/${this.id}`)
         .then(({ data }) => {
-          const suppliesLastUpdated = data.supplies.reduce((result, curr) => {
-            const date = this.$moment(curr.updatedAt);
-            if (!result) return date;
-            if (date < result) return result;
-            return date;
-          }, null);
-          this.detail.hospital = {
-            ...data,
-            contactNumbers: data.contact_numbers,
-            suppliesLastUpdated,
-          };
+          const newData = this.mappingDetailData(data);
+          this.detail.hospital = newData;
         });
+    },
+    mappingDetailData(data) {
+      const suppliesLastUpdated = data.supplies.reduce((result, curr) => {
+        const date = this.$moment(curr.updatedAt);
+        if (!result) return date;
+        if (date < result) return result;
+        return date;
+      }, null);
+      const supplies = data.supplies.map((supply) => {
+        let product = {};
+        if (supply.product) product = supply.product;
+        else {
+          product = {
+            name: supply.product_name,
+            unit: supply.demand_unit,
+          };
+        };
+        return {
+          ...supply,
+          product,
+        };
+      });
+      return {
+        ...data,
+        supplies,
+        contactNumbers: data.contact_numbers,
+        suppliesLastUpdated,
+      };
     },
   },
 };

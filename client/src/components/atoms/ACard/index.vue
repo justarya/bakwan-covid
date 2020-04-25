@@ -25,8 +25,6 @@ export default {
 .a-card {
   border-radius: 10px;
   border: thin solid $soft-gray;
-
-  overflow: hidden;
   &.--gray {
     border-color: $soft-gray;
   }

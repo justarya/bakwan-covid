@@ -515,6 +515,143 @@ $ yarn dev
     }
     ```
 
+## Product
+
+* ### Get all Product
+
+  > **Method** : `GET`  
+  > **Endpoint** : `/product`  
+  > **Authentication** : `true`
+  > **query** :
+  >
+  > * `search`: `String` (for field: `product name`)
+  > * `size`: `Number`
+  > * `page`: `Number`
+
+  **_Response Body_** :
+  * 200
+
+    ```json
+    [
+      {
+        "_id": "581ehj9128ehj19e8h12e98",
+        "name": "Face Mask 3M",
+        "unit": ""
+      }
+    ]
+    ```
+  
+* ### Create Product
+
+  > **Method** : `POST`  
+  > **Endpoint** : `/product`  
+  > **Authentication** : `true`
+
+  **_Request Body_** :
+
+  ```json
+  {
+    "name": "Face Mask 3M",
+    "unit": ""
+  }
+  ```
+
+  **_Response Body_** :
+
+  * 200
+
+    ```json
+    {
+      "_id": "581ehj9128ehj19e8h12e98",
+      "name": "Face Mask 3M",
+      "unit": ""
+    }
+    ```
+
+  * 400
+
+    ```json
+    {
+      "code": 400,
+      "message": [
+        "Product Name cannot be empty",
+      ],
+    }
+    ```
+
+* ### Edit Product
+
+  > **Method** : `PUT`  
+  > **Endpoint** : `/product/:productId`  
+  > **Authentication** : `true`
+
+  **_Request Body_** :
+
+  ```json
+  {
+    "name": "Face Mask 3M",
+    "unit": ""
+  }
+  ```
+
+  **_Response Body_** :
+  * 200
+
+    ```json
+    {
+      "name": "Face Mask 3M",
+      "unit": ""
+    }
+    ```
+
+  * 400
+
+    ```json
+    {
+      "code": 400,
+      "message": [
+        "Product Name cannot be empty",
+      ],
+    }
+    ```
+
+  * 404
+
+    ```json
+    {
+      "code": 400,
+      "message": [
+        "Product not found",
+      ],
+    }
+    ```
+
+* ### Delete Product
+
+  > **Method** : `Delete`  
+  > **Endpoint** : `/product/:productId`  
+  > **Authentication** : `true`
+
+  **_Response Body_** :
+  * 200
+
+    ```json
+    {
+      "success": true,
+    }
+    ```
+
+  * 404
+
+    ```json
+    {
+      "code": 400,
+      "message": [
+        "Product not found",
+      ],
+    }
+    ```
+
 ## Another Error
 
 * Our mistake report this error as issue
