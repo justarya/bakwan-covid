@@ -110,7 +110,7 @@ export default {
               name: supply.product_name,
               unit: supply.demand_unit,
             };
-          };
+          }
           return {
             ...supply,
             product,

@@ -199,7 +199,7 @@ export default {
       const params = {
         search: this.filter.search.value,
       };
-      this.$http.get(`/product`, { params })
+      this.$http.get('/product', { params })
         .then(({ data }) => {
           this.loading = false;
           this.list = data.map(this.translateDataFromServer);

@@ -60,7 +60,11 @@
                 />
               </td>
               <td width="150">
-                {{ formData.create.product && formData.create.product.unit ? formData.create.product.unit : '' }}
+                {{
+                  formData.create.product && formData.create.product.unit
+                  ? formData.create.product.unit
+                  : ''
+                }}
               </td>
               <td width="80" class="--action">
                 <template v-if="config.action === -1">
@@ -121,7 +125,11 @@
               </td>
               <td width="150">
                 <span v-if="config.action === index">
-                  {{ formData.edit.product && formData.edit.product.unit ? formData.edit.product.unit || '-' : '-' }}
+                  {{
+                    formData.edit.product && formData.edit.product.unit
+                      ? formData.edit.product.unit || '-'
+                      : '-'
+                  }}
                 </span>
                 <span v-else>
                   {{ data.product ? data.product.unit || '-' : '-' }}
@@ -245,18 +253,16 @@ export default {
     },
     fetchProductOptions(search) {
       const params = {
-        search: search,
+        search,
         size: 20,
       };
       this.$http.get('/product', { params })
         .then(({ data }) => {
-          this.config.product.options = data.map((el) => {
-            return {
-              label: el.name,
-              value: el._id,
-              unit: el.unit,
-            };
-          });
+          this.config.product.options = data.map((el) => ({
+            label: el.name,
+            value: el._id,
+            unit: el.unit,
+          }));
         })
         .catch(this.catchHandler);
     },
