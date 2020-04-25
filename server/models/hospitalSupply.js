@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const HospitalSupplySchema = new Schema({
-  product_name: {
-    type: String,
-    required: [true, 'Product name cannot be empty'],
+  product: {
+    type: Schema.Types.ObjectId,
+    ref: 'Product',
   },
   demand: {
     type: Number,

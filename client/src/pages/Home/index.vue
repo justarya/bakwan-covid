@@ -87,6 +87,7 @@ export default {
             this.pagination.page += 1;
 
             const newData = this.mappingHospitalData(data);
+            console.log(newData);
             this.list.hospital.push(...newData);
 
             state.loaded();
@@ -100,14 +101,28 @@ export default {
     },
     mappingHospitalData(data) {
       const { list } = data;
-      const newList = list.map((val) => (
-        {
+      const newList = list.map((val) => {
+        const supplies = val.supplies.map((supply) => {
+          let product = {};
+          if (supply.product) product = supply.product;
+          else {
+            product = {
+              name: supply.product_name,
+              unit: supply.demand_unit,
+            };
+          }
+          return {
+            ...supply,
+            product,
+          };
+        });
+        return {
           id: val._id,
           name: val.name,
           location: val.location,
-          supplies: val.supplies,
-        }
-      ));
+          supplies,
+        };
+      });
       return newList;
     },
   },
