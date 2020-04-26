@@ -47,7 +47,7 @@ const errorHandler = (err, req, res, next) => {
         message: ['Cannot authenticate'],
       });
     } else if (err.code) {
-      if (typeof err.message !== 'array') {
+      if (typeof err.message === 'array') {
         res.status(err.code).json({
           ...err,
         });

@@ -74,6 +74,16 @@ const routes = [
         },
         component: () => import(/* webpackChunkName: "member" */ '@/pages/MemberArea/Admin/CreateUser'),
       },
+      {
+        path: '/admin/user/product',
+        name: 'AdminProduct',
+        props: true,
+        meta: {
+          isAdmin: true,
+          requiresAuth: true,
+        },
+        component: () => import(/* webpackChunkName: "member" */ '@/pages/MemberArea/Admin/Product'),
+      },
     ],
   },
 ];

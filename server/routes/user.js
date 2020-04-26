@@ -3,7 +3,6 @@ const userController = require('../controllers/user');
 const authentication = require('../middleware/authentication');
 const authorization = require('../middleware/authorization');
 
-// router.get('/', authentication, userController.decode); // only for development, delete this line for production :)
 router.post('/signin', userController.signIn);
 
 router.use(authentication);

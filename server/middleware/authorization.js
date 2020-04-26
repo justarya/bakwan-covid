@@ -23,7 +23,6 @@ class Authorization {
       const result = await Hospital
         .findOne({ _id: hospitalId, users: userId });
 
-      console.log(result, userId, req.params);
       if (result || isAdmin(userRole)) next();
       else {
         next({

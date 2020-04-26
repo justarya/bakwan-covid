@@ -1,14 +1,40 @@
 const HospitalSupply = require('../models/hospitalSupply');
 const Hospital = require('../models/hospital');
-const selection = '_id product_name supply demand';
+const selection = '_id product demand';
 
 class HospitalSupplyController {
   static async getAll(req, res, next) {
     try {
       const { hospitalId } = req.params;
+      const filter = {
+        supplies: {},
+        product: {},
+      };
+      if (req.query.search) {
+        const search = req.query.search;
+        filter.supplies.product_name = {
+          '$regex': search,
+          '$options' : 'i',
+        };
+        filter.product.name = {
+          '$regex': search,
+          '$options' : 'i',
+        };
+      }
       const result = await Hospital
         .findById(hospitalId)
-        .populate('supplies')
+        .populate({
+          path: 'supplies',
+          match: {
+            ...filter.supplies,
+          },
+          populate: {
+            path: 'product',
+            match: {
+              ...filter.product,
+            },
+          },
+        })
         .select('supplies');
       if (!result) {
         next({
@@ -26,29 +52,30 @@ class HospitalSupplyController {
     try {
       const { hospitalId } = req.params;
       const {
-        product_name,
-        supply,
+        productId,
         demand,
       } = req.body;
       const result = await HospitalSupply
         .create({
-          product_name,
-          supply,
+          product: productId,
           demand
         })
+      const populatedResult = await result
+        .populate('product')
+        .execPopulate()
+
       await Hospital
         .update({ _id: hospitalId }, {
           $push: {
-            supplies: result._id,
+            supplies: populatedResult._id,
           },
         });
       res
         .status(201)
         .json({
-          _id: result._id,
-          product_name: result.product_name,
-          supply: result.supply,
-          demand: result.demand,
+          _id: populatedResult._id,
+          product: populatedResult.product,
+          demand: populatedResult.demand,
         });
     } catch (err) {
       next(err);
@@ -61,20 +88,19 @@ class HospitalSupplyController {
       } = req.params;
 
       const {
-        product_name,
-        supply,
+        productId,
         demand,
       } = req.body;
 
       const result = await HospitalSupply
         .findByIdAndUpdate(hospitalSupplyId, {
-          product_name,
-          supply,
+          product: productId,
           demand,
         }, {
           new: true,
           runValidators: true,
         })
+        .populate('product')
         .select(selection);
       
       if (!result) {

@@ -1,6 +1,7 @@
 export default {
   methods: {
     catchHandler(err) {
+      console.log(err, err.response);
       const errorMessage = err.response.data.message.join(', ');
       this.$swal.fire(
         'Oops...',
@@ -17,7 +18,6 @@ export default {
       );
     },
     successHandler(message, title = 'Sukses!') {
-      console.log(message);
       this.$swal.fire(
         title,
         message,

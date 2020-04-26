@@ -3,7 +3,7 @@
     <input
       v-model="inputValue"
       type="text"
-      placeholder="Search"
+      :placeholder="placeholder"
       @keyup.enter="$emit('submit')"
       @focus="onFocus"
       @blur="onBlur"
@@ -28,6 +28,10 @@ export default {
     value: {
       type: [String, Number],
       default: '',
+    },
+    placeholder: {
+      type: String,
+      default: 'Cari nama, lokasi',
     },
   },
   data: () => ({
@@ -60,8 +64,6 @@ export default {
 
 <style lang="scss">
 .a-search-bar {
-  max-width: 300px;
-  width: 90%;
   position: relative;
   &__close {
     display: block;
