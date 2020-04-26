@@ -9,6 +9,12 @@
 * [Another Error](#another-error)
 * [License](#license)
 
+## What you need before development
+
+* MongoDB
+* NodeJS
+* Git
+
 ## **Global Depedencies for Development**
 
 * [Nodemon](https://www.npmjs.com/package/nodemon)
@@ -49,9 +55,17 @@ $ npm run dev
 $ yarn dev
 ```
 
+### Running server Serverless
+
+```bash
+$ npm run dev:sls
+# OR
+$ yarn dev:sls
+```
+
 #### **Base Url default**  
 
-> `http://localhost:3000/dev`  
+> `http://localhost:3000/`  
 
 ## **API Documentation**
 
@@ -278,8 +292,7 @@ $ yarn dev
           "location": "Jln. Gatot Subtroto",
           "supplies": [
             {
-              "product_name": "Face Mask 3M",
-              "demand_unit": "",
+              "product": "5278190q8dm8913e129e23",
               "demand": 100,
             }
           ]
@@ -304,8 +317,7 @@ $ yarn dev
       "location": "Jln. Gatot Subtroto",
       "supplies": [
         {
-          "product_name": "Face Mask 3M",
-          "demand_unit": "",
+          "product": "5278190q8dm8913e129e23",
           "demand": 100,
         }
       ]
@@ -393,8 +405,7 @@ $ yarn dev
     [
       {
         "_id": "581ehj9128ehj19e8h12e98",
-        "product_name": "Face Mask 3M",
-        "demand_unit": "",
+        "product": "5278190q8dm8913e129e23",
         "demand": 100,
       }
     ]
@@ -410,8 +421,7 @@ $ yarn dev
 
   ```json
   {
-    "product_name": "Face Mask 3M",
-    "demand_unit": "",
+    "product": "5278190q8dm8913e129e23",
     "demand": 100,
   }
   ```
@@ -423,8 +433,7 @@ $ yarn dev
     ```json
     {
       "_id": "581ehj9128ehj19e8h12e98",
-      "product_name": "Face Mask 3M",
-      "demand_unit": "",
+      "product": "5278190q8dm8913e129e23",
       "demand": 100,
     }
     ```
@@ -450,8 +459,7 @@ $ yarn dev
 
   ```json
   {
-    "product_name": "Face Mask 3M",
-    "demand_unit": "",
+    "product": "5278190q8dm8913e129e23",
     "demand": 100,
   }
   ```
@@ -461,8 +469,7 @@ $ yarn dev
 
     ```json
     {
-      "product_name": "Face Mask 3M",
-      "demand_unit": "",
+      "product": "5278190q8dm8913e129e23",
       "demand": 100,
     }
     ```

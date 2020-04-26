@@ -1,7 +1,6 @@
 const HospitalSupply = require('../models/hospitalSupply');
-const Product = require('../models/product');
 const Hospital = require('../models/hospital');
-const selection = '_id product demand_unit demand';
+const selection = '_id product demand';
 
 class HospitalSupplyController {
   static async getAll(req, res, next) {
@@ -54,31 +53,29 @@ class HospitalSupplyController {
       const { hospitalId } = req.params;
       const {
         productId,
-        demand_unit,
         demand,
       } = req.body;
       const result = await HospitalSupply
         .create({
           product: productId,
-          demand_unit,
           demand
         })
+      const populatedResult = await result
         .populate('product')
         .execPopulate()
 
       await Hospital
         .update({ _id: hospitalId }, {
           $push: {
-            supplies: result._id,
+            supplies: populatedResult._id,
           },
         });
       res
         .status(201)
         .json({
-          _id: result._id,
-          product: result.product,
-          demand_unit: result.demand_unit,
-          demand: result.demand,
+          _id: populatedResult._id,
+          product: populatedResult.product,
+          demand: populatedResult.demand,
         });
     } catch (err) {
       next(err);
@@ -92,14 +89,12 @@ class HospitalSupplyController {
 
       const {
         productId,
-        demand_unit,
         demand,
       } = req.body;
 
       const result = await HospitalSupply
         .findByIdAndUpdate(hospitalSupplyId, {
           product: productId,
-          demand_unit,
           demand,
         }, {
           new: true,
