@@ -1,11 +1,13 @@
 const router = require('express').Router();
-const hospitalSupplyRouter = require('./hospitalSupply'); 
+const hospitalSupplyRouter = require('./hospitalSupply');
+const hospitalRecordsRouter = require('./hospitalRecords'); 
 const hospitalController = require('../controllers/hospital');
 
 const authentication = require('../middleware/authentication');
 const authorization = require('../middleware/authorization');
 
 router.use('/:hospitalId/supplies', hospitalSupplyRouter);
+router.use('/:hospitalId/records', hospitalRecordsRouter);
 
 router.get('/', hospitalController.getAllHospital);
 router.get('/:hospitalId', hospitalController.getHospital);

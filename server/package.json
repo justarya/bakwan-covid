@@ -4,8 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev:sls": "serverless offline",
-    "dev": "NODE_ENV=dev nodemon bin/http.js",
+    "dev": "nodemon --exec serverless offline",
+    "dev:sls": "NODE_ENV=dev nodemon bin/http.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

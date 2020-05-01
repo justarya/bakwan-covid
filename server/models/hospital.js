@@ -29,6 +29,10 @@ const HospitalSchema = new Schema({
   location: {
     type: String,
   },
+  records: [{
+    type: Schema.Types.ObjectId,
+    ref: 'HospitalRecords',
+  }]
 }, {
   timestamps: true,
   versionKey: false,
