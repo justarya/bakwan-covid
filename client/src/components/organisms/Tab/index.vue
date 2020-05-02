@@ -32,8 +32,9 @@ export default {
   },
   methods: {
     goTo(url) {
-      if (this.currentActiveRoute !== url.name)
-      this.$router.push(url);
+      if (this.currentActiveRoute !== url.name) {
+        this.$router.push(url);
+      }
     },
   },
 };

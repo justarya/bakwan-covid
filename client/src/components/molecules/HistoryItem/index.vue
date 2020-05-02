@@ -48,7 +48,7 @@ export default {
 <style lang="scss">
 .m-history-item {
   $color: black;
-  
+
   border-radius: 10px;
   padding: 15px;
   display: flex;
