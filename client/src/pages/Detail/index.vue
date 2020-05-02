@@ -2,11 +2,11 @@
   <div class="p-detail">
     <MainTemplate>
       <div class="p-detail__content">
-        <div class="p-detail--info">
+        <div class="p-detail--main">
           <div class="p-detail__nav">
             <AButtonNav
               icon="chevron_left"
-              go-back
+              :to="{ name: 'Home' }"
             >
               Home
             </AButtonNav>
@@ -38,39 +38,11 @@
             </div>
           </div>
         </div>
-        <div class="p-detail--supply">
-          <div class="p-detail__supply-main">
-            <p class="p-detail__supply-title">Kebutuhan Pasokan</p>
-            <div
-              class="p-detail__supply-last-updated"
-              v-if="detail.hospital.supplies && detail.hospital.supplies.length"
-            >
-              <i class="material-icons">
-                schedule
-              </i>
-              <span>
-                Terakhir diperbarui:
-                <b>
-                  {{ suppliesLastUpdated }}
-                </b>
-              </span>
-            </div>
-          </div>
-          <div class="p-detail__supply-list">
-            <SupplyItem
-              v-for="(data, index) in detail.hospital.supplies"
-              v-bind="data"
-              :name="data.product.name"
-              :unit="data.product.unit"
-              :key="index"
-            />
-            <p
-              v-if="detail.hospital.supplies && !detail.hospital.supplies.length"
-              class="text-gray-600"
-            >
-              Data kosong
-            </p>
-          </div>
+        <div class="p-detail--secondary">
+          <Tab
+            :menu="config.menu"
+          />
+          <router-view />
         </div>
       </div>
     </MainTemplate>
@@ -78,16 +50,16 @@
 </template>
 
 <script>
-import SupplyItem from '@/components/molecules/SupplyItem';
 import MainTemplate from '@/components/templates/MainTemplate';
+import Tab from '@/components/organisms/Tab';
 import AButtonNav from '@/components/atoms/AButtonNav';
 
 export default {
   name: 'Detail',
   components: {
     MainTemplate,
-    SupplyItem,
     AButtonNav,
+    Tab,
   },
   props: {
     id: {
@@ -102,27 +74,36 @@ export default {
     detail: {
       hospital: {},
     },
-  }),
-  computed: {
-    suppliesLastUpdated() {
-      return this.$moment(this.detail.hospital.suppliesLastUpdated).format('LLL');
+    config: {
+      menu: [
+        {
+          text: 'Pasokan',
+          url: {
+            name: 'DetailSupply',
+          },
+        },
+        {
+          text: 'Riwayat',
+          url: {
+            name: 'DetailHistory',
+          },
+        },
+      ],
     },
-  },
+  }),
   methods: {
     fetchHospitalDetailData() {
       this.$http.get(`/hospital/${this.id}`)
         .then(({ data }) => {
           const newData = this.mappingDetailData(data);
           this.detail.hospital = newData;
+          this.config.menu[0].url.params = {
+            supplies: this.detail.hospital.supplies,
+          };
+          this.redirect();
         });
     },
     mappingDetailData(data) {
-      const suppliesLastUpdated = data.supplies.reduce((result, curr) => {
-        const date = this.$moment(curr.updatedAt);
-        if (!result) return date;
-        if (date < result) return result;
-        return date;
-      }, null);
       const supplies = data.supplies.map((supply) => {
         let product = {};
         if (supply.product) product = supply.product;
@@ -141,8 +122,17 @@ export default {
         ...data,
         supplies,
         contactNumbers: data.contact_numbers,
-        suppliesLastUpdated,
       };
+    },
+    redirect() {
+      if (this.$router.currentRoute.name === 'Detail') {
+        this.$router.replace({
+          name: 'DetailSupply',
+          params: {
+            supplies: this.detail.hospital.supplies,
+          },
+        });
+      }
     },
   },
 };
@@ -153,7 +143,7 @@ export default {
   &__nav {
     margin-bottom: 10px;
   }
-  &--info {
+  &--main {
     margin-bottom: 30px;
   }
   &__content {
@@ -180,34 +170,6 @@ export default {
   &__contact {
     max-width: 400px;
   }
-  &__last-updated {
-    color: $gray;
-    margin-bottom: 20px;
-  }
-  &__supply {
-    &-main {
-      margin-bottom: 30px;
-    }
-    &-title {
-      font-size: 24px;
-    }
-    &-last-updated {
-      font-size: 14px;
-      color: $gray;
-      display: flex;
-      align-items: center;
-      .material-icons {
-        margin-right: 5px;
-        font-size: 16px;
-      }
-    }
-    &-list {
-      .m-supply-item {
-        padding: 10px;
-        margin: 0;
-      }
-    }
-  }
   @media (min-width: $sm) {
     &__content {
       display: flex;
@@ -215,10 +177,10 @@ export default {
         padding-left: 20px;
       }
     }
-    &--info {
+    &--main {
       width: 50%;
     }
-    &--supply {
+    &--secondary {
       width: 50%;
     }
   }
@@ -228,10 +190,10 @@ export default {
         padding-left: 25px;
       }
     }
-    &--info {
+    &--main {
       width: 45%;
     }
-    &--supply {
+    &--secondary {
       padding-left: 20px;
       width: 55%;
     }
@@ -242,10 +204,10 @@ export default {
         padding-left: 25px;
       }
     }
-    &--info {
+    &--main {
       width: 45%;
     }
-    &--supply {
+    &--secondary {
       padding-left: 20px;
       width: 55%;
     }
