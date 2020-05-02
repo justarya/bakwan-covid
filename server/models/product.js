@@ -18,9 +18,9 @@ const ProductSchema = new Schema({
 
 ProductSchema.plugin(mongooseLogs, {
   schemaName: "Product",
-  createAction: "ditambahkan",
-  updateAction: "diubah",
-  deleteAction: "dihapus" 
+  createAction: "Created",
+  updateAction: "Updated",
+  deleteAction: "Removed" 
 });
 
 const Product = mongoose.model('Product', ProductSchema);

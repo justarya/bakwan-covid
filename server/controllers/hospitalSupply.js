@@ -1,5 +1,6 @@
 const HospitalSupply = require('../models/hospitalSupply');
 const Hospital = require('../models/hospital');
+const ActivityLog = require('../models/activityRecords');
 const selection = '_id product demand';
 
 class HospitalSupplyController {
@@ -122,6 +123,20 @@ class HospitalSupplyController {
         hospitalId,
         hospitalSupplyId,
       } = req.params;
+
+      await HospitalSupply
+      .findById(hospitalSupplyId)
+      .then( result => {
+        const obj = {
+          _id: hospitalSupplyId,
+          product: result.product
+        }
+        ActivityLog.create({
+          collectionType: "Hospital Supply",
+          referenceDocument: obj,
+          action: "Removed"
+        })
+      })
 
       const {
         deletedCount: deleteCountHospitalSupply

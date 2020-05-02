@@ -37,9 +37,9 @@ const HospitalSchema = new Schema({
 
 HospitalSchema.plugin(mongooseLogs, {
   schemaName: "Hospital",
-  createAction: "ditambahkan",
-  updateAction: "diubah",
-  deleteAction: "dihapus" 
+  createAction: "Created",
+  updateAction: "Updated",
+  deleteAction: "Removed" 
 });
 
 const Hospital = mongoose.model('Hospital', HospitalSchema);

@@ -10,7 +10,7 @@ router.get('/hospital', activityRecords.getAllRecordsHospital);
 router.get('/product', activityRecords.getAllRecordsProducts);
 router.get('/user', activityRecords.getAllRecordsUsers);
 router.get('/hospitalsupply', activityRecords.getAllRecordsHospitalSupplies);
-router.get('/hospitalsupply/:productId', activityRecords.getRecordsHospitalSuppliesByProduct);
+router.get('/hospitalsupply/:hospitalSupplyId', activityRecords.getRecordsHospitalSuppliesByProduct);
 
 
 module.exports = router;

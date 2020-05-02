@@ -33,9 +33,9 @@ const UserSchema = new Schema({
 
 UserSchema.plugin(mongooseLogs, {
   schemaName: "User",
-  createAction: "ditambahkan",
-  updateAction: "diubah",
-  deleteAction: "dihapus" 
+  createAction: "Created",
+  updateAction: "Updated",
+  deleteAction: "Removed" 
 });
 
 UserSchema.pre('save', function() {

@@ -84,25 +84,54 @@ class ActivityRecordsController {
 
   static async getRecordsHospitalSuppliesByProduct(req, res, next) {
     try {
-      const { productId } = req.params;
+      const { hospitalSupplyId } = req.params;
       await ActivityModel
-        .find({ collectionType: "Hospital Supply" }, function(err, result){
-
+        .find({ collectionType: "Hospital Supply" })
+        .populate({
+          path: 'referenceDocument.product',
+          model: 'Product'
+        })
+        .then(result => {
           let datas = [];
-          result.forEach(el => {
-            if (el.referenceDocument.product == productId)
-              datas.push(el);
+          let temp = [];
+          result.forEach((el, idx, arr) => {
+            if (el.referenceDocument._id == hospitalSupplyId) {
+              temp.push(el)
+            }
           })
-
+          
+          temp.forEach((el, idx, arr) => {
+            let obj = {};
+            obj.name = el.referenceDocument.product.name;
+              if (el.action == 'Created') {
+                obj.demand_before = 0;
+                obj.demand_after = el.referenceDocument.demand;
+                obj.description = 'ditambahkan';
+              }
+              else if (el.action == 'Updated') {
+                obj.demand_before = arr[idx-1].referenceDocument.demand;
+                obj.demand_after = el.referenceDocument.demand;
+                obj.description = 'diubah'
+              }
+              else {
+                obj.demand_before = arr[idx-1].referenceDocument.demand;
+                obj.demand_after = 0;
+                obj.description = 'dihapus'
+              }
+              datas.push(obj);
+          })
+          
           if (!result) {
             next({
               code: 404,
               message: 'There is no hospital supplies',
             });
           }
-
           res.json(datas);
-      });
+        })
+
+
+
       
     } catch (err) {
       next(err);
