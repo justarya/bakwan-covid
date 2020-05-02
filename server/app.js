@@ -16,9 +16,11 @@ app.use(express.json());
 const user = require('./routes/user');
 const hospital = require('./routes/hospital');
 const product = require('./routes/product');
+const records = require('./routes/activityRecords');
 app.use('/user', user);
 app.use('/hospital', hospital);
 app.use('/product', product);
+app.use('/records', records);
 
 const errorHandler = require('./middleware/errorHandler');
 app.use(errorHandler);
