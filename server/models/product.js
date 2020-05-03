@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-var mongooseLogs = require('mongoose-activitylogs');
+const mongooseLogs = require('mongoose-activitylogs');
 
 const ProductSchema = new Schema({
   name: {
@@ -17,10 +17,10 @@ const ProductSchema = new Schema({
 });
 
 ProductSchema.plugin(mongooseLogs, {
-  schemaName: "Product",
-  createAction: "Created",
-  updateAction: "Updated",
-  deleteAction: "Removed" 
+  schemaName: 'Product',
+  createAction: 'created',
+  updateAction: 'updated',
+  deleteAction: 'removed',
 });
 
 const Product = mongoose.model('Product', ProductSchema);

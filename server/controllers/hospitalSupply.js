@@ -132,9 +132,9 @@ class HospitalSupplyController {
           product: result.product
         }
         ActivityLog.create({
-          collectionType: "Hospital Supply",
+          collectionType: 'HospitalSupply',
           referenceDocument: obj,
-          action: "Removed"
+          action: 'removed',
         })
       })
 

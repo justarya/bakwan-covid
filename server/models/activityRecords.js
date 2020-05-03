@@ -10,8 +10,7 @@ const ActivityRecordsSchema = new Schema({
   },
   action: {
     type: String
-  }
-
+  },
 }, {
   timestamps: true,
   versionKey: false,

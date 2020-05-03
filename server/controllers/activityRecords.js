@@ -1,23 +1,23 @@
 const ActivityModel = require('mongoose-activitylogs/activity-model');
 const Hospital = require('../models/hospital');
+const mongoose = require('mongoose');
 
 class ActivityRecordsController {
 
   static async getAllRecordsHospital(req, res, next) {
     try {
-      await ActivityModel
-        .find({ collectionType: "Hospital" }, function(err, result){
-          
-        if (!result) {
-          next({
-            code: 404,
-            message: 'There is no hospital',
-          });
-        }
+      const result = await ActivityModel
+        .find({ collectionType: 'Hospital' });
 
-        res.json(result);
-      });
-      
+      if (!result) {
+        next({
+          code: 404,
+          message: 'There is no hospital',
+        });
+      }
+
+      res.json(result);
+
     } catch (err) {
       next(err);
     }
@@ -25,19 +25,17 @@ class ActivityRecordsController {
 
   static async getAllRecordsProducts(req, res, next) {
     try {
-      await ActivityModel
-        .find({ collectionType: "Product" }, function(err, result){
-          
-        if (!result) {
-          next({
-            code: 404,
-            message: 'There is no product',
-          });
-        }
+      const result = await ActivityModel
+        .find({ collectionType: 'Product' });
 
-        res.json(result);
-      });
-      
+      if (!result) {
+        next({
+          code: 404,
+          message: 'There is no product',
+        });
+      }
+
+      res.json(result);
     } catch (err) {
       next(err);
     }
@@ -45,18 +43,17 @@ class ActivityRecordsController {
 
   static async getAllRecordsUsers(req, res, next) {
     try {
-      await ActivityModel
-        .find({ collectionType: "User" }, function(err, result){
+      const result = await ActivityModel
+        .find({ collectionType: 'User' })
 
-        if (!result) {
-          next({
-            code: 404,
-            message: 'There is no user',
-          });
-        }
+      if (!result) {
+        next({
+          code: 404,
+          message: 'There is no user',
+        });
+      }
 
-        res.json(result);
-      });
+      res.json(result);
       
     } catch (err) {
       next(err);
@@ -65,134 +62,128 @@ class ActivityRecordsController {
 
   static async getAllRecordsHospitalSupplies(req, res, next) {
     try {
-      await ActivityModel
-        .find({ collectionType: "Hospital Supply" }, function(err, result){
+      const result = await ActivityModel
+        .find({ collectionType: 'HospitalSupply' });
 
-        if (!result) {
-          next({
-            code: 404,
-            message: 'There is no hospital supplies',
-          });
-        }
+      if (!result) {
+        next({
+          code: 404,
+          message: 'There is no hospital supplies',
+        });
+      }
 
-        res.json(result);
-      });
+      res.json(result);
       
     } catch (err) {
       next(err);
     }
   }
 
-  static async getRecordsHospitalSuppliesByProduct(req, res, next) {
+  static async getRecordsHospitalSupplies(req, res, next) {
     try {
       const { hospitalSupplyId } = req.params;
-      await ActivityModel
-        .find({ collectionType: "Hospital Supply" })
+      const result = await ActivityModel
+        .find({
+          collectionType: 'HospitalSupply',
+          'referenceDocument._id': mongoose.Types.ObjectId(hospitalSupplyId),
+        })
         .populate({
           path: 'referenceDocument.product',
-          model: 'Product'
-        })
-        .then(result => {
-          let datas = [];
-          let temp = [];
-          result.forEach((el, idx, arr) => {
-            if (el.referenceDocument._id == hospitalSupplyId) {
-              temp.push(el)
-            }
-          })
-          
-          temp.forEach((el, idx, arr) => {
-            let obj = {};
-            obj.name = el.referenceDocument.product.name;
-              if (el.action == 'Created') {
-                obj.demand_before = 0;
-                obj.demand_after = el.referenceDocument.demand;
-                obj.description = 'ditambahkan';
-              }
-              else if (el.action == 'Updated') {
-                obj.demand_before = arr[idx-1].referenceDocument.demand;
-                obj.demand_after = el.referenceDocument.demand;
-                obj.description = 'diubah'
-              }
-              else {
-                obj.demand_before = arr[idx-1].referenceDocument.demand;
-                obj.demand_after = 0;
-                obj.description = 'dihapus'
-              }
-              datas.push(obj);
-          })
-          
-          if (!result) {
-            next({
-              code: 404,
-              message: 'There is no hospital supplies',
-            });
-          }
-          res.json(datas);
-        })
+          model: 'Product',
+        });
+
+      // let datas = [];
+      // let temp = [];
+      // result.forEach((el, idx, arr) => {
+      //   if (el.referenceDocument._id == hospitalSupplyId) {
+      //     temp.push(el);
+      //   }
+      // });
+      
+      // temp.forEach((el, idx, arr) => {
+      //   let obj = {};
+      //   obj.name = el.referenceDocument.product.name;
+      //   if (el.action == 'created') {
+      //     obj.demand_before = 0;
+      //     obj.demand_after = el.referenceDocument.demand;
+      //     obj.description = el.action;
+      //   }
+      //   else if (el.action == 'updated') {
+      //     obj.demand_before = arr[idx-1].referenceDocument.demand;
+      //     obj.demand_after = el.referenceDocument.demand;
+      //     obj.description = el.action;
+      //   }
+      //   else {
+      //     obj.demand_before = arr[idx-1].referenceDocument.demand;
+      //     obj.demand_after = 0;
+      //     obj.description = el.action;
+      //   }
+      //   datas.push(obj);
+      // });
+      
+      if (!result) {
+        next({
+          code: 404,
+          message: 'There is no hospital supplies',
+        });
+      }
+      res.json(result);
     } catch (err) {
       next(err);
     }
   }
 
   static async getRecordsHospitalSuppliesByHospitalId(req, res, next) {
-    let result = [];
     try {
       const { hospitalId } = req.params;
       
-      let supplies = await Hospital
-      .findById(hospitalId)
-      .then(records => {
-        if (!records) {
-          next({
-            code: 404,
-            message: 'There is no hospital',
-          });
-        }
+      const hospitalData = await Hospital
+        .findById(hospitalId);
+      if (!hospitalData) {
+        next({
+          code: 404,
+          message: 'There is no hospital',
+        });
+      }
 
-        return records.supplies
-      })
-
-      await ActivityModel
+      const records = await ActivityModel
         .find()
         .where('referenceDocument._id')
-        .in(supplies)
+        .in(hospitalData.supplies)
         .populate({
           path: 'referenceDocument.product',
           model: 'Product'
         })
-        .then(records => {
-          let datas = ActivityRecordsController.groupById(records)
-          Object.keys(datas).forEach(key => {
-            var objKeys = {
-              [key]: []
-            }
-            datas[key].forEach((el, idx, arr) => {
-              let obj = {};
-              obj.name = el.referenceDocument.product.name;
+      // let datas = ActivityRecordsController.groupById(records)
+      // Object.keys(datas).forEach(key => {
+      //   var objKeys = {
+      //     [key]: []
+      //   }
+      //   datas[key].forEach((el, idx, arr) => {
+      //     let obj = {};
+      //     obj.name = el.referenceDocument.product.name;
 
-              if (el.action == 'Created') {
-                obj.demand_before = 0;
-                obj.demand_after = el.referenceDocument.demand;
-                obj.description = 'ditambahkan';
-              }
-              else if (el.action == 'Updated') {
-                obj.demand_before = arr[idx-1].referenceDocument.demand;
-                obj.demand_after = el.referenceDocument.demand;
-                obj.description = 'diubah'
-              }
-              else {
-                obj.demand_before = arr[idx-1].referenceDocument.demand;
-                obj.demand_after = 0;
-                obj.description = 'dihapus'
-              }
-              objKeys[key].push(obj)
-            })
-            result.push(objKeys)
-          })
+      //     if (el.action == 'Created') {
+      //       obj.demand_before = 0;
+      //       obj.demand_after = el.referenceDocument.demand;
+      //       obj.description = 'ditambahkan';
+      //     }
+      //     else if (el.action == 'Updated') {
+      //       obj.demand_before = arr[idx-1].referenceDocument.demand;
+      //       obj.demand_after = el.referenceDocument.demand;
+      //       obj.description = 'diubah'
+      //     }
+      //     else {
+      //       obj.demand_before = arr[idx-1].referenceDocument.demand;
+      //       obj.demand_after = 0;
+      //       obj.description = 'dihapus'
+      //     }
+      //     objKeys[key].push(obj)
+      //   })
+      //   result.push(objKeys)
+      // })
 
-          res.json(result)  
-        })
+      res.json(records);
           
     } catch (err) {
       next(err);

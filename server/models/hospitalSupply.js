@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-var mongooseLogs = require('mongoose-activitylogs');
+const mongooseLogs = require('mongoose-activitylogs');
 
 const HospitalSupplySchema = new Schema({
   product: {
@@ -17,10 +17,10 @@ const HospitalSupplySchema = new Schema({
 });
 
 HospitalSupplySchema.plugin(mongooseLogs, {
-  schemaName: "Hospital Supply",
-  createAction: "Created",
-  updateAction: "Updated",
-  deleteAction: "Removed" 
+  schemaName: 'HospitalSupply',
+  createAction: 'created',
+  updateAction: 'updated',
+  deleteAction: 'removed',
 });
 
 const HospitalSupply = mongoose.model('HospitalSupply', HospitalSupplySchema);

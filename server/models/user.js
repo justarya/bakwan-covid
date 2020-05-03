@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const { hashPassword } = require('../helper/bcryptjs');
 const uniqueValidator = require('mongoose-unique-validator');
-var mongooseLogs = require('mongoose-activitylogs');
+const mongooseLogs = require('mongoose-activitylogs');
 
 const UserSchema = new Schema({
   username: {
@@ -32,10 +32,10 @@ const UserSchema = new Schema({
 });
 
 UserSchema.plugin(mongooseLogs, {
-  schemaName: "User",
-  createAction: "Created",
-  updateAction: "Updated",
-  deleteAction: "Removed" 
+  schemaName: 'User',
+  createAction: 'created',
+  updateAction: 'updated',
+  deleteAction: 'removed',
 });
 
 UserSchema.pre('save', function() {
