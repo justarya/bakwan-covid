@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const uniqueValidator = require('mongoose-unique-validator');
+var mongooseLogs = require('mongoose-activitylogs');
 
 const HospitalSchema = new Schema({
   users: [{
@@ -32,6 +33,13 @@ const HospitalSchema = new Schema({
 }, {
   timestamps: true,
   versionKey: false,
+});
+
+HospitalSchema.plugin(mongooseLogs, {
+  schemaName: "Hospital",
+  createAction: "Created",
+  updateAction: "Updated",
+  deleteAction: "Removed" 
 });
 
 const Hospital = mongoose.model('Hospital', HospitalSchema);
