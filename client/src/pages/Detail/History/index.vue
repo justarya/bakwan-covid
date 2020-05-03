@@ -11,22 +11,32 @@
         :key="index"
         v-bind="data"
       />
-      <div
-        v-if="!detail.history.length"
-        class="p-detail-history__list-empty"
+      <InfiniteLoading
+        spinner="spiral"
+        @infinite="fetchHistory"
       >
-        Belum ada riwayat perubahan tercatat
-      </div>
+        <div slot="no-more"></div>
+        <div slot="no-results">
+          <p
+            v-if="!detail.history.length"
+            class="p-detail-history__list-empty"
+          >
+            Belum ada riwayat perubahan tercatat
+          </p>
+        </div>
+      </InfiniteLoading>
     </div>
   </div>
 </template>
 
 <script>
+import InfiniteLoading from 'vue-infinite-loading';
 import SupplyHistoryItem from '@/components/molecules/SupplyHistoryItem';
 
 export default {
   name: 'DetailHistory',
   components: {
+    InfiniteLoading,
     SupplyHistoryItem,
   },
   props: {
@@ -40,13 +50,15 @@ export default {
       history: [],
     },
   }),
-  created() {
-    this.fetchHistory();
-  },
   methods: {
-    async fetchHistory() {
-      const { data } = await this.$http(`/records/hospital/${this.id}/supplies`);
-      this.detail.history = this.mappingHistoryData(data);
+    async fetchHistory(state) {
+      try {
+        const { data } = await this.$http(`/records/hospital/${this.id}/supplies`);
+        this.detail.history = this.mappingHistoryData(data);
+        state.complete();
+      } catch (error) {
+        state.error(error);
+      }
     },
     mappingHistoryData(data) {
       return data.map((el) => ({
