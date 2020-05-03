@@ -949,3 +949,56 @@ base URL: http://localhost:3000/dev/
             "description": "dihapus"
         }
     ]
+
+4.  (Get Hopital Supply Record - Based on HopitalId)
+    Method: 'GET'
+    Endpoint: 'records/hospital/:hospitalId'
+    Authenticated: true
+
+    Respons Body:
+    200
+
+    [
+      {
+          "Masker": [
+              {
+                  "name": "Masker",
+                  "demand_before": 0,
+                  "demand_after": 3,
+                  "description": "ditambahkan"
+              },
+              {
+                  "name": "Masker",
+                  "demand_before": 3,
+                  "demand_after": 8,
+                  "description": "diubah"
+              }
+          ]
+      },
+      {
+          "Ventilator": [
+              {
+                  "name": "Ventilator",
+                  "demand_before": 0,
+                  "demand_after": 4,
+                  "description": "ditambahkan"
+              }
+          ]
+      },
+      {
+          "Hand Sanitizer": [
+              {
+                  "name": "Hand Sanitizer",
+                  "demand_before": 0,
+                  "demand_after": 3,
+                  "description": "ditambahkan"
+              },
+              {
+                  "name": "Hand Sanitizer",
+                  "demand_before": 3,
+                  "demand_after": 10,
+                  "description": "diubah"
+              }
+          ]
+      }
+    ]

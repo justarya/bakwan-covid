@@ -1,4 +1,5 @@
-var ActivityModel = require('mongoose-activitylogs/activity-model');
+const ActivityModel = require('mongoose-activitylogs/activity-model');
+const Hospital = require('../models/hospital');
 
 class ActivityRecordsController {
 
@@ -129,13 +130,80 @@ class ActivityRecordsController {
           }
           res.json(datas);
         })
-
-
-
-      
     } catch (err) {
       next(err);
     }
+  }
+
+  static async getRecordsHospitalSuppliesByHospitalId(req, res, next) {
+    let result = [];
+    try {
+      const { hospitalId } = req.params;
+      
+      let supplies = await Hospital
+      .findById(hospitalId)
+      .then(records => {
+        if (!records) {
+          next({
+            code: 404,
+            message: 'There is no hospital',
+          });
+        }
+
+        return records.supplies
+      })
+
+      await ActivityModel
+        .find()
+        .where('referenceDocument._id')
+        .in(supplies)
+        .populate({
+          path: 'referenceDocument.product',
+          model: 'Product'
+        })
+        .then(records => {
+          let datas = ActivityRecordsController.groupById(records)
+          Object.keys(datas).forEach(key => {
+            var objKeys = {
+              [key]: []
+            }
+            datas[key].forEach((el, idx, arr) => {
+              let obj = {};
+              obj.name = el.referenceDocument.product.name;
+
+              if (el.action == 'Created') {
+                obj.demand_before = 0;
+                obj.demand_after = el.referenceDocument.demand;
+                obj.description = 'ditambahkan';
+              }
+              else if (el.action == 'Updated') {
+                obj.demand_before = arr[idx-1].referenceDocument.demand;
+                obj.demand_after = el.referenceDocument.demand;
+                obj.description = 'diubah'
+              }
+              else {
+                obj.demand_before = arr[idx-1].referenceDocument.demand;
+                obj.demand_after = 0;
+                obj.description = 'dihapus'
+              }
+              objKeys[key].push(obj)
+            })
+            result.push(objKeys)
+          })
+
+          res.json(result)  
+        })
+          
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static groupById (data) {
+    return data.reduce((r, a) => {
+      r[a.referenceDocument.product.name] = [...r[a.referenceDocument.product.name] || [], a];
+      return r;
+    }, {});
   }
 }
 
