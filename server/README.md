@@ -913,6 +913,10 @@ $ yarn dev:sls
   > **Method** : `GET`  
   > **Endpoint** : `/records/hospital/:hospitalId/supplies`  
   > **Authentication** : `false`
+  > **query** :
+  >
+  > * `size`: `Number`
+  > * `page`: `Number`
 
   **_Response Body_** :
   * 200

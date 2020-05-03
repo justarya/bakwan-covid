@@ -104,8 +104,17 @@ class ActivityRecordsController {
     try {
       const { hospitalId } = req.params;
 
+      const pagination = {
+        size: Number(req.query.size) || 20,
+        page: Number(req.query.page) || 0,
+      };
+
       const records = await ActivityModel
-        .find({ 'referenceDocument.hospital': mongoose.Types.ObjectId(hospitalId) })
+        .find({
+          'referenceDocument.hospital': mongoose.Types.ObjectId(hospitalId),
+        })
+        .limit(pagination.size)
+        .skip(pagination.size * pagination.page)
         .populate({
           path: 'referenceDocument.product',
           model: 'Product',
