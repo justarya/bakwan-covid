@@ -6,18 +6,17 @@ class ActivityRecordsController {
   static async getAllRecordsHospital(req, res, next) {
     try {
       await ActivityModel
-        .find({ collectionType: "Hospital" }, function(err, result){
-          
-        if (!result) {
-          next({
-            code: 404,
-            message: 'There is no hospital',
-          });
-        }
-
-        res.json(result);
-      });
-      
+        .find({ collectionType: "Hospital" })
+        .then(result => {
+          if (!result) {
+            next({
+              code: 404,
+              message: 'There is no hospital',
+            });
+          }
+  
+          res.json(result);
+        })
     } catch (err) {
       next(err);
     }
@@ -26,18 +25,17 @@ class ActivityRecordsController {
   static async getAllRecordsProducts(req, res, next) {
     try {
       await ActivityModel
-        .find({ collectionType: "Product" }, function(err, result){
-          
-        if (!result) {
-          next({
-            code: 404,
-            message: 'There is no product',
-          });
-        }
-
-        res.json(result);
-      });
-      
+        .find({ collectionType: "Product" })
+        .then(result => {
+          if (!result) {
+            next({
+              code: 404,
+              message: 'There is no product',
+            });
+          }
+  
+          res.json(result);
+        })
     } catch (err) {
       next(err);
     }
@@ -46,18 +44,17 @@ class ActivityRecordsController {
   static async getAllRecordsUsers(req, res, next) {
     try {
       await ActivityModel
-        .find({ collectionType: "User" }, function(err, result){
-
-        if (!result) {
-          next({
-            code: 404,
-            message: 'There is no user',
-          });
-        }
-
-        res.json(result);
-      });
-      
+        .find({ collectionType: "User" })
+        .then(result => {
+          if (!result) {
+            next({
+              code: 404,
+              message: 'There is no user',
+            });
+          }
+  
+          res.json(result);
+        })
     } catch (err) {
       next(err);
     }
@@ -66,18 +63,17 @@ class ActivityRecordsController {
   static async getAllRecordsHospitalSupplies(req, res, next) {
     try {
       await ActivityModel
-        .find({ collectionType: "Hospital Supply" }, function(err, result){
-
-        if (!result) {
-          next({
-            code: 404,
-            message: 'There is no hospital supplies',
-          });
-        }
-
-        res.json(result);
-      });
-      
+        .find({ collectionType: "Hospital Supply" })
+        .then(result => {
+          if (!result) {
+            next({
+              code: 404,
+              message: 'There is no hospital supplies',
+            });
+          }
+  
+          res.json(result);
+        })
     } catch (err) {
       next(err);
     }
