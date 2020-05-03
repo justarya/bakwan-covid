@@ -31,13 +31,6 @@ const UserSchema = new Schema({
   versionKey: false,
 });
 
-UserSchema.plugin(mongooseLogs, {
-  schemaName: 'User',
-  createAction: 'created',
-  updateAction: 'updated',
-  deleteAction: 'removed',
-});
-
 UserSchema.pre('save', function() {
   this.password = hashPassword(this.password);
 });

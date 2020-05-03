@@ -1,5 +1,4 @@
 const ActivityModel = require('mongoose-activitylogs/activity-model');
-const Hospital = require('../models/hospital');
 const mongoose = require('mongoose');
 
 class ActivityRecordsController {
@@ -92,34 +91,6 @@ class ActivityRecordsController {
           model: 'Product',
         })
         .sort([['createdAt', -1]]);
-      // let datas = [];
-      // let temp = [];
-      // result.forEach((el, idx, arr) => {
-      //   if (el.referenceDocument._id == hospitalSupplyId) {
-      //     temp.push(el);
-      //   }
-      // });
-      
-      // temp.forEach((el, idx, arr) => {
-      //   let obj = {};
-      //   obj.name = el.referenceDocument.product.name;
-      //   if (el.action == 'created') {
-      //     obj.demand_before = 0;
-      //     obj.demand_after = el.referenceDocument.demand;
-      //     obj.description = el.action;
-      //   }
-      //   else if (el.action == 'updated') {
-      //     obj.demand_before = arr[idx-1].referenceDocument.demand;
-      //     obj.demand_after = el.referenceDocument.demand;
-      //     obj.description = el.action;
-      //   }
-      //   else {
-      //     obj.demand_before = arr[idx-1].referenceDocument.demand;
-      //     obj.demand_after = 0;
-      //     obj.description = el.action;
-      //   }
-      //   datas.push(obj);
-      // });
       
       if (!result) {
         next({
@@ -144,34 +115,6 @@ class ActivityRecordsController {
           model: 'Product'
         })
         .sort([['createdAt', -1]]);
-      // let datas = ActivityRecordsController.groupById(records)
-      // Object.keys(datas).forEach(key => {
-      //   var objKeys = {
-      //     [key]: []
-      //   }
-      //   datas[key].forEach((el, idx, arr) => {
-      //     let obj = {};
-      //     obj.name = el.referenceDocument.product.name;
-
-      //     if (el.action == 'Created') {
-      //       obj.demand_before = 0;
-      //       obj.demand_after = el.referenceDocument.demand;
-      //       obj.description = 'ditambahkan';
-      //     }
-      //     else if (el.action == 'Updated') {
-      //       obj.demand_before = arr[idx-1].referenceDocument.demand;
-      //       obj.demand_after = el.referenceDocument.demand;
-      //       obj.description = 'diubah'
-      //     }
-      //     else {
-      //       obj.demand_before = arr[idx-1].referenceDocument.demand;
-      //       obj.demand_after = 0;
-      //       obj.description = 'dihapus'
-      //     }
-      //     objKeys[key].push(obj)
-      //   })
-      //   result.push(objKeys)
-      // })
 
       res.json(records);
           

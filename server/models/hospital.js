@@ -35,13 +35,6 @@ const HospitalSchema = new Schema({
   versionKey: false,
 });
 
-HospitalSchema.plugin(mongooseLogs, {
-  schemaName: 'Hospital',
-  createAction: 'created',
-  updateAction: 'updated',
-  deleteAction: 'removed',
-});
-
 const Hospital = mongoose.model('Hospital', HospitalSchema);
 
 HospitalSchema.plugin(uniqueValidator);

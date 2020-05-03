@@ -16,13 +16,6 @@ const ProductSchema = new Schema({
   versionKey: false,
 });
 
-ProductSchema.plugin(mongooseLogs, {
-  schemaName: 'Product',
-  createAction: 'created',
-  updateAction: 'updated',
-  deleteAction: 'removed',
-});
-
 const Product = mongoose.model('Product', ProductSchema);
 
 module.exports = Product;
