@@ -49,13 +49,31 @@ export default {
     detail: {
       history: [],
     },
+    pagination: {
+      page: 0,
+      size: 20,
+    },
   }),
   methods: {
     async fetchHistory(state) {
       try {
-        const { data } = await this.$http(`/records/hospital/${this.id}/supplies`);
-        this.detail.history = this.mappingHistoryData(data);
-        state.complete();
+        const { data } = await this.$http(
+          `/records/hospital/${this.id}/supplies`,
+          {
+            params: {
+              page: this.pagination.page,
+              size: this.pagination.size,
+            },
+          },
+        );
+        if (data.length) {
+          this.pagination.page += 1;
+
+          this.detail.history.push(...this.mappingHistoryData(data));
+          state.loaded();
+        } else {
+          state.complete();
+        }
       } catch (error) {
         state.error(error);
       }
