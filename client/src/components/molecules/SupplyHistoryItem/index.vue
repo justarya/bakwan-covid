@@ -165,16 +165,7 @@ export default {
         color: rgba($color, 0.4);
       }
       &__change {
-        &::after {
-          content: '';
-          background-color: $color;
-          position: absolute;
-          top: 50%;
-          right: 0;
-          width: 100%;
-          height: 2px;
-          transform: rotate(-5deg);
-        }
+        text-decoration: line-through;
       }
     }
   }
