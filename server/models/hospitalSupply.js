@@ -11,6 +11,10 @@ const HospitalSupplySchema = new Schema({
     type: Number,
     required: [true, 'Demand cannot be empty'],
   },
+  hospital: {
+    type: Schema.Types.ObjectId,
+    ref: 'Hospital',
+  },
 }, {
   timestamps: true,
   versionKey: false,

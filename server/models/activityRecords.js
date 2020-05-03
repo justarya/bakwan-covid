@@ -3,13 +3,13 @@ const Schema = mongoose.Schema;
 
 const ActivityRecordsSchema = new Schema({
   collectionType: {
-    type: String
+    type: String,
   },
   referenceDocument: {
-    type: Object
+    type: Object,
   },
   action: {
-    type: String
+    type: String,
   },
 }, {
   timestamps: true,

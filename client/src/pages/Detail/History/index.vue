@@ -6,23 +6,56 @@
       </p>
     </div>
     <div class="p-detail-history__list">
-      <HistoryItem />
+      <SupplyHistoryItem
+        v-for="(data, index) in detail.history"
+        :key="index"
+        v-bind="data"
+      />
+      <div
+        v-if="!detail.history.length"
+        class="p-detail-history__list-empty"
+      >
+        Belum ada riwayat perubahan tercatat
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import HistoryItem from '@/components/molecules/HistoryItem';
+import SupplyHistoryItem from '@/components/molecules/SupplyHistoryItem';
 
 export default {
   name: 'DetailHistory',
   components: {
-    HistoryItem,
+    SupplyHistoryItem,
   },
   props: {
     id: {
       type: String,
       default: '',
+    },
+  },
+  data: () => ({
+    detail: {
+      history: [],
+    },
+  }),
+  created() {
+    this.fetchHistory();
+  },
+  methods: {
+    async fetchHistory() {
+      const { data } = await this.$http(`/records/hospital/${this.id}/supplies`);
+      this.detail.history = this.mappingHistoryData(data);
+    },
+    mappingHistoryData(data) {
+      return data.map(el => ({
+        productUnit: el.referenceDocument.product.unit,
+        productName: el.referenceDocument.product.name,
+        demand: el.referenceDocument.demand,
+        action: el.action,
+        date: this.$moment(el.createdAt).format('LLL'),
+      }));
     },
   },
 };

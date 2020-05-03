@@ -90,8 +90,8 @@ class ActivityRecordsController {
         .populate({
           path: 'referenceDocument.product',
           model: 'Product',
-        });
-
+        })
+        .sort([['createdAt', -1]]);
       // let datas = [];
       // let temp = [];
       // result.forEach((el, idx, arr) => {
@@ -124,7 +124,7 @@ class ActivityRecordsController {
       if (!result) {
         next({
           code: 404,
-          message: 'There is no hospital supplies',
+          message: 'Hospital supplies not found',
         });
       }
       res.json(result);
@@ -136,24 +136,14 @@ class ActivityRecordsController {
   static async getRecordsHospitalSuppliesByHospitalId(req, res, next) {
     try {
       const { hospitalId } = req.params;
-      
-      const hospitalData = await Hospital
-        .findById(hospitalId);
-      if (!hospitalData) {
-        next({
-          code: 404,
-          message: 'There is no hospital',
-        });
-      }
 
       const records = await ActivityModel
-        .find()
-        .where('referenceDocument._id')
-        .in(hospitalData.supplies)
+        .find({ 'referenceDocument.hospital': mongoose.Types.ObjectId(hospitalId) })
         .populate({
           path: 'referenceDocument.product',
           model: 'Product'
         })
+        .sort([['createdAt', -1]]);
       // let datas = ActivityRecordsController.groupById(records)
       // Object.keys(datas).forEach(key => {
       //   var objKeys = {

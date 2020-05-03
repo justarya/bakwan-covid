@@ -2,7 +2,7 @@
   <div
     :class="[
       'm-history-item',
-      '--action-primary',
+      actionClass,
     ]"
   >
     <div class="m-history-item__main">
@@ -11,10 +11,10 @@
           Kebutuhan
         </span>
         <span class="m-history-item__title-product-name">
-          Masker
+          {{ productName }}
         </span>
         <span class="m-history-item__title-action">
-          dibuat
+          {{ actionLabel }}
         </span>
       </p>
       <p class="m-history-item__last-update">
@@ -22,17 +22,19 @@
           schedule
         </i>
         <span>
-          24 Maret 2020
+          {{ date }}
         </span>
       </p>
     </div>
     <div class="m-history-item__change">
-      <span>
-        10 Qty
-      </span>
-      <i class="material-icons">chevron_right</i>
+      <i
+        v-if="action === 'updated'"
+        class="material-icons"
+      >
+        chevron_right
+      </i>
       <span class="font-bold">
-        100 Qty
+        {{ quantity }}
       </span>
     </div>
   </div>
@@ -40,8 +42,77 @@
 
 <script>
 export default {
-  name: 'HistoryItem',
-  props: {},
+  name: 'SupplyHistoryItem',
+  props: {
+    productName: {
+      type: String,
+      default: '',
+    },
+    productUnit: {
+      type: String,
+      default: '',
+    },
+    demand: {
+      type: Number,
+      default: 0,
+    },
+    action: {
+      type: String,
+      default: '',
+    },
+    date: {
+      type: String,
+      default: '',
+    },
+  },
+  computed: {
+    actionClass() {
+      switch (this.action) {
+        case 'created':
+          return '--action-primary';
+        
+        case 'updated':
+          return '--action-default';
+
+        case 'removed':
+          return '--action-danger';
+      
+        default:
+          return '--action-default';
+      }
+    },
+    actionLabel() {
+      switch (this.action) {
+        case 'created':
+          return 'dibuat';
+        
+        case 'updated':
+          return 'diubah menjadi';
+
+        case 'removed':
+          return 'dihapus';
+      
+        default:
+          return '';
+      }
+    },
+    quantity() {
+      const defaultText = `${this.demand} ${this.productUnit}`
+      switch (this.action) {
+        case 'created':
+          return `+ ${defaultText}`;
+        
+        case 'updated':
+          return defaultText;
+
+        case 'removed':
+          return defaultText;
+      
+        default:
+          return defaultText;
+      }
+    },
+  },
 };
 </script>
 
@@ -51,16 +122,15 @@ export default {
 
   border-radius: 10px;
   padding: 15px;
+  margin-bottom: 10px;
+
   display: flex;
   justify-content: space-between;
 
   &__title {
     font-size: 18px;
     &-product-name {
-      font-weight: 600;
-    }
-    &-action {
-      font-weight: 600;
+      font-weight: bold;
     }
   }
   &__last-update {
@@ -82,9 +152,9 @@ export default {
   }
 
   &.--action-default {
-    $color: black;
+    $color: rgba(0, 0, 0, 0.8);
     color: $color;
-    border: 2px solid rgba($color, 0.05);
+    border: 2px solid rgba($color, 0.02);
   }
   &.--action-danger {
     $color: red;
@@ -111,7 +181,7 @@ export default {
   &.--action-primary {
     $color: $blue;
     color: $color;
-    border: 2px solid rgba($color, 0.05);
+    border: 2px solid rgba($color, 0.2);
     .m-history-item {
       &__last-update {
         color: rgba($color, 0.4);
@@ -134,7 +204,7 @@ export default {
       }
     }
     &__change {
-      font-size: 14px;
+      font-size: 16px;
     }
   }
   @media (min-width: $lg) {
@@ -152,7 +222,7 @@ export default {
       }
     }
     &__change {
-      font-size: 16px;
+      font-size: 18px;
     }
   }
 }
