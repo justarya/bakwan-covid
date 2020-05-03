@@ -61,37 +61,40 @@ class HospitalSupplyController {
       } = req.body;
 
       const HospitalSupplyWithProductId = await HospitalSupply
-        .findOne({ product: productId });
+        .findOne({
+          hospital: hospitalId,
+          product: productId
+        });
       if (HospitalSupplyWithProductId) {
-        next({
+        return next({
           code: 400,
           message: 'Product already exist',
         });
+      } else {
+        const result = await HospitalSupply
+          .create({
+            hospital: mongoose.Types.ObjectId(hospitalId),
+            product: productId,
+            demand,
+          });
+        const populatedResult = await result
+          .populate('product')
+          .execPopulate();
+  
+        await Hospital
+          .updateOne({ _id: hospitalId }, {
+            $push: {
+              supplies: populatedResult._id,
+            },
+          });
+        res
+          .status(201)
+          .json({
+            _id: populatedResult._id,
+            product: populatedResult.product,
+            demand: populatedResult.demand,
+          });
       }
-
-      const result = await HospitalSupply
-        .create({
-          hospital: mongoose.Types.ObjectId(hospitalId),
-          product: productId,
-          demand,
-        });
-      const populatedResult = await result
-        .populate('product')
-        .execPopulate();
-
-      await Hospital
-        .updateOne({ _id: hospitalId }, {
-          $push: {
-            supplies: populatedResult._id,
-          },
-        });
-      res
-        .status(201)
-        .json({
-          _id: populatedResult._id,
-          product: populatedResult.product,
-          demand: populatedResult.demand,
-        });
     } catch (err) {
       next(err);
     }
