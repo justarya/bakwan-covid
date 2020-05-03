@@ -4,7 +4,7 @@ const { comparePassword } = require('../helper/bcryptjs');
 const { jwtHash } = require('../helper/jwt');
 
 class UserController {
-  static signUp (req, res, next) {
+  static signUp(req, res, next) {
     const {
       username,
       password,
@@ -32,7 +32,7 @@ class UserController {
       .catch(next);
   }
 
-  static signIn (req, res, next) {
+  static signIn(req, res, next) {
     const {
       username,
       password,
@@ -40,14 +40,14 @@ class UserController {
     if (!username || !password) {
       next({
         message: 'Username / password cannot be empty',
-      })
+      });
     } else {
       User
         .findOne({ username })
         .then((result) => {
           if (result) {
             if (comparePassword(password, result.password)) {
-              const { _id, username, role } = result;
+              const { _id, role } = result;
               const payload = {
                 _id,
                 username,
@@ -99,24 +99,24 @@ class UserController {
       const { username, password } = req.body;
       await User
         .findByIdAndUpdate(userId, {
-          username, password
+          username, password,
         }, {
           new: true,
           runValidators: true,
           context: 'query',
         });
-      
+
       res
         .status(200)
         .json({
-          username,  
+          username,
         });
     } catch (err) {
       next(err);
     }
   }
 
-  static decode(req, res, next) {
+  static decode(req, res) {
     res.status(200).send(req.payload._id);
   }
 }

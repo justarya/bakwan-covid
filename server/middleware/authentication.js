@@ -4,11 +4,10 @@ module.exports = (req, res, next) => {
   try {
     req.payload = jwtVerify(req.headers.token);
     next();
-  }
-  catch(err) {
+  } catch (err) {
     next({
       code: 401,
-      message: err.message
+      message: err.message,
     });
   }
-}
+};

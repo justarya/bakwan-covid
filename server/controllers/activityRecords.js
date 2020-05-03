@@ -2,7 +2,6 @@ const ActivityModel = require('mongoose-activitylogs/activity-model');
 const mongoose = require('mongoose');
 
 class ActivityRecordsController {
-
   static async getAllRecordsHospital(req, res, next) {
     try {
       const result = await ActivityModel
@@ -16,7 +15,6 @@ class ActivityRecordsController {
       }
 
       res.json(result);
-
     } catch (err) {
       next(err);
     }
@@ -43,7 +41,7 @@ class ActivityRecordsController {
   static async getAllRecordsUsers(req, res, next) {
     try {
       const result = await ActivityModel
-        .find({ collectionType: 'User' })
+        .find({ collectionType: 'User' });
 
       if (!result) {
         next({
@@ -53,7 +51,6 @@ class ActivityRecordsController {
       }
 
       res.json(result);
-      
     } catch (err) {
       next(err);
     }
@@ -72,7 +69,6 @@ class ActivityRecordsController {
       }
 
       res.json(result);
-      
     } catch (err) {
       next(err);
     }
@@ -91,7 +87,7 @@ class ActivityRecordsController {
           model: 'Product',
         })
         .sort([['createdAt', -1]]);
-      
+
       if (!result) {
         next({
           code: 404,
@@ -112,21 +108,26 @@ class ActivityRecordsController {
         .find({ 'referenceDocument.hospital': mongoose.Types.ObjectId(hospitalId) })
         .populate({
           path: 'referenceDocument.product',
-          model: 'Product'
+          model: 'Product',
         })
         .sort([['createdAt', -1]]);
 
       res.json(records);
-          
     } catch (err) {
       next(err);
     }
   }
 
-  static groupById (data) {
-    return data.reduce((r, a) => {
-      r[a.referenceDocument.product.name] = [...r[a.referenceDocument.product.name] || [], a];
-      return r;
+  static groupById(data) {
+    return data.reduce((result, value) => {
+      const newResult = result;
+      newResult[
+        value.referenceDocument.product.name
+      ] = [
+        ...newResult[value.referenceDocument.product.name] || [],
+        value,
+      ];
+      return newResult;
     }, {});
   }
 }
