@@ -59,6 +59,16 @@ class HospitalSupplyController {
         productId,
         demand,
       } = req.body;
+
+      const HospitalSupplyWithProductId = await HospitalSupply
+        .findOne({ product: productId });
+      if (HospitalSupplyWithProductId) {
+        next({
+          code: 400,
+          message: 'Product already exist',
+        });
+      }
+
       const result = await HospitalSupply
         .create({
           hospital: mongoose.Types.ObjectId(hospitalId),
@@ -70,7 +80,7 @@ class HospitalSupplyController {
         .execPopulate();
 
       await Hospital
-        .update({ _id: hospitalId }, {
+        .updateOne({ _id: hospitalId }, {
           $push: {
             supplies: populatedResult._id,
           },
