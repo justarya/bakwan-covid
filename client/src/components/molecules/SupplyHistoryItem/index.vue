@@ -70,13 +70,13 @@ export default {
       switch (this.action) {
         case 'created':
           return '--action-primary';
-        
+
         case 'updated':
           return '--action-default';
 
         case 'removed':
           return '--action-danger';
-      
+
         default:
           return '--action-default';
       }
@@ -85,29 +85,29 @@ export default {
       switch (this.action) {
         case 'created':
           return 'dibuat';
-        
+
         case 'updated':
           return 'diubah menjadi';
 
         case 'removed':
           return 'dihapus';
-      
+
         default:
           return '';
       }
     },
     quantity() {
-      const defaultText = `${this.demand} ${this.productUnit}`
+      const defaultText = `${this.demand} ${this.productUnit}`;
       switch (this.action) {
         case 'created':
           return `+ ${defaultText}`;
-        
+
         case 'updated':
           return defaultText;
 
         case 'removed':
           return defaultText;
-      
+
         default:
           return defaultText;
       }

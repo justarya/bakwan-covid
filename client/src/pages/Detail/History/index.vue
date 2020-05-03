@@ -49,7 +49,7 @@ export default {
       this.detail.history = this.mappingHistoryData(data);
     },
     mappingHistoryData(data) {
-      return data.map(el => ({
+      return data.map((el) => ({
         productUnit: el.referenceDocument.product.unit,
         productName: el.referenceDocument.product.name,
         demand: el.referenceDocument.demand,
