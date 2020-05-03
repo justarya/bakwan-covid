@@ -713,292 +713,292 @@ $ yarn dev:sls
 base URL: http://localhost:3000/dev/
 
 1.  (Get Hospital Record)
-    Method: 'GET'
-    Endpoint: 'records/hospital'
-    Authenticated: true
+  Method: 'GET'
+  Endpoint: 'records/hospital'
+  Authenticated: true
 
-    Respons Body:
-    200
+  Respons Body:
+  200
 
-    [
-        {
-            "_id": "5eadbb2f74d8ba527779489d",
-            "collectionType": "Hospital",
-            "referenceDocument": {
-                "users": [
-                    "5eadbb2e74d8ba527779489a"
-                ],
-                "supplies": [],
-                "contact_numbers": [
-                    "085678909876 (Dr. Dina Usaurus)"
-                ],
-                "_id": "5eadbb2f74d8ba527779489c",
-                "name": "RS Harapan Kita",
-                "email": "admin@harapankita.hospital.id",
-                "location": "Jalan Gatot Subroto, no.56, Menteng, Jakarta Selatan, DKI Jakarta",
-                "createdAt": "2020-05-02T18:25:51.704Z",
-                "updatedAt": "2020-05-02T18:25:51.704Z"
-            },
-            "action": "Created",
-            "createdAt": "2020-05-02T18:25:51.912Z",
-            "__v": 0
-        },
-        {
-            "_id": "5eadbb9574d8ba52777948a2",
-            "collectionType": "Hospital",
-            "referenceDocument": {
-                "users": [
-                    "5eadbb8b74d8ba527779489e"
-                ],
-                "supplies": [],
-                "contact_numbers": [
-                    "086576787678 (Dr. Fx Prayitno)"
-                ],
-                "_id": "5eadbb9474d8ba52777948a1",
-                "name": "RS Siloam Bandung",
-                "email": "admin@siloam-bandung.hospital.id",
-                "location": "Jalan Teuku Umar, no.37, Bandung Selatan, Kota Bandung",
-                "createdAt": "2020-05-02T18:27:33.104Z",
-                "updatedAt": "2020-05-02T18:27:33.104Z"
-            },
-            "action": "Created",
-            "createdAt": "2020-05-02T18:27:33.356Z",
-            "__v": 0
-        }
-    ]
+  [
+    {
+      "_id": "5eadbb2f74d8ba527779489d",
+      "collectionType": "Hospital",
+      "referenceDocument": {
+        "users": [
+          "5eadbb2e74d8ba527779489a"
+        ],
+        "supplies": [],
+        "contact_numbers": [
+          "085678909876 (Dr. Dina Usaurus)"
+        ],
+        "_id": "5eadbb2f74d8ba527779489c",
+        "name": "RS Harapan Kita",
+        "email": "admin@harapankita.hospital.id",
+        "location": "Jalan Gatot Subroto, no.56, Menteng, Jakarta Selatan, DKI Jakarta",
+        "createdAt": "2020-05-02T18:25:51.704Z",
+        "updatedAt": "2020-05-02T18:25:51.704Z"
+      },
+      "action": "Created",
+      "createdAt": "2020-05-02T18:25:51.912Z",
+      "__v": 0
+    },
+    {
+      "_id": "5eadbb9574d8ba52777948a2",
+      "collectionType": "Hospital",
+      "referenceDocument": {
+        "users": [
+          "5eadbb8b74d8ba527779489e"
+        ],
+        "supplies": [],
+        "contact_numbers": [
+          "086576787678 (Dr. Fx Prayitno)"
+        ],
+        "_id": "5eadbb9474d8ba52777948a1",
+        "name": "RS Siloam Bandung",
+        "email": "admin@siloam-bandung.hospital.id",
+        "location": "Jalan Teuku Umar, no.37, Bandung Selatan, Kota Bandung",
+        "createdAt": "2020-05-02T18:27:33.104Z",
+        "updatedAt": "2020-05-02T18:27:33.104Z"
+      },
+      "action": "Created",
+      "createdAt": "2020-05-02T18:27:33.356Z",
+      "__v": 0
+    }
+  ]
 
 
 2.  (Get Product Record)
-    Method: 'GET'
-    Endpoint: 'records/product'
-    Authenticated: true
+  Method: 'GET'
+  Endpoint: 'records/product'
+  Authenticated: true
 
-    Respons Body:
-    200
+  Respons Body:
+  200
 
-    [
-        {
-            "_id": "5eadbd5474d8ba52777948a4",
-            "collectionType": "Product",
-            "referenceDocument": {
-                "unit": "pcs",
-                "_id": "5eadbd5474d8ba52777948a3",
-                "name": "Hazmat",
-                "createdAt": "2020-05-02T18:35:00.247Z",
-                "updatedAt": "2020-05-02T18:35:00.247Z"
-            },
-            "action": "Created",
-            "createdAt": "2020-05-02T18:35:00.468Z",
-            "__v": 0
-        },
-        {
-            "_id": "5eadbd5d74d8ba52777948a6",
-            "collectionType": "Product",
-            "referenceDocument": {
-                "unit": "pcs",
-                "_id": "5eadbd5c74d8ba52777948a5",
-                "name": "Masker",
-                "createdAt": "2020-05-02T18:35:08.623Z",
-                "updatedAt": "2020-05-02T18:35:08.623Z"
-            },
-            "action": "Created",
-            "createdAt": "2020-05-02T18:35:09.280Z",
-            "__v": 0
-        },
-        {
-            "_id": "5eadbd6a74d8ba52777948a8",
-            "collectionType": "Product",
-            "referenceDocument": {
-                "unit": "pcs",
-                "_id": "5eadbd6974d8ba52777948a7",
-                "name": "Ventilator",
-                "createdAt": "2020-05-02T18:35:21.973Z",
-                "updatedAt": "2020-05-02T18:35:21.973Z"
-            },
-            "action": "Created",
-            "createdAt": "2020-05-02T18:35:22.182Z",
-            "__v": 0
-        }
-    ]
+  [
+    {
+      "_id": "5eadbd5474d8ba52777948a4",
+      "collectionType": "Product",
+      "referenceDocument": {
+        "unit": "pcs",
+        "_id": "5eadbd5474d8ba52777948a3",
+        "name": "Hazmat",
+        "createdAt": "2020-05-02T18:35:00.247Z",
+        "updatedAt": "2020-05-02T18:35:00.247Z"
+      },
+      "action": "Created",
+      "createdAt": "2020-05-02T18:35:00.468Z",
+      "__v": 0
+    },
+    {
+      "_id": "5eadbd5d74d8ba52777948a6",
+      "collectionType": "Product",
+      "referenceDocument": {
+        "unit": "pcs",
+        "_id": "5eadbd5c74d8ba52777948a5",
+        "name": "Masker",
+        "createdAt": "2020-05-02T18:35:08.623Z",
+        "updatedAt": "2020-05-02T18:35:08.623Z"
+      },
+      "action": "Created",
+      "createdAt": "2020-05-02T18:35:09.280Z",
+      "__v": 0
+    },
+    {
+      "_id": "5eadbd6a74d8ba52777948a8",
+      "collectionType": "Product",
+      "referenceDocument": {
+        "unit": "pcs",
+        "_id": "5eadbd6974d8ba52777948a7",
+        "name": "Ventilator",
+        "createdAt": "2020-05-02T18:35:21.973Z",
+        "updatedAt": "2020-05-02T18:35:21.973Z"
+      },
+      "action": "Created",
+      "createdAt": "2020-05-02T18:35:22.182Z",
+      "__v": 0
+    }
+  ]
 
 3.  (Get User Record)
-    Method: 'GET'
-    Endpoint: 'records/user'
-    Authenticated: true
+  Method: 'GET'
+  Endpoint: 'records/user'
+  Authenticated: true
 
-    Respons Body:
-    200
+  Respons Body:
+  200
 
-    [
-        {
-            "_id": "5eadbb2f74d8ba527779489b",
-            "collectionType": "User",
-            "referenceDocument": {
-                "role": 0,
-                "_id": "5eadbb2e74d8ba527779489a",
-                "username": "admin-harapankita-jakarta",
-                "password": "$2a$10$8hb4agunAePDk2REUaKhGOhPLG7bM8ASlQxZd1zrbTsMFw0v7cIqG",
-                "createdAt": "2020-05-02T18:25:50.884Z",
-                "updatedAt": "2020-05-02T18:25:50.884Z"
-            },
-            "action": "Created",
-            "createdAt": "2020-05-02T18:25:51.224Z",
-            "__v": 0
-        },
-        {
-            "_id": "5eadbb8c74d8ba527779489f",
-            "collectionType": "User",
-            "referenceDocument": {
-                "role": 0,
-                "_id": "5eadbb8b74d8ba527779489e",
-                "username": "admin-siloam-bandung",
-                "password": "$2a$10$KxqdQX6rgfBa73Aio0RDheN.lRuutSyXYrcoY8IqvpF6fqnaJ2skC",
-                "createdAt": "2020-05-02T18:27:23.852Z",
-                "updatedAt": "2020-05-02T18:27:23.852Z"
-            },
-            "action": "Created",
-            "createdAt": "2020-05-02T18:27:24.182Z",
-            "__v": 0
-        }
-    ]
+  [
+    {
+      "_id": "5eadbb2f74d8ba527779489b",
+      "collectionType": "User",
+      "referenceDocument": {
+        "role": 0,
+        "_id": "5eadbb2e74d8ba527779489a",
+        "username": "admin-harapankita-jakarta",
+        "password": "$2a$10$8hb4agunAePDk2REUaKhGOhPLG7bM8ASlQxZd1zrbTsMFw0v7cIqG",
+        "createdAt": "2020-05-02T18:25:50.884Z",
+        "updatedAt": "2020-05-02T18:25:50.884Z"
+      },
+      "action": "Created",
+      "createdAt": "2020-05-02T18:25:51.224Z",
+      "__v": 0
+    },
+    {
+      "_id": "5eadbb8c74d8ba527779489f",
+      "collectionType": "User",
+      "referenceDocument": {
+        "role": 0,
+        "_id": "5eadbb8b74d8ba527779489e",
+        "username": "admin-siloam-bandung",
+        "password": "$2a$10$KxqdQX6rgfBa73Aio0RDheN.lRuutSyXYrcoY8IqvpF6fqnaJ2skC",
+        "createdAt": "2020-05-02T18:27:23.852Z",
+        "updatedAt": "2020-05-02T18:27:23.852Z"
+      },
+      "action": "Created",
+      "createdAt": "2020-05-02T18:27:24.182Z",
+      "__v": 0
+    }
+  ]
 
 3.  (Get Hopital Supply Record)
-    Method: 'GET'
-    Endpoint: 'records/hospitalsupply'
-    Authenticated: true
+  Method: 'GET'
+  Endpoint: 'records/hospitalsupply'
+  Authenticated: true
 
-    Respons Body:
-    200
+  Respons Body:
+  200
 
-    [
-        {
-            "_id": "5eadbf2174d8ba52777948b2",
-            "collectionType": "Hospital Supply",
-            "referenceDocument": {
-                "_id": "5eadbf2174d8ba52777948b1",
-                "product": "5eadbd6974d8ba52777948a7",
-                "demand": 3,
-                "createdAt": "2020-05-02T18:42:41.571Z",
-                "updatedAt": "2020-05-02T18:42:41.571Z"
-            },
-            "action": "Created",
-            "createdAt": "2020-05-02T18:42:41.808Z",
-            "__v": 0
-        },
-        {
-            "_id": "5eadbf2e74d8ba52777948b5",
-            "collectionType": "Hospital Supply",
-            "referenceDocument": {
-                "_id": "5eadbf2d74d8ba52777948b4",
-                "product": "5eadbd8374d8ba52777948ab",
-                "demand": 5,
-                "createdAt": "2020-05-02T18:42:53.870Z",
-                "updatedAt": "2020-05-02T18:42:53.870Z"
-            },
-            "action": "Created",
-            "createdAt": "2020-05-02T18:42:54.084Z",
-            "__v": 0
-        },
-        {
-            "_id": "5eadbf3774d8ba52777948b8",
-            "collectionType": "Hospital Supply",
-            "referenceDocument": {
-                "_id": "5eadbf3774d8ba52777948b7",
-                "product": "5eadbd9674d8ba52777948ad",
-                "demand": 7,
-                "createdAt": "2020-05-02T18:43:03.430Z",
-                "updatedAt": "2020-05-02T18:43:03.430Z"
-            },
-            "action": "Created",
-            "createdAt": "2020-05-02T18:43:03.642Z",
-            "__v": 0
-        }
-    ]
+  [
+    {
+      "_id": "5eadbf2174d8ba52777948b2",
+      "collectionType": "Hospital Supply",
+      "referenceDocument": {
+        "_id": "5eadbf2174d8ba52777948b1",
+        "product": "5eadbd6974d8ba52777948a7",
+        "demand": 3,
+        "createdAt": "2020-05-02T18:42:41.571Z",
+        "updatedAt": "2020-05-02T18:42:41.571Z"
+      },
+      "action": "Created",
+      "createdAt": "2020-05-02T18:42:41.808Z",
+      "__v": 0
+    },
+    {
+      "_id": "5eadbf2e74d8ba52777948b5",
+      "collectionType": "Hospital Supply",
+      "referenceDocument": {
+        "_id": "5eadbf2d74d8ba52777948b4",
+        "product": "5eadbd8374d8ba52777948ab",
+        "demand": 5,
+        "createdAt": "2020-05-02T18:42:53.870Z",
+        "updatedAt": "2020-05-02T18:42:53.870Z"
+      },
+      "action": "Created",
+      "createdAt": "2020-05-02T18:42:54.084Z",
+      "__v": 0
+    },
+    {
+      "_id": "5eadbf3774d8ba52777948b8",
+      "collectionType": "Hospital Supply",
+      "referenceDocument": {
+        "_id": "5eadbf3774d8ba52777948b7",
+        "product": "5eadbd9674d8ba52777948ad",
+        "demand": 7,
+        "createdAt": "2020-05-02T18:43:03.430Z",
+        "updatedAt": "2020-05-02T18:43:03.430Z"
+      },
+      "action": "Created",
+      "createdAt": "2020-05-02T18:43:03.642Z",
+      "__v": 0
+    }
+  ]
 
 3.  (Get Hopital Supply Record - Single Product)
-    Method: 'GET'
-    Endpoint: 'records/hospitalsupply/:hospitalSupplyId'
-    Authenticated: true
+  Method: 'GET'
+  Endpoint: 'records/hospitalsupply/:hospitalSupplyId'
+  Authenticated: true
 
-    Respons Body:
-    200
+  Respons Body:
+  200
 
-    [
-        {
-            "name": "Hazmat",
-            "demand_before": 0,
-            "demand_after": 2,
-            "description": "ditambahkan"
-        },
-        {
-            "name": "Hazmat",
-            "demand_before": 2,
-            "demand_after": 3,
-            "description": "diubah"
-        },
-        {
-            "name": "Hazmat",
-            "demand_before": 3,
-            "demand_after": 1,
-            "description": "diubah"
-        },
-        {
-            "name": "Hazmat",
-            "demand_before": 1,
-            "demand_after": 0,
-            "description": "dihapus"
-        }
-    ]
+  [
+    {
+      "name": "Hazmat",
+      "demand_before": 0,
+      "demand_after": 2,
+      "description": "ditambahkan"
+    },
+    {
+      "name": "Hazmat",
+      "demand_before": 2,
+      "demand_after": 3,
+      "description": "diubah"
+    },
+    {
+      "name": "Hazmat",
+      "demand_before": 3,
+      "demand_after": 1,
+      "description": "diubah"
+    },
+    {
+      "name": "Hazmat",
+      "demand_before": 1,
+      "demand_after": 0,
+      "description": "dihapus"
+    }
+  ]
 
 4.  (Get Hopital Supply Record - Based on HopitalId)
-    Method: 'GET'
-    Endpoint: 'records/hospital/:hospitalId'
-    Authenticated: true
+  Method: 'GET'
+  Endpoint: 'records/hospital/:hospitalId'
+  Authenticated: true
 
-    Respons Body:
-    200
+  Respons Body:
+  200
 
-    [
-      {
-          "Masker": [
-              {
-                  "name": "Masker",
-                  "demand_before": 0,
-                  "demand_after": 3,
-                  "description": "ditambahkan"
-              },
-              {
-                  "name": "Masker",
-                  "demand_before": 3,
-                  "demand_after": 8,
-                  "description": "diubah"
-              }
-          ]
-      },
-      {
-          "Ventilator": [
-              {
-                  "name": "Ventilator",
-                  "demand_before": 0,
-                  "demand_after": 4,
-                  "description": "ditambahkan"
-              }
-          ]
-      },
-      {
-          "Hand Sanitizer": [
-              {
-                  "name": "Hand Sanitizer",
-                  "demand_before": 0,
-                  "demand_after": 3,
-                  "description": "ditambahkan"
-              },
-              {
-                  "name": "Hand Sanitizer",
-                  "demand_before": 3,
-                  "demand_after": 10,
-                  "description": "diubah"
-              }
-          ]
-      }
-    ]
+  [
+    {
+      "Masker": [
+        {
+          "name": "Masker",
+          "demand_before": 0,
+          "demand_after": 3,
+          "description": "ditambahkan"
+        },
+        {
+          "name": "Masker",
+          "demand_before": 3,
+          "demand_after": 8,
+          "description": "diubah"
+        }
+      ]
+    },
+    {
+      "Ventilator": [
+        {
+          "name": "Ventilator",
+          "demand_before": 0,
+          "demand_after": 4,
+          "description": "ditambahkan"
+        }
+      ]
+    },
+    {
+      "Hand Sanitizer": [
+        {
+          "name": "Hand Sanitizer",
+          "demand_before": 0,
+          "demand_after": 3,
+          "description": "ditambahkan"
+        },
+        {
+          "name": "Hand Sanitizer",
+          "demand_before": 3,
+          "demand_after": 10,
+          "description": "diubah"
+        }
+      ]
+    }
+  ]
