@@ -1,4 +1,5 @@
 const Hospital = require('../models/hospital');
+
 const defaultSelection = 'name contact_numbers email location';
 
 class HospitalController {
@@ -49,7 +50,7 @@ class HospitalController {
     try {
       let filter = {};
       if (req.query.search) {
-        const regex = new RegExp(req.query.search,'i');
+        const regex = new RegExp(req.query.search, 'i');
         filter = {
           $or: [
             { name: regex },
@@ -106,15 +107,15 @@ class HospitalController {
         })
         .select(`${defaultSelection} supplies`);
 
-        if (!hospitalData.name) {
-          next({
-            code: 404,
-            message: 'Hospital Not found',
-          });
-        }
+      if (!hospitalData.name) {
+        next({
+          code: 404,
+          message: 'Hospital Not found',
+        });
+      }
 
-        res
-          .json(hospitalData);
+      res
+        .json(hospitalData);
     } catch (err) {
       next(err);
     }
@@ -155,6 +156,7 @@ class HospitalController {
       next(err);
     }
   }
+
   static async deleteHospital(req, res, next) {
     try {
       const { hospitalId } = req.params;
@@ -169,7 +171,6 @@ class HospitalController {
       }
       res
         .json({ success: true });
-
     } catch (err) {
       next(err);
     }

@@ -10,7 +10,7 @@ let isConnected;
  */
 const connectToDatabase = (done) => {
   console.log('isConnected', isConnected);
-  if (isConnected) return done();
+  if (isConnected) done();
 
   mongoose.connect(process.env.ATLAS_CLUSTER, {
     useNewUrlParser: true,
