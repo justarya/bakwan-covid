@@ -5,10 +5,10 @@ class ProductController {
     try {
       const filter = {};
       if (req.query.search) {
-        const search = req.query.search;
+        const { search } = req.query;
         filter.name = {
-          '$regex': search,
-          '$options' : 'i',
+          $regex: search,
+          $options: 'i',
         };
       }
       const pagination = {
@@ -25,6 +25,7 @@ class ProductController {
       next(err);
     }
   }
+
   static async create(req, res, next) {
     try {
       const {
@@ -36,12 +37,13 @@ class ProductController {
           name,
           unit,
         });
-      
+
       res.status(201).json(result);
     } catch (err) {
       next(err);
     }
   }
+
   static async edit(req, res, next) {
     try {
       const { productId } = req.params;
@@ -57,17 +59,18 @@ class ProductController {
           new: true,
           runValidators: true,
         });
-      
+
       res.json(result);
     } catch (err) {
       next(err);
     }
   }
+
   static async delete(req, res, next) {
     try {
       const { productId } = req.params;
       await Product.deleteOne({ _id: productId });
-      
+
       res.json({
         success: true,
       });

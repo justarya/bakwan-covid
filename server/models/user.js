@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const { hashPassword } = require('../helper/bcryptjs');
+
+const { Schema } = mongoose;
 const uniqueValidator = require('mongoose-unique-validator');
-const mongooseLogs = require('mongoose-activitylogs');
+const { hashPassword } = require('../helper/bcryptjs');
 
 const UserSchema = new Schema({
   username: {
@@ -15,12 +15,12 @@ const UserSchema = new Schema({
         return false;
       }
       return true;
-    }, `Username must not contain '@', ' ', '.'`]
+    }, 'Username must not contain \'@\', \' \', \'.\''],
   },
   password: {
     type: String,
-    minlength: [8, `Password must have min length 8`],
-    required: [true, `Password required!`],
+    minlength: [8, 'Password must have min length 8'],
+    required: [true, 'Password required!'],
   },
   role: {
     type: Number,
@@ -31,7 +31,7 @@ const UserSchema = new Schema({
   versionKey: false,
 });
 
-UserSchema.pre('save', function() {
+UserSchema.pre('save', function () {
   this.password = hashPassword(this.password);
 });
 

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+
+const { Schema } = mongoose;
 const uniqueValidator = require('mongoose-unique-validator');
-const mongooseLogs = require('mongoose-activitylogs');
 
 const HospitalSchema = new Schema({
   users: [{
@@ -23,7 +23,7 @@ const HospitalSchema = new Schema({
   email: {
     type: String,
     unique: true,
-    validate: [function(val) {
+    validate: [function (val) {
       return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(val);
     }, 'Email not valid'],
   },

@@ -1,8 +1,10 @@
+const mongoose = require('mongoose');
+
 const HospitalSupply = require('../models/hospitalSupply');
 const Hospital = require('../models/hospital');
 const ActivityLog = require('../models/activityRecords');
+
 const selection = '_id product demand hospital';
-const mongoose = require('mongoose');
 
 class HospitalSupplyController {
   static async getAll(req, res, next) {
@@ -13,14 +15,14 @@ class HospitalSupplyController {
         product: {},
       };
       if (req.query.search) {
-        const search = req.query.search;
+        const { search } = req.query;
         filter.supplies.product_name = {
-          '$regex': search,
-          '$options' : 'i',
+          $regex: search,
+          $options: 'i',
         };
         filter.product.name = {
-          '$regex': search,
-          '$options' : 'i',
+          $regex: search,
+          $options: 'i',
         };
       }
       const result = await Hospital
@@ -45,11 +47,11 @@ class HospitalSupplyController {
         });
       }
       res.json(result.supplies);
-
     } catch (err) {
       next(err);
     }
   }
+
   static async create(req, res, next) {
     try {
       const { hospitalId } = req.params;
@@ -61,11 +63,11 @@ class HospitalSupplyController {
         .create({
           hospital: mongoose.Types.ObjectId(hospitalId),
           product: productId,
-          demand
-        })
+          demand,
+        });
       const populatedResult = await result
         .populate('product')
-        .execPopulate()
+        .execPopulate();
 
       await Hospital
         .update({ _id: hospitalId }, {
@@ -84,11 +86,12 @@ class HospitalSupplyController {
       next(err);
     }
   }
+
   static async edit(req, res, next) {
     try {
       const {
         hospitalId,
-        hospitalSupplyId
+        hospitalSupplyId,
       } = req.params;
 
       const {
@@ -117,11 +120,11 @@ class HospitalSupplyController {
       }
       res
         .json(result);
-      
     } catch (err) {
       next(err);
     }
   }
+
   static async delete(req, res, next) {
     try {
       const {
@@ -135,8 +138,8 @@ class HospitalSupplyController {
       const log = {
         _id: hospitalSupplyId,
         hospital: mongoose.Types.ObjectId(hospitalId),
-        product: hospitalSupplyData.product, 
-        demand: hospitalSupplyData.demand, 
+        product: hospitalSupplyData.product,
+        demand: hospitalSupplyData.demand,
       };
       await ActivityLog.create({
         collectionType: 'HospitalSupply',
@@ -145,23 +148,22 @@ class HospitalSupplyController {
       });
 
       const {
-        deletedCount: deleteCountHospitalSupply
+        deletedCount: deleteCountHospitalSupply,
       } = await HospitalSupply
         .deleteOne({ _id: hospitalSupplyId });
-        
+
       if (deleteCountHospitalSupply) {
         await Hospital
           .updateOne({
-              _id: hospitalId
-            }, {
-              $pull: {
-                supplies: hospitalSupplyId,
-              },
-            }
-          );
+            _id: hospitalId,
+          }, {
+            $pull: {
+              supplies: hospitalSupplyId,
+            },
+          });
         res
           .json({
-            success: true,    
+            success: true,
           });
       }
 

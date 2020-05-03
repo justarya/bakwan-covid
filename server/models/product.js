@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const mongooseLogs = require('mongoose-activitylogs');
+
+const { Schema } = mongoose;
 
 const ProductSchema = new Schema({
   name: {
