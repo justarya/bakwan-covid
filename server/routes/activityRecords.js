@@ -11,6 +11,7 @@ router.get('/product', activityRecords.getAllRecordsProducts);
 router.get('/user', activityRecords.getAllRecordsUsers);
 router.get('/hospitalsupply', activityRecords.getAllRecordsHospitalSupplies);
 router.get('/hospitalsupply/:hospitalSupplyId', activityRecords.getRecordsHospitalSuppliesByProduct);
+router.get('/hospital/:hospitalId', activityRecords.getRecordsHospitalSuppliesByHospitalId);
 
 
 module.exports = router;
