@@ -1,7 +1,7 @@
 const HospitalSupply = require('../models/hospitalSupply');
 const Hospital = require('../models/hospital');
 const ActivityLog = require('../models/activityRecords');
-const selection = '_id product demand';
+const selection = '_id product demand hospital';
 const mongoose = require('mongoose');
 
 class HospitalSupplyController {
@@ -108,7 +108,7 @@ class HospitalSupplyController {
         })
         .populate('product')
         .select(selection);
-      
+
       if (!result) {
         next({
           code: 404,

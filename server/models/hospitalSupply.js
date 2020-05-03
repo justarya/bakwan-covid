@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 const mongooseLogs = require('mongoose-activitylogs');
 
 const HospitalSupplySchema = new Schema({
+  hospital: {
+    type: Schema.Types.ObjectId,
+    ref: 'Hospital',
+  },
   product: {
     type: Schema.Types.ObjectId,
     ref: 'Product',
@@ -10,10 +14,6 @@ const HospitalSupplySchema = new Schema({
   demand: {
     type: Number,
     required: [true, 'Demand cannot be empty'],
-  },
-  hospital: {
-    type: Schema.Types.ObjectId,
-    ref: 'Hospital',
   },
 }, {
   timestamps: true,
