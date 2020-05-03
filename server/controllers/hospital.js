@@ -61,7 +61,6 @@ class HospitalController {
         size: Number(req.query.size) || 20,
         page: Number(req.query.page) || 0,
       };
-      console.log(pagination);
       const hospitalList = await Hospital
         .find(filter)
         .limit(pagination.size)

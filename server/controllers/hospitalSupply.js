@@ -1,6 +1,8 @@
 const HospitalSupply = require('../models/hospitalSupply');
 const Hospital = require('../models/hospital');
-const selection = '_id product demand';
+const ActivityLog = require('../models/activityRecords');
+const selection = '_id product demand hospital';
+const mongoose = require('mongoose');
 
 class HospitalSupplyController {
   static async getAll(req, res, next) {
@@ -57,6 +59,7 @@ class HospitalSupplyController {
       } = req.body;
       const result = await HospitalSupply
         .create({
+          hospital: mongoose.Types.ObjectId(hospitalId),
           product: productId,
           demand
         })
@@ -84,6 +87,7 @@ class HospitalSupplyController {
   static async edit(req, res, next) {
     try {
       const {
+        hospitalId,
         hospitalSupplyId
       } = req.params;
 
@@ -94,15 +98,17 @@ class HospitalSupplyController {
 
       const result = await HospitalSupply
         .findByIdAndUpdate(hospitalSupplyId, {
+          hospital: mongoose.Types.ObjectId(hospitalId),
           product: productId,
           demand,
         }, {
           new: true,
+          useFindAndModify: false,
           runValidators: true,
         })
         .populate('product')
         .select(selection);
-      
+
       if (!result) {
         next({
           code: 404,
@@ -122,6 +128,21 @@ class HospitalSupplyController {
         hospitalId,
         hospitalSupplyId,
       } = req.params;
+
+      const hospitalSupplyData = await HospitalSupply
+        .findById(hospitalSupplyId);
+
+      const log = {
+        _id: hospitalSupplyId,
+        hospital: mongoose.Types.ObjectId(hospitalId),
+        product: hospitalSupplyData.product, 
+        demand: hospitalSupplyData.demand, 
+      };
+      await ActivityLog.create({
+        collectionType: 'HospitalSupply',
+        referenceDocument: log,
+        action: 'removed',
+      });
 
       const {
         deletedCount: deleteCountHospitalSupply
