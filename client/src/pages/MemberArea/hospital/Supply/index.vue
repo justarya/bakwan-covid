@@ -91,23 +91,7 @@
               :key="index"
             >
               <td style="width: 500px">
-                <v-select
-                  v-if="config.action === index"
-                  v-model="formData.edit.product"
-                  :searchable="true"
-                  :filterable="true"
-                  :options="config.product.options"
-                >
-                  <template #no-options="{ search }">
-                    <template v-if="!search">
-                      Silahkan ketik nama barang
-                    </template>
-                    <template v-else>
-                      Kata kunci "{{ search }}" tidak ditemukan
-                    </template>
-                  </template>
-                </v-select>
-                <span v-else>
+                <span>
                   {{ data.product ? data.product.name : data.product_name }}
                 </span>
               </td>

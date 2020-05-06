@@ -1,6 +1,10 @@
+const mongoose = require('mongoose');
+
 const HospitalSupply = require('../models/hospitalSupply');
 const Hospital = require('../models/hospital');
-const selection = '_id product demand';
+const ActivityLog = require('../models/activityRecords');
+
+const selection = '_id product demand hospital';
 
 class HospitalSupplyController {
   static async getAll(req, res, next) {
@@ -11,14 +15,14 @@ class HospitalSupplyController {
         product: {},
       };
       if (req.query.search) {
-        const search = req.query.search;
+        const { search } = req.query;
         filter.supplies.product_name = {
-          '$regex': search,
-          '$options' : 'i',
+          $regex: search,
+          $options: 'i',
         };
         filter.product.name = {
-          '$regex': search,
-          '$options' : 'i',
+          $regex: search,
+          $options: 'i',
         };
       }
       const result = await Hospital
@@ -43,11 +47,11 @@ class HospitalSupplyController {
         });
       }
       res.json(result.supplies);
-
     } catch (err) {
       next(err);
     }
   }
+
   static async create(req, res, next) {
     try {
       const { hospitalId } = req.params;
@@ -55,36 +59,52 @@ class HospitalSupplyController {
         productId,
         demand,
       } = req.body;
-      const result = await HospitalSupply
-        .create({
-          product: productId,
-          demand
-        })
-      const populatedResult = await result
-        .populate('product')
-        .execPopulate()
 
-      await Hospital
-        .update({ _id: hospitalId }, {
-          $push: {
-            supplies: populatedResult._id,
-          },
+      const HospitalSupplyWithProductId = await HospitalSupply
+        .findOne({
+          hospital: hospitalId,
+          product: productId
         });
-      res
-        .status(201)
-        .json({
-          _id: populatedResult._id,
-          product: populatedResult.product,
-          demand: populatedResult.demand,
+      if (HospitalSupplyWithProductId) {
+        return next({
+          code: 400,
+          message: 'Product already exist',
         });
+      } else {
+        const result = await HospitalSupply
+          .create({
+            hospital: mongoose.Types.ObjectId(hospitalId),
+            product: productId,
+            demand,
+          });
+        const populatedResult = await result
+          .populate('product')
+          .execPopulate();
+  
+        await Hospital
+          .updateOne({ _id: hospitalId }, {
+            $push: {
+              supplies: populatedResult._id,
+            },
+          });
+        res
+          .status(201)
+          .json({
+            _id: populatedResult._id,
+            product: populatedResult.product,
+            demand: populatedResult.demand,
+          });
+      }
     } catch (err) {
       next(err);
     }
   }
+
   static async edit(req, res, next) {
     try {
       const {
-        hospitalSupplyId
+        hospitalId,
+        hospitalSupplyId,
       } = req.params;
 
       const {
@@ -94,15 +114,17 @@ class HospitalSupplyController {
 
       const result = await HospitalSupply
         .findByIdAndUpdate(hospitalSupplyId, {
+          hospital: mongoose.Types.ObjectId(hospitalId),
           product: productId,
           demand,
         }, {
           new: true,
+          useFindAndModify: false,
           runValidators: true,
         })
         .populate('product')
         .select(selection);
-      
+
       if (!result) {
         next({
           code: 404,
@@ -111,11 +133,11 @@ class HospitalSupplyController {
       }
       res
         .json(result);
-      
     } catch (err) {
       next(err);
     }
   }
+
   static async delete(req, res, next) {
     try {
       const {
@@ -123,24 +145,38 @@ class HospitalSupplyController {
         hospitalSupplyId,
       } = req.params;
 
+      const hospitalSupplyData = await HospitalSupply
+        .findById(hospitalSupplyId);
+
+      const log = {
+        _id: hospitalSupplyId,
+        hospital: mongoose.Types.ObjectId(hospitalId),
+        product: hospitalSupplyData.product,
+        demand: hospitalSupplyData.demand,
+      };
+      await ActivityLog.create({
+        collectionType: 'HospitalSupply',
+        referenceDocument: log,
+        action: 'removed',
+      });
+
       const {
-        deletedCount: deleteCountHospitalSupply
+        deletedCount: deleteCountHospitalSupply,
       } = await HospitalSupply
         .deleteOne({ _id: hospitalSupplyId });
-        
+
       if (deleteCountHospitalSupply) {
         await Hospital
           .updateOne({
-              _id: hospitalId
-            }, {
-              $pull: {
-                supplies: hospitalSupplyId,
-              },
-            }
-          );
+            _id: hospitalId,
+          }, {
+            $pull: {
+              supplies: hospitalSupplyId,
+            },
+          });
         res
           .json({
-            success: true,    
+            success: true,
           });
       }
 

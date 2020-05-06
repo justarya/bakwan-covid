@@ -6,6 +6,7 @@
   "scripts": {
     "dev:sls": "serverless offline",
     "dev": "NODE_ENV=dev nodemon bin/http.js",
+    "lint": "./node_modules/.bin/eslint .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -18,11 +19,15 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.10",
+    "mongoose-activitylogs": "^2.1.15",
     "mongoose-unique-validator": "^2.0.3",
     "morgan": "^1.9.1",
     "serverless-http": "^2.3.2"
   },
   "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2",
     "serverless-offline": "^6.1.4"
   }
 }

@@ -87,7 +87,6 @@ export default {
             this.pagination.page += 1;
 
             const newData = this.mappingHospitalData(data);
-            console.log(newData);
             this.list.hospital.push(...newData);
 
             state.loaded();

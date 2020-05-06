@@ -659,6 +659,291 @@ $ yarn dev:sls
     }
     ```
 
+## Records
+
+
+* ### Get Hospital Record
+
+  > **Method** : `GET`  
+  > **Endpoint** : `/records/hospital`  
+  > **Authentication** : `true`
+
+  **_Response Body_** :
+  * 200
+
+    ```json
+    [
+      {
+        "_id": "5eadbb2f74d8ba527779489d",
+        "collectionType": "Hospital",
+        "referenceDocument": {
+          "users": [
+            "5eadbb2e74d8ba527779489a"
+          ],
+          "supplies": [],
+          "contact_numbers": [
+            "085678909876 (Dr. Dina Usaurus)"
+          ],
+          "_id": "5eadbb2f74d8ba527779489c",
+          "name": "RS Harapan Kita",
+          "email": "admin@harapankita.hospital.id",
+          "location": "Jalan Gatot Subroto, no.56, Menteng, Jakarta Selatan, DKI Jakarta",
+          "createdAt": "2020-05-02T18:25:51.704Z",
+          "updatedAt": "2020-05-02T18:25:51.704Z"
+        },
+        "action": "created",
+        "createdAt": "2020-05-02T18:25:51.912Z",
+        "__v": 0
+      },
+      {
+        "_id": "5eadbb9574d8ba52777948a2",
+        "collectionType": "Hospital",
+        "referenceDocument": {
+          "users": [
+            "5eadbb8b74d8ba527779489e"
+          ],
+          "supplies": [],
+          "contact_numbers": [
+            "086576787678 (Dr. Fx Prayitno)"
+          ],
+          "_id": "5eadbb9474d8ba52777948a1",
+          "name": "RS Siloam Bandung",
+          "email": "admin@siloam-bandung.hospital.id",
+          "location": "Jalan Teuku Umar, no.37, Bandung Selatan, Kota Bandung",
+          "createdAt": "2020-05-02T18:27:33.104Z",
+          "updatedAt": "2020-05-02T18:27:33.104Z"
+        },
+        "action": "created",
+        "createdAt": "2020-05-02T18:27:33.356Z",
+        "__v": 0
+      }
+    ]
+    ```
+
+* ### Get Product Record
+
+  > **Method** : `GET`  
+  > **Endpoint** : `/records/product`  
+  > **Authentication** : `true`
+
+  **_Response Body_** :
+  * 200
+
+    ```json
+    [
+      {
+        "_id": "5eadbd5474d8ba52777948a4",
+        "collectionType": "Product",
+        "referenceDocument": {
+          "unit": "pcs",
+          "_id": "5eadbd5474d8ba52777948a3",
+          "name": "Hazmat",
+          "createdAt": "2020-05-02T18:35:00.247Z",
+          "updatedAt": "2020-05-02T18:35:00.247Z"
+        },
+        "action": "created",
+        "createdAt": "2020-05-02T18:35:00.468Z",
+        "__v": 0
+      },
+      {
+        "_id": "5eadbd5d74d8ba52777948a6",
+        "collectionType": "Product",
+        "referenceDocument": {
+          "unit": "pcs",
+          "_id": "5eadbd5c74d8ba52777948a5",
+          "name": "Masker",
+          "createdAt": "2020-05-02T18:35:08.623Z",
+          "updatedAt": "2020-05-02T18:35:08.623Z"
+        },
+        "action": "created",
+        "createdAt": "2020-05-02T18:35:09.280Z",
+        "__v": 0
+      },
+      {
+        "_id": "5eadbd6a74d8ba52777948a8",
+        "collectionType": "Product",
+        "referenceDocument": {
+          "unit": "pcs",
+          "_id": "5eadbd6974d8ba52777948a7",
+          "name": "Ventilator",
+          "createdAt": "2020-05-02T18:35:21.973Z",
+          "updatedAt": "2020-05-02T18:35:21.973Z"
+        },
+        "action": "created",
+        "createdAt": "2020-05-02T18:35:22.182Z",
+        "__v": 0
+      }
+    ]
+    ```
+
+* ### Get User Record
+
+  > **Method** : `GET`  
+  > **Endpoint** : `/records/user`  
+  > **Authentication** : `true`
+
+  **_Response Body_** :
+  * 200
+
+    ```json
+    [
+      {
+        "_id": "5eadbb2f74d8ba527779489b",
+        "collectionType": "User",
+        "referenceDocument": {
+            "role": 0,
+            "_id": "5eadbb2e74d8ba527779489a",
+            "username": "admin-harapankita-jakarta",
+            "password": "$2a$10$8hb4agunAePDk2REUaKhGOhPLG7bM8ASlQxZd1zrbTsMFw0v7cIqG",
+            "createdAt": "2020-05-02T18:25:50.884Z",
+            "updatedAt": "2020-05-02T18:25:50.884Z"
+        },
+        "action": "created",
+        "createdAt": "2020-05-02T18:25:51.224Z",
+        "__v": 0
+      },
+      {
+        "_id": "5eadbb8c74d8ba527779489f",
+        "collectionType": "User",
+        "referenceDocument": {
+            "role": 0,
+            "_id": "5eadbb8b74d8ba527779489e",
+            "username": "admin-siloam-bandung",
+            "password": "$2a$10$KxqdQX6rgfBa73Aio0RDheN.lRuutSyXYrcoY8IqvpF6fqnaJ2skC",
+            "createdAt": "2020-05-02T18:27:23.852Z",
+            "updatedAt": "2020-05-02T18:27:23.852Z"
+        },
+        "action": "created",
+        "createdAt": "2020-05-02T18:27:24.182Z",
+        "__v": 0
+      }
+    ]
+    ```
+
+* ### Get Hopital Supply Record
+
+  > **Method** : `GET`  
+  > **Endpoint** : `/records/hospitalsupply`  
+  > **Authentication** : `false`
+
+  **_Response Body_** :
+  * 200
+
+    ```json
+    [
+      {
+        "_id": "5eadbf2174d8ba52777948b2",
+        "collectionType": "HospitalSupply",
+        "referenceDocument": {
+          "_id": "5eadbf2174d8ba52777948b1",
+          "product": "5eadbd6974d8ba52777948a7",
+          "demand": 3,
+          "createdAt": "2020-05-02T18:42:41.571Z",
+          "updatedAt": "2020-05-02T18:42:41.571Z"
+        },
+        "action": "created",
+        "createdAt": "2020-05-02T18:42:41.808Z",
+        "__v": 0
+      },
+      {
+        "_id": "5eadbf2e74d8ba52777948b5",
+        "collectionType": "HospitalSupply",
+        "referenceDocument": {
+          "_id": "5eadbf2d74d8ba52777948b4",
+          "product": "5eadbd8374d8ba52777948ab",
+          "demand": 5,
+          "createdAt": "2020-05-02T18:42:53.870Z",
+          "updatedAt": "2020-05-02T18:42:53.870Z"
+        },
+        "action": "created",
+        "createdAt": "2020-05-02T18:42:54.084Z",
+        "__v": 0
+      },
+      {
+        "_id": "5eadbf3774d8ba52777948b8",
+        "collectionType": "HospitalSupply",
+        "referenceDocument": {
+          "_id": "5eadbf3774d8ba52777948b7",
+          "product": "5eadbd9674d8ba52777948ad",
+          "demand": 7,
+          "createdAt": "2020-05-02T18:43:03.430Z",
+          "updatedAt": "2020-05-02T18:43:03.430Z"
+        },
+        "action": "created",
+        "createdAt": "2020-05-02T18:43:03.642Z",
+        "__v": 0
+      }
+    ]
+    ```
+
+* ### Get Hopital Supply Record - Single Product
+
+  > **Method** : `GET`  
+  > **Endpoint** : `/records/hospitalsupply/:hospitalSupplyId`  
+  > **Authentication** : `false`
+
+  **_Response Body_** :
+  * 200
+
+    ```json
+    [
+      {
+        "_id": "5eae5f24c6a468983901c862",
+        "collectionType": "HospitalSupply",
+        "referenceDocument": {
+          "_id": "5e9ace2e1ab712f883c45769",
+          "demand": 80,
+          "product": {
+            "unit": "",
+            "_id": "5ea3efc5a97c53829de4b07a",
+            "name": "APD",
+            "createdAt": "2020-04-25T08:07:33.606Z",
+            "updatedAt": "2020-04-25T08:08:20.054Z"
+          }
+        },
+        "action": "created",
+        "createdAt": "2020-05-03T06:05:24.772Z",
+        "__v": 0
+      }
+    ]
+    ```
+
+* ### Get Hopital Supply Record - Based on HopitalId
+
+  > **Method** : `GET`  
+  > **Endpoint** : `/records/hospital/:hospitalId/supplies`  
+  > **Authentication** : `false`
+  > **query** :
+  >
+  > * `size`: `Number`
+  > * `page`: `Number`
+
+  **_Response Body_** :
+  * 200
+
+    ```json
+    [
+      {
+        "_id": "5eae5f24c6a468983901c862",
+        "collectionType": "HospitalSupply",
+        "referenceDocument": {
+          "_id": "5e9ace2e1ab712f883c45769",
+          "demand": 80,
+          "product": {
+            "unit": "",
+            "_id": "5ea3efc5a97c53829de4b07a",
+            "name": "APD",
+            "createdAt": "2020-04-25T08:07:33.606Z",
+            "updatedAt": "2020-04-25T08:08:20.054Z"
+          }
+        },
+        "action": "created",
+        "createdAt": "2020-05-03T06:05:24.772Z",
+        "__v": 0
+      }
+    ]
+    ```
+
 ## Another Error
 
 * Our mistake report this error as issue

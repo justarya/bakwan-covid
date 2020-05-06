@@ -8,20 +8,21 @@ let isConnected;
  * @param done Callback to notify the result.
  * @returns {*}
  */
-const connectToDatabase = (done) => {
-  console.log('isConnected', isConnected);
-  if (isConnected) return done();
+const connectToDatabase = async (done) => {
+  try {
+    console.log('isConnected', isConnected);
+    if (isConnected) return done();
 
-  mongoose.connect(process.env.ATLAS_CLUSTER, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true,
-  })
-    .then(() => {
-      isConnected = true;
-      done();
-    })
-    .catch(done);
+    await mongoose.connect(process.env.ATLAS_CLUSTER, {
+      useNewUrlParser: true,
+      useCreateIndex: true,
+      useUnifiedTopology: true,
+    });
+    isConnected = true;
+    return done();
+  } catch (err) {
+    return done(err);
+  }
 };
 
 /**
