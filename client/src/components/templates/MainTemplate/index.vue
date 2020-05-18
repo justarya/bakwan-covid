@@ -1,7 +1,9 @@
 <template>
   <div class="t-main-template">
     <MainNav/>
+    <div class="t-main-template__content">
       <slot></slot>
+    </div>
     <MainFooter/>
   </div>
 </template>
@@ -18,3 +20,11 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.t-main-template {
+  &__content {
+    margin-bottom: 70px;
+  }
+}
+</style>

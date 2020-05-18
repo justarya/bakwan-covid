@@ -1,50 +1,16 @@
 <template>
   <div class="p-hospital-create">
+    <div class="p-hospital-create__banner">
+      <p class="text-xl font-bold">Selamat datang di Bakwan Covid!</p>
+      <p>Satu langkah lagi, kamu bisa menggunakan sistem ini!</p>
+    </div>
     <div class="p-hospital-create__title">
       <p>Buat Rumah Sakit</p>
     </div>
     <div class="p-hospital-create__form">
-      <div class="m-form-group">
-        <p>
-          Nama
-          <i class="text-gray-500">
-            (cth: RS Indonesia)
-          </i>
-        </p>
-        <AInputText
-          v-model="formData.name"
-        />
-      </div>
-      <div class="m-form-group">
-        <p>
-          Email
-          <i class="text-gray-500">
-            (yang bisa dihubungi)
-          </i>
-        </p>
-        <AInputText
-          v-model="formData.email"
-        />
-      </div>
-      <div class="m-form-group">
-        <p>
-          Telepon/Kontak
-          <i class="text-gray-500">
-            (yang bisa dihubungi)
-          </i>
-        </p>
-        <AInputText
-          v-model="formData.contactNumber"
-        />
-      </div>
-      <div class="m-form-group">
-        <p class="mb-2">Lokasi</p>
-        <AInputText
-          v-model="formData.location"
-          type="textarea"
-          rows="4"
-        />
-      </div>
+      <FormHospital
+        :form-data="formData"
+      />
       <AButton
         type="submit"
         @click="create"
@@ -56,16 +22,16 @@
 </template>
 
 <script>
-import AInputText from '@/components/atoms/AInputText';
 import AButton from '@/components/atoms/AButton';
+import FormHospital from '@/components/organisms/form/Hospital';
 import swalMixin from '@/mixins/swalMixin';
 
 export default {
   name: 'HospitalInfo',
   mixins: [swalMixin],
   components: {
-    AInputText,
     AButton,
+    FormHospital,
   },
   props: {
     id: {
@@ -77,7 +43,7 @@ export default {
     formData: {
       name: '',
       email: '',
-      contactNumber: '',
+      contactNumbers: [],
       location: '',
     },
   }),
@@ -86,13 +52,17 @@ export default {
   },
   methods: {
     create() {
+      const contactNumbers = this.formData.contactNumbers.map((el) => el.value);
       const payload = {
         ...this.formData,
-        contact_number: this.formData.contactNumber,
+        contact_numbers: contactNumbers,
       };
       this.$http.post('/hospital', payload)
         .then(() => {
-          this.successHandler('Update info berhasil!');
+          this.successHandler('Buat rumah sakit berhasil!');
+          return this.$store.dispatch('checkLogin');
+        })
+        .then(() => {
           this.$router.replace({ name: 'MemberArea' });
         })
         .catch(this.catchHandler);
@@ -115,6 +85,13 @@ export default {
   &__form {
     width: 100%;
     max-width: 350px;
+  }
+  &__banner {
+    padding: 20px 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    color: $dark-blue;
+    background-color: $light-blue;
   }
 }
 .m-form-group {

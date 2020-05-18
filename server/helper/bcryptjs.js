@@ -9,4 +9,4 @@ function comparePassword(str, hash) {
   return bcrypt.compareSync(str, hash);
 }
 
-module.exports = { hashPassword, comparePassword}
+module.exports = { hashPassword, comparePassword };

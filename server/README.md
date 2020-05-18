@@ -1,17 +1,31 @@
-# **Server Template With Express**
-> _This repo made with love_  :heart:
+# Server
 
-# _Section Header_
+* [Global Dependencies for Development](#global-depedencies-for-development)
 * [Dependencies](#dependencies)
 * [Features](#features)
-* [Clone](#clone)
 * [Installation](#installation)
 * [Usage](#usage)
+* [API Documentation](#api-documentation)
 * [Another Error](#another-error)
 * [License](#license)
 
-## Dependencies
+## What you need before development
+
+* MongoDB
+* NodeJS
+* Git
+
+## **Global Depedencies for Development**
+
+* [Nodemon](https://www.npmjs.com/package/nodemon)
+* [serverless](https://www.npmjs.com/package/serverless)
+
+## **Dependencies**
+
 > List of all dependencies
+
+* [serverless-offline](https://www.npmjs.com/package/serverless-offline)
+* [serverless-http](https://www.npmjs.com/package/serverless-http)
 * [morgan](https://www.npmjs.com/package/morgan)
 * [dotenv](https://www.npmjs.com/package/dotenv)
 * [express](https://www.npmjs.com/package/express)
@@ -21,38 +35,52 @@
 * [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
 * [mongoose-unique-validator](https://www.npmjs.com/package/mongoose-unique-validator)
 
+## **Installation**
 
-## Installation
 Enter to the folder and install all `Dependencies`
+
 ```bash
 $ npm install
 # OR
 $ yarn
-``` 
-<br>
+```  
 
-## Usage
+## **Usage**
+
 ### Running server
+
 ```bash
 $ npm run dev
 # OR
 $ yarn dev
 ```
-#### Base Url default :<br>
-> `http://localhost:3000`
 
-<br>
+### Running server Serverless
 
-# API Documentation
-## Users
-+ ### **Sign Up**
-  > **Method** : `POST`<br>
+```bash
+$ npm run dev:sls
+# OR
+$ yarn dev:sls
+```
+
+#### **Base Url default**  
+
+> `http://localhost:3000/`  
+
+## **API Documentation**
+
+## **Users**
+
+* ### **Sign Up**
+
+  > **Method** : `POST`  
   > **Endpoint** : `/user/signup`
   > **Authentication** : `true`
   > **Authorization** : `Admin`
 
-  #### _Request_ :
+  **_Request_** :
   * body:
+
     ```javascript
     {
       "username": String(required),
@@ -60,8 +88,9 @@ $ yarn dev
     }
     ```
 
-  #### _Response Body_ :
-  - 201
+  **_Response Body_** :
+  * 201
+
     ```json
     {
       "username": "justarya",
@@ -69,7 +98,9 @@ $ yarn dev
       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
     }
     ```
-  - 400
+
+  * 400
+
     ```json
     {
       "code": 400,
@@ -80,12 +111,14 @@ $ yarn dev
       ]
     }
 
-+ ### Sign In
-  > **Method** : `POST`<br>
+* ### Sign In
+
+  > **Method** : `POST`  
   > **Endpoint** : `/user/signin`
 
-  #### _Request_ :
+  **_Request_** :
   * body:
+
     ```javascript
     {
       "username": String(required),
@@ -93,8 +126,9 @@ $ yarn dev
     }
     ```
 
-  #### _Response Body_ :
-  - 201
+  **_Response Body_** :
+  * 201
+
     ```json
     {
       "username": "justarya",
@@ -102,7 +136,9 @@ $ yarn dev
       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
     }
     ```
-  - 404
+
+  * 404
+
     ```json
     {
       "code": 404,
@@ -110,41 +146,49 @@ $ yarn dev
     }
     ```
 
-+ ### Get User
-  > **Method** : `GET`<br>
-  > **Endpoint** : `/user`<br>
+* ### Get User
+
+  > **Method** : `GET`  
+  > **Endpoint** : `/user`  
   > **Authentication** : `true`
 
-  #### _Response Body_ :
-  - 200
+  **_Response Body_** :
+  * 200
+
     ```json
     {
       "username": "justarya",
       "hospitals": [
         {
           "name": "RS Gatot Subroto",
-          "contact_number": "6123928379290",
+          "contact_numbers": ["6123928379290"],
           "email": "contact@gatot.com",
           "location": "Jln. Gatot Subtroto",
         },
       ]
     }
     ```
-  - 404
+
+  * 404
+
     ```json
     {
       "code": 404,
       "message": "User not found"
     }
     ```
-+ ### Edit User
-  > **Method** : `PUT`<br>
-  > **Endpoint** : `/user/:id`<br>
-  > **Authentication** : `true`<br>
+
+* ### Edit User
+
+  > **Method** : `PUT`  
+  > **Endpoint** : `/user/:id`  
+  > **Authentication** : `true`  
   > **Authorization** : `Admin`
 
-  #### _Request Body_ :
+  **_Request Body_** :
+
   * body:
+
     ```javascript
     {
       "username": String(required),
@@ -152,14 +196,17 @@ $ yarn dev
     }
     ```
 
-  #### _Response Body_ :
-  - 200
+  **_Response Body_** :
+  * 200
+
     ```json
     {
       "username": "justarya",
     }
     ```
-  - 404
+
+  * 404
+
     ```json
     {
       "code": 404,
@@ -168,32 +215,50 @@ $ yarn dev
     ```
 
 ## Hospital
-+ ### Create Hospital
-  > **Method** : `POST`<br>
-  > **Endpoint** : `/hospital`<br>
+
+* ### Create Hospital
+
+  > **Method** : `POST`  
+  > **Endpoint** : `/hospital`  
   > **Authentication** : `true`
 
-  #### _Request Body_ :
+  **_Request Body (Admin)_** :
+
   ```json
   {
+    "userId": "91231923129",
     "name": "RS Gatot Subroto",
-    "contact_number": "6123928379290",
+    "contact_numbers": ["6123928379290"],
     "email": "contact@gatot.com",
     "location": "Jln. Gatot Subtroto",
   }
   ```
 
-  #### _Response Body_ :
-  - 200
+  **_Request Body (normal user)_** :
+
+  ```json
+  {
+    "name": "RS Gatot Subroto",
+    "contact_numbers": ["6123928379290"],
+    "email": "contact@gatot.com",
+    "location": "Jln. Gatot Subtroto",
+  }
+  ```
+
+  **_Response Body_** :
+  * 200
+
     ```json
     {
       "name": "RS Gatot Subroto",
-      "contact_number": "6123928379290",
+      "contact_numbers": ["6123928379290"],
       "email": "contact@gatot.com",
       "location": "Jln. Gatot Subtroto",
     }
     ```
-  - 400
+
+  * 400
+
     ```json
     {
       "code": 400,
@@ -204,26 +269,30 @@ $ yarn dev
     }
     ```
 
-+ ### Get all Hospital
-  > **Method** : `GET`<br>
-  > **Endpoint** : `/hospital`<br>
-  > **query** : 
-  > - `search`: `String` (for field: `name`, `location`)
+* ### Get all Hospital
 
-  #### _Response Body_ :
-  - 200
+  > **Method** : `GET`  
+  > **Endpoint** : `/hospital`  
+  > **query** :
+  >
+  > * `search`: `String` (for field: `name`, `location`)
+  > * `size`: `Number`
+  > * `page`: `Number`
+
+  **_Response Body_** :
+  * 200
+
     ```json
     {
       "list": [
         {
           "name": "RS Gatot Subroto",
-          "contact_number": "6123928379290",
+          "contact_numbers": ["6123928379290"],
           "email": "contact@gatot.com",
           "location": "Jln. Gatot Subtroto",
           "supplies": [
             {
-              "product_name": "Face Mask 3M",
-              "supply": 30,
+              "product": "5278190q8dm8913e129e23",
               "demand": 100,
             }
           ]
@@ -232,28 +301,31 @@ $ yarn dev
     }
     ```
 
-+ ### Get Hospital
-  > **Method** : `GET`<br>
+* ### Get Hospital
+
+  > **Method** : `GET`  
   > **Endpoint** : `/hospital/:id`
 
-  #### _Response Body_ :
-  - 200
+  **_Response Body_** :
+  * 200
+
     ```json
     {
       "name": "RS Gatot Subroto",
-      "contact_number": "6123928379290",
+      "contact_numbers": ["6123928379290"],
       "email": "contact@gatot.com",
       "location": "Jln. Gatot Subtroto",
       "supplies": [
         {
-          "product_name": "Face Mask 3M",
-          "supply": 30,
+          "product": "5278190q8dm8913e129e23",
           "demand": 100,
         }
       ]
     }
     ```
-  - 404
+
+  * 404
+
     ```json
     {
       "code": 404,
@@ -261,23 +333,27 @@ $ yarn dev
     }
     ```
 
-+ ### Edit Hospital
-  > **Method** : `PUT`<br>
+* ### Edit Hospital
+
+  > **Method** : `PUT`  
   > **Endpoint** : `/hospital/:id`
   > **Authentication** : `true`
   > **Authorization** : `User with access`
 
-  #### _Response Body_ :
-  - 200
+  **_Response Body_** :
+  * 200
+
     ```json
     {
       "name": "RS Gatot Subroto",
-      "contact_number": "6123928379290",
+      "contact_numbers": ["6123928379290"],
       "email": "contact@gatot.com",
       "location": "Jln. Gatot Subtroto",
     }
     ```
-  - 404
+
+  * 404
+
     ```json
     {
       "code": 404,
@@ -285,20 +361,25 @@ $ yarn dev
     }
     ```
 
-+ ### Delete Hospital
-  > **Method** : `DELETE`<br>
-  > **Endpoint** : `/hospital/:id`<br>
+* ### Delete Hospital
+
+  > **Method** : `DELETE`  
+  > **Endpoint** : `/hospital/:id`  
   > **Authentication** : `true`
   > **Authorization** : `Admin`
 
-  #### _Response Body_ :
-  - 200
+  **_Response Body_** :
+
+  * 200
+
     ```json
     {
       "success": true,
     }
     ```
-  - 404
+
+  * 404
+
     ```json
     {
       "code": 404,
@@ -307,49 +388,58 @@ $ yarn dev
     ```
 
 ## Hospital Supplies
-+ ### Get all Hospital Supply
-  > **Method** : `GET`<br>
-  > **Endpoint** : `/hospital/:id/supplies`<br>
-  > **Authentication** : `true`
 
-  #### _Response Body_ :
-  - 200
+* ### Get all Hospital Supply
+
+  > **Method** : `GET`  
+  > **Endpoint** : `/hospital/:id/supplies`  
+  > **Authentication** : `true`
+  > **query** :
+  >
+  > * `search`: `String` (for field: `product name`)
+
+  **_Response Body_** :
+  * 200
+
     ```json
     [
       {
         "_id": "581ehj9128ehj19e8h12e98",
-        "product_name": "Face Mask 3M",
-        "supply": 30,
+        "product": "5278190q8dm8913e129e23",
         "demand": 100,
       }
     ]
     ```
   
-+ ### Create Hospital Supply
-  > **Method** : `POST`<br>
-  > **Endpoint** : `/hospital/:id/supplies`<br>
+* ### Create Hospital Supply
+
+  > **Method** : `POST`  
+  > **Endpoint** : `/hospital/:id/supplies`  
   > **Authentication** : `true`
 
-  #### _Request Body_ :
+  **_Request Body_** :
+
   ```json
   {
-    "product_name": "Face Mask 3M",
-    "supply": 30,
+    "product": "5278190q8dm8913e129e23",
     "demand": 100,
   }
   ```
 
-  #### _Response Body_ :
-  - 200
+  **_Response Body_** :
+
+  * 200
+
     ```json
     {
       "_id": "581ehj9128ehj19e8h12e98",
-      "product_name": "Face Mask 3M",
-      "supply": 30,
+      "product": "5278190q8dm8913e129e23",
       "demand": 100,
     }
     ```
-  - 400
+
+  * 400
+
     ```json
     {
       "code": 400,
@@ -358,30 +448,34 @@ $ yarn dev
       ],
     }
     ```
-+ ### Edit Hospital Supply
-  > **Method** : `PUT`<br>
-  > **Endpoint** : `/hospital/:id/supplies/:id`<br>
+
+* ### Edit Hospital Supply
+
+  > **Method** : `PUT`  
+  > **Endpoint** : `/hospital/:id/supplies/:id`  
   > **Authentication** : `true`
 
-  #### _Request Body_ :
+  **_Request Body_** :
+
   ```json
   {
-    "product_name": "Face Mask 3M",
-    "supply": 30,
+    "product": "5278190q8dm8913e129e23",
     "demand": 100,
   }
   ```
 
-  #### _Response Body_ :
-  - 200
+  **_Response Body_** :
+  * 200
+
     ```json
     {
-      "product_name": "Face Mask 3M",
-      "supply": 30,
+      "product": "5278190q8dm8913e129e23",
       "demand": 100,
     }
     ```
-  - 400
+
+  * 400
+
     ```json
     {
       "code": 400,
@@ -390,7 +484,9 @@ $ yarn dev
       ],
     }
     ```
-  - 404
+
+  * 404
+
     ```json
     {
       "code": 400,
@@ -399,19 +495,24 @@ $ yarn dev
       ],
     }
     ```
-+ ### Delete Hospital Supply
-  > **Method** : `Delete`<br>
-  > **Endpoint** : `/hospital/:id/supplies/:id`<br>
+
+* ### Delete Hospital Supply
+
+  > **Method** : `Delete`  
+  > **Endpoint** : `/hospital/:id/supplies/:id`  
   > **Authentication** : `true`
 
-  #### _Response Body_ :
-  - 200
+  **_Response Body_** :
+  * 200
+
     ```json
     {
       "success": true,
     }
     ```
-  - 404
+
+  * 404
+
     ```json
     {
       "code": 400,
@@ -421,23 +522,439 @@ $ yarn dev
     }
     ```
 
+## Product
+
+* ### Get all Product
+
+  > **Method** : `GET`  
+  > **Endpoint** : `/product`  
+  > **Authentication** : `true`
+  > **query** :
+  >
+  > * `search`: `String` (for field: `product name`)
+  > * `size`: `Number`
+  > * `page`: `Number`
+
+  **_Response Body_** :
+  * 200
+
+    ```json
+    [
+      {
+        "_id": "581ehj9128ehj19e8h12e98",
+        "name": "Face Mask 3M",
+        "unit": ""
+      }
+    ]
+    ```
+  
+* ### Create Product
+
+  > **Method** : `POST`  
+  > **Endpoint** : `/product`  
+  > **Authentication** : `true`
+
+  **_Request Body_** :
+
+  ```json
+  {
+    "name": "Face Mask 3M",
+    "unit": ""
+  }
+  ```
+
+  **_Response Body_** :
+
+  * 200
+
+    ```json
+    {
+      "_id": "581ehj9128ehj19e8h12e98",
+      "name": "Face Mask 3M",
+      "unit": ""
+    }
+    ```
+
+  * 400
+
+    ```json
+    {
+      "code": 400,
+      "message": [
+        "Product Name cannot be empty",
+      ],
+    }
+    ```
+
+* ### Edit Product
+
+  > **Method** : `PUT`  
+  > **Endpoint** : `/product/:productId`  
+  > **Authentication** : `true`
+
+  **_Request Body_** :
+
+  ```json
+  {
+    "name": "Face Mask 3M",
+    "unit": ""
+  }
+  ```
+
+  **_Response Body_** :
+  * 200
+
+    ```json
+    {
+      "name": "Face Mask 3M",
+      "unit": ""
+    }
+    ```
+
+  * 400
+
+    ```json
+    {
+      "code": 400,
+      "message": [
+        "Product Name cannot be empty",
+      ],
+    }
+    ```
+
+  * 404
+
+    ```json
+    {
+      "code": 400,
+      "message": [
+        "Product not found",
+      ],
+    }
+    ```
+
+* ### Delete Product
+
+  > **Method** : `Delete`  
+  > **Endpoint** : `/product/:productId`  
+  > **Authentication** : `true`
+
+  **_Response Body_** :
+  * 200
+
+    ```json
+    {
+      "success": true,
+    }
+    ```
+
+  * 404
+
+    ```json
+    {
+      "code": 400,
+      "message": [
+        "Product not found",
+      ],
+    }
+    ```
+
+## Records
+
+
+* ### Get Hospital Record
+
+  > **Method** : `GET`  
+  > **Endpoint** : `/records/hospital`  
+  > **Authentication** : `true`
+
+  **_Response Body_** :
+  * 200
+
+    ```json
+    [
+      {
+        "_id": "5eadbb2f74d8ba527779489d",
+        "collectionType": "Hospital",
+        "referenceDocument": {
+          "users": [
+            "5eadbb2e74d8ba527779489a"
+          ],
+          "supplies": [],
+          "contact_numbers": [
+            "085678909876 (Dr. Dina Usaurus)"
+          ],
+          "_id": "5eadbb2f74d8ba527779489c",
+          "name": "RS Harapan Kita",
+          "email": "admin@harapankita.hospital.id",
+          "location": "Jalan Gatot Subroto, no.56, Menteng, Jakarta Selatan, DKI Jakarta",
+          "createdAt": "2020-05-02T18:25:51.704Z",
+          "updatedAt": "2020-05-02T18:25:51.704Z"
+        },
+        "action": "created",
+        "createdAt": "2020-05-02T18:25:51.912Z",
+        "__v": 0
+      },
+      {
+        "_id": "5eadbb9574d8ba52777948a2",
+        "collectionType": "Hospital",
+        "referenceDocument": {
+          "users": [
+            "5eadbb8b74d8ba527779489e"
+          ],
+          "supplies": [],
+          "contact_numbers": [
+            "086576787678 (Dr. Fx Prayitno)"
+          ],
+          "_id": "5eadbb9474d8ba52777948a1",
+          "name": "RS Siloam Bandung",
+          "email": "admin@siloam-bandung.hospital.id",
+          "location": "Jalan Teuku Umar, no.37, Bandung Selatan, Kota Bandung",
+          "createdAt": "2020-05-02T18:27:33.104Z",
+          "updatedAt": "2020-05-02T18:27:33.104Z"
+        },
+        "action": "created",
+        "createdAt": "2020-05-02T18:27:33.356Z",
+        "__v": 0
+      }
+    ]
+    ```
+
+* ### Get Product Record
+
+  > **Method** : `GET`  
+  > **Endpoint** : `/records/product`  
+  > **Authentication** : `true`
+
+  **_Response Body_** :
+  * 200
+
+    ```json
+    [
+      {
+        "_id": "5eadbd5474d8ba52777948a4",
+        "collectionType": "Product",
+        "referenceDocument": {
+          "unit": "pcs",
+          "_id": "5eadbd5474d8ba52777948a3",
+          "name": "Hazmat",
+          "createdAt": "2020-05-02T18:35:00.247Z",
+          "updatedAt": "2020-05-02T18:35:00.247Z"
+        },
+        "action": "created",
+        "createdAt": "2020-05-02T18:35:00.468Z",
+        "__v": 0
+      },
+      {
+        "_id": "5eadbd5d74d8ba52777948a6",
+        "collectionType": "Product",
+        "referenceDocument": {
+          "unit": "pcs",
+          "_id": "5eadbd5c74d8ba52777948a5",
+          "name": "Masker",
+          "createdAt": "2020-05-02T18:35:08.623Z",
+          "updatedAt": "2020-05-02T18:35:08.623Z"
+        },
+        "action": "created",
+        "createdAt": "2020-05-02T18:35:09.280Z",
+        "__v": 0
+      },
+      {
+        "_id": "5eadbd6a74d8ba52777948a8",
+        "collectionType": "Product",
+        "referenceDocument": {
+          "unit": "pcs",
+          "_id": "5eadbd6974d8ba52777948a7",
+          "name": "Ventilator",
+          "createdAt": "2020-05-02T18:35:21.973Z",
+          "updatedAt": "2020-05-02T18:35:21.973Z"
+        },
+        "action": "created",
+        "createdAt": "2020-05-02T18:35:22.182Z",
+        "__v": 0
+      }
+    ]
+    ```
+
+* ### Get User Record
+
+  > **Method** : `GET`  
+  > **Endpoint** : `/records/user`  
+  > **Authentication** : `true`
+
+  **_Response Body_** :
+  * 200
+
+    ```json
+    [
+      {
+        "_id": "5eadbb2f74d8ba527779489b",
+        "collectionType": "User",
+        "referenceDocument": {
+            "role": 0,
+            "_id": "5eadbb2e74d8ba527779489a",
+            "username": "admin-harapankita-jakarta",
+            "password": "$2a$10$8hb4agunAePDk2REUaKhGOhPLG7bM8ASlQxZd1zrbTsMFw0v7cIqG",
+            "createdAt": "2020-05-02T18:25:50.884Z",
+            "updatedAt": "2020-05-02T18:25:50.884Z"
+        },
+        "action": "created",
+        "createdAt": "2020-05-02T18:25:51.224Z",
+        "__v": 0
+      },
+      {
+        "_id": "5eadbb8c74d8ba527779489f",
+        "collectionType": "User",
+        "referenceDocument": {
+            "role": 0,
+            "_id": "5eadbb8b74d8ba527779489e",
+            "username": "admin-siloam-bandung",
+            "password": "$2a$10$KxqdQX6rgfBa73Aio0RDheN.lRuutSyXYrcoY8IqvpF6fqnaJ2skC",
+            "createdAt": "2020-05-02T18:27:23.852Z",
+            "updatedAt": "2020-05-02T18:27:23.852Z"
+        },
+        "action": "created",
+        "createdAt": "2020-05-02T18:27:24.182Z",
+        "__v": 0
+      }
+    ]
+    ```
+
+* ### Get Hopital Supply Record
+
+  > **Method** : `GET`  
+  > **Endpoint** : `/records/hospitalsupply`  
+  > **Authentication** : `false`
+
+  **_Response Body_** :
+  * 200
+
+    ```json
+    [
+      {
+        "_id": "5eadbf2174d8ba52777948b2",
+        "collectionType": "HospitalSupply",
+        "referenceDocument": {
+          "_id": "5eadbf2174d8ba52777948b1",
+          "product": "5eadbd6974d8ba52777948a7",
+          "demand": 3,
+          "createdAt": "2020-05-02T18:42:41.571Z",
+          "updatedAt": "2020-05-02T18:42:41.571Z"
+        },
+        "action": "created",
+        "createdAt": "2020-05-02T18:42:41.808Z",
+        "__v": 0
+      },
+      {
+        "_id": "5eadbf2e74d8ba52777948b5",
+        "collectionType": "HospitalSupply",
+        "referenceDocument": {
+          "_id": "5eadbf2d74d8ba52777948b4",
+          "product": "5eadbd8374d8ba52777948ab",
+          "demand": 5,
+          "createdAt": "2020-05-02T18:42:53.870Z",
+          "updatedAt": "2020-05-02T18:42:53.870Z"
+        },
+        "action": "created",
+        "createdAt": "2020-05-02T18:42:54.084Z",
+        "__v": 0
+      },
+      {
+        "_id": "5eadbf3774d8ba52777948b8",
+        "collectionType": "HospitalSupply",
+        "referenceDocument": {
+          "_id": "5eadbf3774d8ba52777948b7",
+          "product": "5eadbd9674d8ba52777948ad",
+          "demand": 7,
+          "createdAt": "2020-05-02T18:43:03.430Z",
+          "updatedAt": "2020-05-02T18:43:03.430Z"
+        },
+        "action": "created",
+        "createdAt": "2020-05-02T18:43:03.642Z",
+        "__v": 0
+      }
+    ]
+    ```
+
+* ### Get Hopital Supply Record - Single Product
+
+  > **Method** : `GET`  
+  > **Endpoint** : `/records/hospitalsupply/:hospitalSupplyId`  
+  > **Authentication** : `false`
+
+  **_Response Body_** :
+  * 200
+
+    ```json
+    [
+      {
+        "_id": "5eae5f24c6a468983901c862",
+        "collectionType": "HospitalSupply",
+        "referenceDocument": {
+          "_id": "5e9ace2e1ab712f883c45769",
+          "demand": 80,
+          "product": {
+            "unit": "",
+            "_id": "5ea3efc5a97c53829de4b07a",
+            "name": "APD",
+            "createdAt": "2020-04-25T08:07:33.606Z",
+            "updatedAt": "2020-04-25T08:08:20.054Z"
+          }
+        },
+        "action": "created",
+        "createdAt": "2020-05-03T06:05:24.772Z",
+        "__v": 0
+      }
+    ]
+    ```
+
+* ### Get Hopital Supply Record - Based on HopitalId
+
+  > **Method** : `GET`  
+  > **Endpoint** : `/records/hospital/:hospitalId/supplies`  
+  > **Authentication** : `false`
+  > **query** :
+  >
+  > * `size`: `Number`
+  > * `page`: `Number`
+
+  **_Response Body_** :
+  * 200
+
+    ```json
+    [
+      {
+        "_id": "5eae5f24c6a468983901c862",
+        "collectionType": "HospitalSupply",
+        "referenceDocument": {
+          "_id": "5e9ace2e1ab712f883c45769",
+          "demand": 80,
+          "product": {
+            "unit": "",
+            "_id": "5ea3efc5a97c53829de4b07a",
+            "name": "APD",
+            "createdAt": "2020-04-25T08:07:33.606Z",
+            "updatedAt": "2020-04-25T08:08:20.054Z"
+          }
+        },
+        "action": "created",
+        "createdAt": "2020-05-03T06:05:24.772Z",
+        "__v": 0
+      }
+    ]
+    ```
+
 ## Another Error
-  + Our mistake report this error as issue
+
+* Our mistake report this error as issue
+
   ```json
   {
     "code": 500,
     "message": "Internal server error :("
   }
   ```
+  
+## Special Thanks to
 
-
-## License
-
-- **[MIT license](http://opensource.org/licenses/mit-license.php)**
-- Contributor [
-  <a href="https://github.com/justarya" target="_blank">JustArya</a>,
-  <a href="https://github.com/havus" target="_blank">Havus</a>
-]
-
-<br><br><br>
-### Happy Hacking!
+[Express User Template](https://github.com/havus/express-user-template)

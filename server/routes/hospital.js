@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const hospitalSupplyRouter = require('./hospitalSupply'); 
+const hospitalSupplyRouter = require('./hospitalSupply');
 const hospitalController = require('../controllers/hospital');
 
 const authentication = require('../middleware/authentication');

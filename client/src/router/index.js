@@ -19,6 +19,20 @@ const routes = [
     name: 'Detail',
     props: true,
     component: () => import(/* webpackChunkName: "detail" */ '@/pages/Detail'),
+    children: [
+      {
+        path: 'supply',
+        name: 'DetailSupply',
+        props: true,
+        component: () => import(/* webpackChunkName: "detailSupply" */ '@/pages/Detail/Supply'),
+      },
+      {
+        path: 'history',
+        name: 'DetailHistory',
+        props: true,
+        component: () => import(/* webpackChunkName: "detailHistory" */ '@/pages/Detail/History'),
+      },
+    ],
   },
   {
     path: '/login',
@@ -73,6 +87,16 @@ const routes = [
           requiresAuth: true,
         },
         component: () => import(/* webpackChunkName: "member" */ '@/pages/MemberArea/Admin/CreateUser'),
+      },
+      {
+        path: '/admin/user/product',
+        name: 'AdminProduct',
+        props: true,
+        meta: {
+          isAdmin: true,
+          requiresAuth: true,
+        },
+        component: () => import(/* webpackChunkName: "member" */ '@/pages/MemberArea/Admin/Product'),
       },
     ],
   },

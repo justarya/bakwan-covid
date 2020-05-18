@@ -1,14 +1,16 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+
+const { Schema } = mongoose;
+const mongooseLogs = require('mongoose-activitylogs');
 
 const HospitalSupplySchema = new Schema({
-  product_name: {
-    type: String,
-    required: [true, 'Product name cannot be empty'],
+  hospital: {
+    type: Schema.Types.ObjectId,
+    ref: 'Hospital',
   },
-  supply: {
-    type: Number,
-    required: [true, 'Supply cannot be empty'],
+  product: {
+    type: Schema.Types.ObjectId,
+    ref: 'Product',
   },
   demand: {
     type: Number,
@@ -17,6 +19,13 @@ const HospitalSupplySchema = new Schema({
 }, {
   timestamps: true,
   versionKey: false,
+});
+
+HospitalSupplySchema.plugin(mongooseLogs, {
+  schemaName: 'HospitalSupply',
+  createAction: 'created',
+  updateAction: 'updated',
+  deleteAction: 'removed',
 });
 
 const HospitalSupply = mongoose.model('HospitalSupply', HospitalSupplySchema);

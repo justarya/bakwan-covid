@@ -2,3 +2,8 @@
 // @import './plugins/skeleton.scss';
 @import './plugins/tailwind.custom';
 @import './plugins/material-icons';
+
+* {
+  font-family: 'Quicksand', sans-serif;
+  -webkit-tap-highlight-color:  rgba(255, 255, 255, 0); 
+}

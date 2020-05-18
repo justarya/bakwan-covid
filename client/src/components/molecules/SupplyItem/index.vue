@@ -1,17 +1,7 @@
 <template>
   <div class="m-supply-item">
-    <p class="m-supply-item__title a-text text-lg">{{ name }}</p>
-    <div class="m-supply-item__total">
-      <div class="m-supply-item__supply">
-        <p class="m-supply-item__label">Sisa</p>
-        <p class="m-supply-item__count">{{ supply }}</p>
-      </div>
-      <div class="m-supply-item__seperator"></div>
-      <div class="m-supply-item__demand">
-        <p class="m-supply-item__label">Butuh</p>
-        <p class="m-supply-item__count">{{ demand }}</p>
-      </div>
-    </div>
+    <p class="m-supply-item__count a-text">{{ demand + unit }}</p>
+    <p class="m-supply-item__name a-text">{{ name }}</p>
   </div>
 </template>
 
@@ -23,13 +13,13 @@ export default {
       type: String,
       default: '',
     },
-    supply: {
-      type: Number,
-      default: 0,
-    },
     demand: {
       type: Number,
       default: 0,
+    },
+    unit: {
+      type: String,
+      default: '',
     },
   },
 };
@@ -37,53 +27,81 @@ export default {
 
 <style lang="scss">
 .m-supply-item {
-  padding: 0 10px;
-  display: inline-block;
+  margin: 0 10px;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
   &--container {
-    position: relative;
-    width: 100%;
+    border: thin solid $blue;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba($blue, 0.2);
+    padding: 10px;
+    padding-right: 40px;
+    min-width: 45px;
+    max-width: 100%;
+    min-height: 50px;
+
     display: flex;
+    position: relative;
     overflow: hidden;
+
+    .m-supply-item__name {
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    &__arrow {
+      position: absolute;
+      top: 0;
+      right: 10px;
+      z-index: 9;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      color: $blue;
+    }
+
     &::after {
       content: "";
+
       position: absolute;
       right: 0;
       top: 0;
-      max-width: 200px;
+
+      max-width: 120px;
       width: 100%;
       height: 100%;
-      background: linear-gradient(to right, rgba(255, 255, 255, 0), #fff)
+
+      background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) ,
+        #fff 65%
+      );
     }
   }
-  &__total {
-    display: flex;
-  }
-  &__supply, &__demand {
-    width: 50px;
-  }
-  &__supply {
-    text-align: right;
-    color: #C3CED3;
-  }
-  &__demand {
-    text-align: left;
-    color: #3482FF;
-  }
-  &__seperator {
-    border-right: thin solid $gray;
-    margin: 5px 10px;
-  }
-  &__label {
-    font-size: 10px;
-    line-height: 1.25;
-  }
   &__count {
-    font-size: 17px;
-    font-weight: 500;
+    color: $blue;
+    font-size: 18px;
     line-height: 1.25;
   }
-  &__title {
-    text-align: center;
+  &__name {
+    color: black;
+    font-size: 12px;
+    line-height: 1.25;
+  }
+  @media (min-width: $sm) {
+    &__count {
+      line-height: 1.3;
+      font-size: 20px;
+    }
+    &__name {
+      font-size: 14px;
+    }
+  }
+  @media (min-width: $lg) {
+    &--container {
+      max-width: 500px;
+    }
   }
 }
 </style>

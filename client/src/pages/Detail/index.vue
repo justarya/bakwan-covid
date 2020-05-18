@@ -1,62 +1,65 @@
 <template>
   <div class="p-detail">
     <MainTemplate>
-      <ACard>
-        <div class="p-detail__content">
+      <div class="p-detail__content">
+        <div class="p-detail--main">
           <div class="p-detail__nav">
             <AButtonNav
               icon="chevron_left"
-              go-back
+              :to="{ name: 'Home' }"
             >
               Home
             </AButtonNav>
           </div>
-          <p class="p-detail__title a-text">
-            {{ detail.hospital.name }}
-          </p>
-          <div class="p-detail__info o-detail-info">
-            <div class="o-detail-info__item --location">
+          <div class="p-detail__main">
+            <p class="p-detail__name a-text">
+              {{ detail.hospital.name }}
+            </p>
+            <div class="p-detail__location">
               <i class="material-icons">room</i>
               <span>{{ detail.hospital.location }}</span>
             </div>
-            <div class="o-detail-info__item --contact-number">
-              <i class="material-icons">call</i>
-              <span>{{ detail.hospital.contact_number }}</span>
+          </div>
+          <div class="p-detail__contact o-detail-contact">
+            <div class="o-detail-contact__title">
+              Kontak (untuk donasi)
             </div>
-            <div class="o-detail-info__item --email">
+            <div
+              class="o-detail-contact__item --contact-number"
+              v-for="(contactNumber, index) in detail.hospital.contactNumbers"
+              :key="index"
+            >
+              <i class="material-icons">call</i>
+              <span>{{ contactNumber }}</span>
+            </div>
+            <div class="o-detail-contact__item --email">
               <i class="material-icons">email</i>
               <span>{{ detail.hospital.email }}</span>
             </div>
           </div>
-          <div class="p-detail__supply-list">
-            <p class="text-2xl font-semibold">Pasokan</p>
-            <SupplyItem
-              v-for="(data, index) in detail.hospital.supplies"
-              v-bind="data"
-              :name="data.product_name"
-              :key="index"
-              class="my-5"
-            />
-          </div>
         </div>
-      </ACard>
+        <div class="p-detail--secondary">
+          <Tab
+            :menu="config.menu"
+          />
+          <router-view />
+        </div>
+      </div>
     </MainTemplate>
   </div>
 </template>
 
 <script>
-import SupplyItem from '@/components/molecules/SupplyItem';
 import MainTemplate from '@/components/templates/MainTemplate';
+import Tab from '@/components/organisms/Tab';
 import AButtonNav from '@/components/atoms/AButtonNav';
-import ACard from '@/components/atoms/ACard';
 
 export default {
   name: 'Detail',
   components: {
     MainTemplate,
-    SupplyItem,
     AButtonNav,
-    ACard,
+    Tab,
   },
   props: {
     id: {
@@ -71,13 +74,65 @@ export default {
     detail: {
       hospital: {},
     },
+    config: {
+      menu: [
+        {
+          text: 'Pasokan',
+          url: {
+            name: 'DetailSupply',
+          },
+        },
+        {
+          text: 'Riwayat',
+          url: {
+            name: 'DetailHistory',
+          },
+        },
+      ],
+    },
   }),
   methods: {
     fetchHospitalDetailData() {
       this.$http.get(`/hospital/${this.id}`)
         .then(({ data }) => {
-          this.detail.hospital = data;
+          const newData = this.mappingDetailData(data);
+          this.detail.hospital = newData;
+          this.config.menu[0].url.params = {
+            supplies: this.detail.hospital.supplies,
+          };
+          this.redirect();
         });
+    },
+    mappingDetailData(data) {
+      const supplies = data.supplies.map((supply) => {
+        let product = {};
+        if (supply.product) product = supply.product;
+        else {
+          product = {
+            name: supply.product_name,
+            unit: supply.demand_unit,
+          };
+        }
+        return {
+          ...supply,
+          product,
+        };
+      });
+      return {
+        ...data,
+        supplies,
+        contactNumbers: data.contact_numbers,
+      };
+    },
+    redirect() {
+      if (this.$router.currentRoute.name === 'Detail') {
+        this.$router.replace({
+          name: 'DetailSupply',
+          params: {
+            supplies: this.detail.hospital.supplies,
+          },
+        });
+      }
     },
   },
 };
@@ -88,27 +143,91 @@ export default {
   &__nav {
     margin-bottom: 10px;
   }
+  &--main {
+    margin-bottom: 30px;
+  }
   &__content {
-    padding: 15px;
-    @media (min-width: $sm) { padding: 30px; }
+    padding: 25px;
   }
-  &__title {
-    font-size: 40px;
+  &__main {
+    margin-bottom: 30px;
+  }
+  &__name {
+    font-size: 22px;
     font-weight: 500;
-    margin-bottom: 20px;
+    line-height: 1.25;
+    margin-bottom: 10px;
   }
-  &__info {
-    margin-bottom: 20px;
+  &__location {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    line-height: 1.3;
+    .material-icons {
+      margin-right: 5px;
+    }
+  }
+  &__contact {
+    max-width: 400px;
+  }
+  @media (min-width: $sm) {
+    &__content {
+      display: flex;
+      > div:last-child {
+        padding-left: 20px;
+      }
+    }
+    &--main {
+      width: 50%;
+    }
+    &--secondary {
+      width: 50%;
+    }
+  }
+  @media (min-width: $md) {
+    &__content {
+      > div:last-child {
+        padding-left: 25px;
+      }
+    }
+    &--main {
+      width: 45%;
+    }
+    &--secondary {
+      padding-left: 20px;
+      width: 55%;
+    }
+  }
+  @media (min-width: $xl) {
+    &__content {
+      > div:last-child {
+        padding-left: 25px;
+      }
+    }
+    &--main {
+      width: 45%;
+    }
+    &--secondary {
+      padding-left: 20px;
+      width: 55%;
+    }
   }
 }
-.o-detail-info {
+.o-detail-contact {
   border-radius: 10px;
-  border: thin solid $gray;
+  box-shadow: 0 0 10px rgba($blue, 0.2);
   padding: 20px;
-  display: inline-block;
-  padding-right: 50px;
+  width: 100%;
+  &__title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
   &__item {
     margin-bottom: 8px;
+    &:last-child {
+      margin-bottom: 0;
+    }
     .material-icons {
       padding-right: 8px;
     }

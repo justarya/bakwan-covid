@@ -1,6 +1,13 @@
 <template>
   <ACard color="blue" class="o-sidebar --menu">
-    <p class="o-sidebar__title">{{ title }}</p>
+    <p
+      :class="[
+        'o-sidebar__title',
+        { 'mb-3' : menu.length && title }
+      ]"
+    >
+      {{ title }}
+    </p>
     <template
       v-for="(data, index) in menu"
     >
@@ -51,7 +58,6 @@ export default {
   }
   &__title {
     padding: 0 15px;
-    margin-bottom: 15px;
     font-size: 25px;
     line-height: 1.4;
   }
@@ -65,7 +71,7 @@ export default {
       padding-right: 10px;
     }
     &:hover {
-      background-color: $soft-gray;
+      background-color: $light-blue;
     }
     &.--active {
       background-color: $blue;
